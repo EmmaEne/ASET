@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ASET TAMP</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="admin.html" class="sidebar-brand">
+                    <div class="logo-icon">A</div>
+                    <span>ASET</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#cases" class="nav-item" data-page="cases">
+                        <i class="fas fa-folder-open"></i>
+                        <span>All Cases</span>
+                    </a>
+                    <a href="#users" class="nav-item" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <a href="#assignments" class="nav-item" data-page="assignments">
+                        <i class="fas fa-user-tag"></i>
+                        <span>Assignments</span>
+                    </a>
+                    <a href="#activity" class="nav-item" data-page="activity">
+                        <i class="fas fa-history"></i>
+                        <span>Activity Log</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Reports</div>
+                    <a href="#reports" class="nav-item" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-menu" id="userMenu"></div>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <i class="fas fa-search text-muted"></i>
+                        <input type="text" placeholder="Search cases, students..." id="globalSearch">
+                    </div>
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">5</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div class="page-section active" id="dashboard-page">
+                    <!-- Stats Row -->
+                    <div class="row g-4 mb-6">
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="stat-value" id="statTotalCases">0</div>
+                                <div class="stat-label">Total Cases</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card warning">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-value" id="statPending">0</div>
+                                <div class="stat-label">Pending Review</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card success">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-value" id="statCompleted">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="stat-value" id="statStudents">0</div>
+                                <div class="stat-label">Total Students</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="row g-4 mb-6">
+                        <div class="col-lg-8">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">Cases by Request Type</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="casesByTypeChart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">Cases by Status</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="casesByStatusChart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity & Cases -->
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Recent Cases</h3>
+                                    <button class="btn btn-sm btn-secondary" onclick="showPage('cases')">View
+                                        All</button>
+                                </div>
+                                <div class="card-body p-0" id="recentCasesList"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Recent Activity</h3>
+                                    <button class="btn btn-sm btn-secondary" onclick="showPage('activity')">View
+                                        All</button>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="activity-feed" id="recentActivityFeed"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cases Page -->
+                <div class="page-section" id="cases-page">
+                    <!-- Filter Bar -->
+                    <div class="filter-bar mb-4">
+                        <div class="filter-group">
+                            <label class="filter-label">Faculty:</label>
+                            <select class="filter-select" id="filterFaculty">
+                                <option value="">All Faculties</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Department:</label>
+                            <select class="filter-select" id="filterDepartment">
+                                <option value="">All Departments</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Request Type:</label>
+                            <select class="filter-select" id="filterRequestType">
+                                <option value="">All Types</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Status:</label>
+                            <select class="filter-select" id="filterStatus">
+                                <option value="">All Status</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="applyFilters()">
+                            <i class="fas fa-filter"></i> Apply
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="clearFilters()">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+
+                    <!-- Cases Table -->
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="data-table" id="casesTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Case ID</th>
+                                            <th>Student</th>
+                                            <th>Faculty/Dept</th>
+                                            <th>Request Type</th>
+                                            <th>Status</th>
+                                            <th>Officer</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="casesTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Page -->
+                <div class="page-section" id="users-page">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon primary"><i class="fas fa-user-graduate"></i></div>
+                                <div class="stat-value" id="userStatStudents">0</div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card success">
+                                <div class="stat-icon success"><i class="fas fa-user-tie"></i></div>
+                                <div class="stat-value" id="userStatOfficers">0</div>
+                                <div class="stat-label">Officers</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card warning">
+                                <div class="stat-icon warning"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <div class="stat-value" id="userStatMentors">0</div>
+                                <div class="stat-label">Mentors</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon primary"><i class="fas fa-user-shield"></i></div>
+                                <div class="stat-value" id="userStatAdmins">0</div>
+                                <div class="stat-label">Admins</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">All Users</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Faculty/Dept</th>
+                                            <th>Joined</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignments Page -->
+                <div class="page-section" id="assignments-page">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Unassigned Cases</h3>
+                                </div>
+                                <div class="card-body p-0" id="unassignedCasesList"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Officer Workload</h3>
+                                </div>
+                                <div class="card-body" id="officerWorkloadList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Page -->
+                <div class="page-section" id="activity-page">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Activity Log</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="activity-feed" id="activityLogFeed" style="max-height: none;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Page -->
+                <div class="page-section" id="reports-page">
+                    <div class="row g-4 mb-6">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Cases by Faculty</h3>
+                                </div>
+                                <div class="card-body" id="casesByFacultyList"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Processing Time</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center py-4">
+                                        <div class="stat-value text-primary">14</div>
+                                        <div class="stat-label">Average Days to Complete</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Case Detail Modal -->
+    <div class="modal-backdrop" id="caseModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Case Details</h3>
+                <button class="modal-close" onclick="closeModal('caseModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="caseModalContent"></div>
+            <div class="modal-footer" id="caseModalFooter"></div>
+        </div>
+    </div>
+
+    <!-- Assign Officer Modal -->
+    <div class="modal-backdrop" id="assignModal">
+        <div class="modal" style="max-width: 480px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Assign Officer</h3>
+                <button class="modal-close" onclick="closeModal('assignModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="assignCaseId">
+                <div class="form-group">
+                    <label class="form-label">Select Case Officer</label>
+                    <select class="form-control form-select" id="assignOfficerSelect"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Select Mentor (Optional)</label>
+                    <select class="form-control form-select" id="assignMentorSelect">
+                        <option value="">No mentor</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('assignModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="confirmAssignment()">
+                    <i class="fas fa-check"></i> Assign
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div class="modal-backdrop" id="noteModal">
+        <div class="modal" style="max-width: 480px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Note</h3>
+                <button class="modal-close" onclick="closeModal('noteModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="noteCaseId">
+                <div class="form-group">
+                    <label class="form-label">Note</label>
+                    <textarea class="form-control" id="noteContent" rows="4"
+                        placeholder="Enter your note..."></textarea>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="noteInternal" checked>
+                    <label class="form-check-label" for="noteInternal">Internal note (not visible to student)</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('noteModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="submitNote()">
+                    <i class="fas fa-plus"></i> Add Note
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .chart-bar-label {
+            width: 140px;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .chart-bar-track {
+            flex: 1;
+            height: 24px;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.75rem;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 40px;
+        }
+
+        .status-dot-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .status-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .workload-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .workload-item:last-child {
+            border-bottom: none;
+        }
+
+        .workload-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-100);
+            color: var(--primary-600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .workload-info {
+            flex: 1;
+        }
+
+        .workload-count {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-600);
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        let currentUser = null;
+        let selectedCase = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            currentUser = ASET.requireAuth(['admin', 'superadmin']);
+            if (!currentUser) return;
+
+            ASET.renderUserInfo(currentUser);
+
+            setupNavigation();
+            setupFilters();
+            loadDashboard();
+        });
+
+        // Navigation
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(item.dataset.page);
+                });
+            });
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.page === page);
+            });
+
+            const titles = {
+                'dashboard': 'Dashboard',
+                'cases': 'All Cases',
+                'users': 'Users',
+                'assignments': 'Assignments',
+                'activity': 'Activity Log',
+                'reports': 'Analytics'
+            };
+            document.getElementById('pageTitle').textContent = titles[page] || 'Dashboard';
+
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`${page}-page`).classList.add('active');
+
+            if (page === 'dashboard') loadDashboard();
+            if (page === 'cases') loadCases();
+            if (page === 'users') loadUsers();
+            if (page === 'assignments') loadAssignments();
+            if (page === 'activity') loadActivity();
+            if (page === 'reports') loadReports();
+        }
+
+        // Dashboard
+        function loadDashboard() {
+            const stats = ASET.getStatistics();
+
+            document.getElementById('statTotalCases').textContent = stats.totalCases;
+            document.getElementById('statPending').textContent = stats.pendingCases;
+            document.getElementById('statCompleted').textContent = stats.completedCases;
+            document.getElementById('statStudents').textContent = stats.totalStudents;
+
+            // Cases by type chart
+            const maxCount = Math.max(...stats.casesByType.map(t => t.count), 1);
+            document.getElementById('casesByTypeChart').innerHTML = stats.casesByType.map(t => `
+        <div class="chart-bar">
+          <div class="chart-bar-label">${t.type}</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: ${(t.count / maxCount) * 100}%">${t.count}</div>
+          </div>
+        </div>
+      `).join('');
+
+            // Cases by status
+            document.getElementById('casesByStatusChart').innerHTML = `
+        <div class="mb-4">
+          <div class="d-flex justify-content-between mb-2">
+            <span>Pending</span>
+            <span class="fw-600">${stats.pendingCases}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>In Progress</span>
+            <span class="fw-600">${stats.inProgressCases}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Completed</span>
+            <span class="fw-600">${stats.completedCases}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Rejected</span>
+            <span class="fw-600">${stats.rejectedCases}</span>
+          </div>
+        </div>
+        <div class="status-dot-legend">
+          <div class="status-legend-item"><div class="status-legend-dot" style="background: var(--gray-400)"></div> Pending</div>
+          <div class="status-legend-item"><div class="status-legend-dot" style="background: var(--info-500)"></div> In Progress</div>
+          <div class="status-legend-item"><div class="status-legend-dot" style="background: var(--success-500)"></div> Completed</div>
+          <div class="status-legend-item"><div class="status-legend-dot" style="background: var(--danger-500)"></div> Rejected</div>
+        </div>
+      `;
+
+            // Recent cases
+            const cases = ASET.getCases().slice(0, 5);
+            document.getElementById('recentCasesList').innerHTML = cases.map(c => `
+        <div class="d-flex align-items-center gap-3 p-4 border-bottom" style="cursor: pointer;" onclick="viewCase('${c.id}')">
+          <div class="flex-grow-1">
+            <div class="fw-600">${c.id}</div>
+            <div class="text-muted">${c.studentName}</div>
+          </div>
+          ${ASET.renderStatusBadge(c.currentStage)}
+        </div>
+      `).join('');
+
+            // Recent activity
+            const logs = ASET.getActivityLogs().slice(0, 5);
+            renderActivityFeed('recentActivityFeed', logs);
+        }
+
+        // Cases
+        function setupFilters() {
+            ASET.populateFacultyDropdown('filterFaculty');
+            ASET.populateRequestTypeDropdown('filterRequestType');
+
+            document.getElementById('filterFaculty').addEventListener('change', function () {
+                ASET.populateDepartmentDropdown('filterDepartment', this.value);
+            });
+
+            const statusSelect = document.getElementById('filterStatus');
+            ASET.CASE_STAGES.forEach(stage => {
+                statusSelect.innerHTML += `<option value="${stage.id}">${stage.label}</option>`;
+            });
+        }
+
+        function loadCases(filters = {}) {
+            const cases = ASET.getCases(filters);
+            const officers = ASET.getUsers('officer');
+
+            document.getElementById('casesTableBody').innerHTML = cases.map(c => {
+                const officer = officers.find(o => o.id === c.assignedOfficer);
+                return `
+          <tr>
+            <td><span class="case-id" style="cursor: pointer;" onclick="viewCase('${c.id}')">${c.id}</span></td>
+            <td>
+              <div class="fw-500">${c.studentName}</div>
+              <div class="text-muted" style="font-size: 0.85rem;">${c.matricNumber}</div>
+            </td>
+            <td>
+              <div>${c.faculty}</div>
+              <div class="text-muted" style="font-size: 0.85rem;">${c.department}</div>
+            </td>
+            <td>${ASET.getRequestTypeLabel(c.requestType)}</td>
+            <td>${ASET.renderStatusBadge(c.currentStage)}</td>
+            <td>${officer ? officer.fullName : '<span class="text-muted">Unassigned</span>'}</td>
+            <td>${ASET.formatDate(c.createdAt)}</td>
+            <td>
+              <div class="d-flex gap-2">
+                <button class="btn btn-icon btn-sm btn-secondary" onclick="viewCase('${c.id}')" title="View">
+                  <i class="fas fa-eye"></i>
+                </button>
+                ${!c.assignedOfficer ? `
+                  <button class="btn btn-icon btn-sm btn-primary" onclick="openAssignModal('${c.id}')" title="Assign">
+                    <i class="fas fa-user-plus"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+            }).join('');
+        }
+
+        function applyFilters() {
+            const filters = {
+                faculty: document.getElementById('filterFaculty').value,
+                department: document.getElementById('filterDepartment').value,
+                requestType: document.getElementById('filterRequestType').value,
+                status: document.getElementById('filterStatus').value
+            };
+
+            // Remove empty filters
+            Object.keys(filters).forEach(key => {
+                if (!filters[key]) delete filters[key];
+            });
+
+            loadCases(filters);
+        }
+
+        function clearFilters() {
+            document.getElementById('filterFaculty').value = '';
+            document.getElementById('filterDepartment').value = '';
+            document.getElementById('filterRequestType').value = '';
+            document.getElementById('filterStatus').value = '';
+            loadCases();
+        }
+
+        function viewCase(caseId) {
+            selectedCase = ASET.getCaseById(caseId);
+            if (!selectedCase) return;
+
+            const officer = selectedCase.assignedOfficer ? ASET.getUserById(selectedCase.assignedOfficer) : null;
+            const mentor = selectedCase.assignedMentor ? ASET.getUserById(selectedCase.assignedMentor) : null;
+
+            document.getElementById('caseModalContent').innerHTML = `
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <div class="text-muted mb-1">Case ID</div>
+            <div class="fw-700 case-id" style="font-size: 1.1rem;">${selectedCase.id}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-muted mb-1">Status</div>
+            <div>${ASET.renderStatusBadge(selectedCase.currentStage)}</div>
+          </div>
+        </div>
+        
+        <div class="stepper mb-4">
+          ${ASET.renderStepper(selectedCase.currentStage)}
+        </div>
+        
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <div class="card" style="background: var(--gray-50);">
+              <div class="card-body">
+                <h6 class="text-muted mb-3">Student Information</h6>
+                <div class="mb-2"><strong>Name:</strong> ${selectedCase.studentName}</div>
+                <div class="mb-2"><strong>Matric:</strong> ${selectedCase.matricNumber}</div>
+                <div class="mb-2"><strong>Faculty:</strong> ${selectedCase.faculty}</div>
+                <div><strong>Department:</strong> ${selectedCase.department}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card" style="background: var(--gray-50);">
+              <div class="card-body">
+                <h6 class="text-muted mb-3">Case Details</h6>
+                <div class="mb-2"><strong>Request:</strong> ${ASET.getRequestTypeLabel(selectedCase.requestType)}</div>
+                <div class="mb-2"><strong>Payment:</strong> ${ASET.renderPaymentBadge(selectedCase.paymentStatus)}</div>
+                <div class="mb-2"><strong>Officer:</strong> ${officer ? officer.fullName : 'Unassigned'}</div>
+                <div><strong>Mentor:</strong> ${mentor ? mentor.fullName : 'None'}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <h6 class="mb-3">Timeline</h6>
+        <div class="case-timeline mb-4">
+          ${ASET.renderCaseTimeline(selectedCase.timeline)}
+        </div>
+        
+        ${selectedCase.notes.length > 0 ? `
+          <h6 class="mb-3">Notes</h6>
+          ${selectedCase.notes.map(note => `
+            <div class="p-3 rounded mb-2" style="background: ${note.isInternal ? 'var(--warning-50)' : 'var(--info-50)'}">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="fw-600">${note.authorName}</span>
+                <div>
+                  ${note.isInternal ? '<span class="badge badge-warning">Internal</span>' : ''}
+                  <span class="text-muted ms-2">${ASET.formatDate(note.createdAt)}</span>
+                </div>
+              </div>
+              <p class="mb-0">${note.content}</p>
+            </div>
+          `).join('')}
+        ` : ''}
+      `;
+
+            // Footer actions
+            const nextStage = getNextStage(selectedCase.currentStage);
+            document.getElementById('caseModalFooter').innerHTML = `
+        <button class="btn btn-secondary" onclick="openNoteModal('${selectedCase.id}')">
+          <i class="fas fa-sticky-note"></i> Add Note
+        </button>
+        ${!selectedCase.assignedOfficer ? `
+          <button class="btn btn-primary" onclick="openAssignModal('${selectedCase.id}')">
+            <i class="fas fa-user-plus"></i> Assign Officer
+          </button>
+        ` : ''}
+        ${nextStage && selectedCase.currentStage !== 'completed' && selectedCase.currentStage !== 'not_approved' ? `
+          <button class="btn btn-success" onclick="moveToNextStage('${selectedCase.id}', '${nextStage}')">
+            <i class="fas fa-arrow-right"></i> Move to ${ASET.getStageInfo(nextStage).label}
+          </button>
+        ` : ''}
+      `;
+
+            openModal('caseModal');
+        }
+
+        function getNextStage(currentStage) {
+            const stages = ['submitted', 'under_review', 'department', 'faculty', 'registry', 'completed'];
+            const currentIndex = stages.indexOf(currentStage);
+            return currentIndex >= 0 && currentIndex < stages.length - 1 ? stages[currentIndex + 1] : null;
+        }
+
+        function moveToNextStage(caseId, nextStage) {
+            const result = ASET.updateCaseStage(caseId, nextStage, null, currentUser.id, currentUser.fullName);
+            if (result.error) {
+                ASET.showToast(result.error, 'error');
+                return;
+            }
+
+            ASET.showToast('Case stage updated successfully!', 'success');
+            closeModal('caseModal');
+            loadDashboard();
+            loadCases();
+        }
+
+        function openAssignModal(caseId) {
+            document.getElementById('assignCaseId').value = caseId;
+
+            const officers = ASET.getUsers('officer');
+            const mentors = ASET.getUsers('mentor');
+
+            document.getElementById('assignOfficerSelect').innerHTML =
+                '<option value="">Select Officer</option>' +
+                officers.map(o => `<option value="${o.id}">${o.fullName}</option>`).join('');
+
+            document.getElementById('assignMentorSelect').innerHTML =
+                '<option value="">No mentor</option>' +
+                mentors.map(m => `<option value="${m.id}">${m.fullName}</option>`).join('');
+
+            closeModal('caseModal');
+            openModal('assignModal');
+        }
+
+        function confirmAssignment() {
+            const caseId = document.getElementById('assignCaseId').value;
+            const officerId = document.getElementById('assignOfficerSelect').value;
+            const mentorId = document.getElementById('assignMentorSelect').value;
+
+            if (!officerId) {
+                ASET.showToast('Please select an officer', 'error');
+                return;
+            }
+
+            ASET.assignOfficer(caseId, officerId, currentUser.id, currentUser.fullName);
+
+            if (mentorId) {
+                ASET.assignMentor(caseId, mentorId, currentUser.id, currentUser.fullName);
+            }
+
+            ASET.showToast('Case assigned successfully!', 'success');
+            closeModal('assignModal');
+            loadCases();
+            loadDashboard();
+        }
+
+        function openNoteModal(caseId) {
+            document.getElementById('noteCaseId').value = caseId;
+            document.getElementById('noteContent').value = '';
+            document.getElementById('noteInternal').checked = true;
+            closeModal('caseModal');
+            openModal('noteModal');
+        }
+
+        function submitNote() {
+            const caseId = document.getElementById('noteCaseId').value;
+            const content = document.getElementById('noteContent').value;
+            const isInternal = document.getElementById('noteInternal').checked;
+
+            if (!content.trim()) {
+                ASET.showToast('Please enter a note', 'error');
+                return;
+            }
+
+            ASET.addCaseNote(caseId, content, currentUser.id, currentUser.fullName, isInternal);
+            ASET.showToast('Note added successfully!', 'success');
+            closeModal('noteModal');
+        }
+
+        // Users
+        function loadUsers() {
+            const users = ASET.getUsers();
+            const stats = ASET.getStatistics();
+
+            document.getElementById('userStatStudents').textContent = stats.totalStudents;
+            document.getElementById('userStatOfficers').textContent = stats.totalOfficers;
+            document.getElementById('userStatMentors').textContent = stats.totalMentors;
+            document.getElementById('userStatAdmins').textContent = users.filter(u => u.role === 'admin' || u.role === 'superadmin').length;
+
+            document.getElementById('usersTableBody').innerHTML = users.map(u => `
+        <tr>
+          <td class="fw-500">${u.fullName}</td>
+          <td>${u.email}</td>
+          <td><span class="badge badge-${u.role === 'student' ? 'primary' : u.role === 'officer' ? 'success' : u.role === 'mentor' ? 'warning' : 'secondary'}">${u.role}</span></td>
+          <td>${u.faculty ? `${u.faculty} / ${u.department}` : '-'}</td>
+          <td>${ASET.formatDate(u.createdAt)}</td>
+        </tr>
+      `).join('');
+        }
+
+        // Assignments
+        function loadAssignments() {
+            const cases = ASET.getCases();
+            const officers = ASET.getUsers('officer');
+
+            // Unassigned cases
+            const unassigned = cases.filter(c => !c.assignedOfficer);
+            document.getElementById('unassignedCasesList').innerHTML = unassigned.length === 0
+                ? '<div class="p-4 text-center text-muted">All cases are assigned</div>'
+                : unassigned.map(c => `
+          <div class="d-flex align-items-center gap-3 p-4 border-bottom">
+            <div class="flex-grow-1">
+              <div class="fw-600">${c.id}</div>
+              <div class="text-muted">${c.studentName}</div>
+            </div>
+            <button class="btn btn-sm btn-primary" onclick="openAssignModal('${c.id}')">
+              <i class="fas fa-user-plus"></i> Assign
+            </button>
+          </div>
+        `).join('');
+
+            // Officer workload
+            document.getElementById('officerWorkloadList').innerHTML = officers.map(o => {
+                const caseCount = cases.filter(c => c.assignedOfficer === o.id).length;
+                const initials = o.fullName.split(' ').map(n => n[0]).join('');
+                return `
+          <div class="workload-item">
+            <div class="workload-avatar">${initials}</div>
+            <div class="workload-info">
+              <div class="fw-600">${o.fullName}</div>
+              <div class="text-muted">${o.email}</div>
+            </div>
+            <div class="workload-count">${caseCount}</div>
+          </div>
+        `;
+            }).join('');
+        }
+
+        // Activity
+        function loadActivity() {
+            const logs = ASET.getActivityLogs();
+            renderActivityFeed('activityLogFeed', logs);
+        }
+
+        function renderActivityFeed(containerId, logs) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = logs.map(log => {
+                const icon = getActivityIcon(log.action);
+                return `
+          <div class="activity-item">
+            <div class="activity-icon">
+              <i class="${icon}"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>${log.userName}</strong> ${log.details}
+                ${log.caseId ? `<span class="case-id">(${log.caseId})</span>` : ''}
+              </div>
+              <div class="activity-time">${ASET.formatDateTime(log.timestamp)}</div>
+            </div>
+          </div>
+        `;
+            }).join('');
+        }
+
+        function getActivityIcon(action) {
+            const icons = {
+                'login': 'fas fa-sign-in-alt',
+                'register': 'fas fa-user-plus',
+                'case_created': 'fas fa-folder-plus',
+                'case_assigned': 'fas fa-user-tag',
+                'stage_updated': 'fas fa-arrow-right',
+                'note_added': 'fas fa-sticky-note',
+                'mentor_assigned': 'fas fa-chalkboard-teacher',
+                'case_locked': 'fas fa-lock',
+                'case_unlocked': 'fas fa-unlock'
+            };
+            return icons[action] || 'fas fa-circle';
+        }
+
+        // Reports
+        function loadReports() {
+            const stats = ASET.getStatistics();
+
+            document.getElementById('casesByFacultyList').innerHTML = stats.casesByFaculty.map(f => `
+        <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+          <span>${f.faculty}</span>
+          <span class="badge badge-primary">${f.count}</span>
+        </div>
+      `).join('');
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Dashboard - ASET TAMP</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" style="background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 100%);">
+            <div class="sidebar-header">
+                <a href="mentor.html" class="sidebar-brand">
+                    <div class="logo-icon" style="background: rgba(255,255,255,0.2);">A</div>
+                    <span>ASET</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Mentorship</div>
+                    <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#students" class="nav-item" data-page="students">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>My Students</span>
+                    </a>
+                    <a href="#recommendations" class="nav-item" data-page="recommendations">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>Recommendations</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Communication</div>
+                    <a href="#messages" class="nav-item" data-page="messages">
+                        <i class="fas fa-comments"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="#resources" class="nav-item" data-page="resources">
+                        <i class="fas fa-book-open"></i>
+                        <span>Resources</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-menu" id="userMenu"></div>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationCount">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div class="page-section active" id="dashboard-page">
+                    <!-- Welcome Banner -->
+                    <div class="card mb-6"
+                        style="background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; border: none;">
+                        <div class="card-body p-6">
+                            <div class="d-flex align-items-center gap-4">
+                                <div class="mentor-avatar">
+                                    <i class="fas fa-chalkboard-teacher" style="font-size: 2rem;"></i>
+                                </div>
+                                <div>
+                                    <h2 style="color: white;">Welcome, <span id="welcomeName">Mentor</span>!</h2>
+                                    <p class="mb-0" style="opacity: 0.9;">Guide and support students through their
+                                        academic transition journey.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="row g-4 mb-6">
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card" style="--primary-600: #7c3aed;">
+                                <div class="stat-icon" style="background: #ede9fe; color: #7c3aed;">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="stat-value" id="statStudents">0</div>
+                                <div class="stat-label">Assigned Students</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card warning">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-folder-open"></i>
+                                </div>
+                                <div class="stat-value" id="statActiveCases">0</div>
+                                <div class="stat-label">Active Cases</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card success">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-clipboard-check"></i>
+                                </div>
+                                <div class="stat-value" id="statRecommendations">0</div>
+                                <div class="stat-label">Recommendations</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="stat-value" id="statComments">0</div>
+                                <div class="stat-label">Comments Made</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students Overview -->
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">My Students</h3>
+                                    <button class="btn btn-sm btn-secondary" onclick="showPage('students')">View
+                                        All</button>
+                                </div>
+                                <div class="card-body p-0" id="studentsList"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title">Quick Actions</h3>
+                                </div>
+                                <div class="card-body">
+                                    <a href="#" class="d-flex align-items-center gap-3 p-3 rounded mb-2"
+                                        style="background: var(--gray-50); text-decoration: none;"
+                                        onclick="showPage('recommendations')">
+                                        <div class="stat-icon success" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-600 text-dark">Add Recommendation</div>
+                                            <div class="text-muted" style="font-size: 0.85rem;">Provide academic
+                                                guidance</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="d-flex align-items-center gap-3 p-3 rounded mb-2"
+                                        style="background: var(--gray-50); text-decoration: none;"
+                                        onclick="showPage('messages')">
+                                        <div class="stat-icon primary" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-comment"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-600 text-dark">Send Message</div>
+                                            <div class="text-muted" style="font-size: 0.85rem;">Communicate with
+                                                students</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="d-flex align-items-center gap-3 p-3 rounded"
+                                        style="background: var(--gray-50); text-decoration: none;"
+                                        onclick="showPage('resources')">
+                                        <div class="stat-icon warning" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-600 text-dark">Share Resources</div>
+                                            <div class="text-muted" style="font-size: 0.85rem;">Help with transition
+                                                prep</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Students Page -->
+                <div class="page-section" id="students-page">
+                    <div id="allStudentsList"></div>
+                </div>
+
+                <!-- Recommendations Page -->
+                <div class="page-section" id="recommendations-page">
+                    <div class="row g-4">
+                        <div class="col-lg-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Add Recommendation</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form id="recommendationForm">
+                                        <div class="form-group">
+                                            <label class="form-label">Select Student</label>
+                                            <select class="form-control form-select" id="recStudentSelect"
+                                                required></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Recommendation Type</label>
+                                            <select class="form-control form-select" id="recType" required>
+                                                <option value="">Select type</option>
+                                                <option value="academic">Academic Advice</option>
+                                                <option value="career">Career Guidance</option>
+                                                <option value="transition">Transition Support</option>
+                                                <option value="general">General Recommendation</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Recommendation</label>
+                                            <textarea class="form-control" id="recContent" rows="5"
+                                                placeholder="Enter your recommendation for the student..."
+                                                required></textarea>
+                                        </div>
+                                        <div class="form-check mb-4">
+                                            <input type="checkbox" class="form-check-input" id="recVisible" checked>
+                                            <label class="form-check-label" for="recVisible">Visible to student</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">
+                                            <i class="fas fa-paper-plane"></i> Submit Recommendation
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">My Recommendations</h3>
+                                </div>
+                                <div class="card-body" id="myRecommendationsList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages Page -->
+                <div class="page-section" id="messages-page">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state">
+                                <div class="empty-state-icon"><i class="fas fa-comments"></i></div>
+                                <h3 class="empty-state-title">Messaging Coming Soon</h3>
+                                <p class="empty-state-text">Direct messaging with students will be available in the next
+                                    update.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Page -->
+                <div class="page-section" id="resources-page">
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex gap-3 mb-3">
+                                        <div class="stat-icon primary" style="background: #ede9fe; color: #7c3aed;">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Programme Change Guide</h5>
+                                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Step-by-step guide for
+                                                changing programmes</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex gap-3 mb-3">
+                                        <div class="stat-icon success">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Probation Recovery Tips</h5>
+                                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Academic strategies
+                                                for probation students</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex gap-3 mb-3">
+                                        <div class="stat-icon warning">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Transfer Checklist</h5>
+                                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Essential documents
+                                                for transfer applications</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex gap-3 mb-3">
+                                        <div class="stat-icon" style="background: #fef3c7; color: #d97706;">
+                                            <i class="fas fa-video"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Transition Workshop</h5>
+                                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Video series on
+                                                academic transitions</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-play"></i> Watch
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex gap-3 mb-3">
+                                        <div class="stat-icon" style="background: #fce7f3; color: #db2777;">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">Letter Templates</h5>
+                                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Application letter
+                                                templates</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex gap-3 mb-3">
+                                        <div class="stat-icon" style="background: #d1fae5; color: #059669;">
+                                            <i class="fas fa-question-circle"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-1">FAQ Document</h5>
+                                            <p class="text-muted mb-0" style="font-size: 0.9rem;">Common questions
+                                                answered</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Student Detail Modal -->
+    <div class="modal-backdrop" id="studentModal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Student Details</h3>
+                <button class="modal-close" onclick="closeModal('studentModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="studentModalContent"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('studentModal')">Close</button>
+                <button class="btn btn-primary" onclick="addRecommendationFromModal()">
+                    <i class="fas fa-plus"></i> Add Recommendation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .mentor-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .student-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .student-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .student-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .recommendation-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #7c3aed;
+        }
+
+        .rec-type-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .rec-type-academic {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .rec-type-career {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .rec-type-transition {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .rec-type-general {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        let currentUser = null;
+        let myStudents = [];
+        let selectedStudent = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            currentUser = ASET.requireAuth(['mentor']);
+            if (!currentUser) return;
+
+            ASET.renderUserInfo(currentUser);
+            document.getElementById('welcomeName').textContent = currentUser.fullName.split(' ')[0];
+
+            setupNavigation();
+            loadDashboard();
+        });
+
+        // Navigation
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(item.dataset.page);
+                });
+            });
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.page === page);
+            });
+
+            const titles = {
+                'dashboard': 'Dashboard',
+                'students': 'My Students',
+                'recommendations': 'Recommendations',
+                'messages': 'Messages',
+                'resources': 'Resources'
+            };
+            document.getElementById('pageTitle').textContent = titles[page] || 'Dashboard';
+
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`${page}-page`).classList.add('active');
+
+            if (page === 'dashboard') loadDashboard();
+            if (page === 'students') loadAllStudents();
+            if (page === 'recommendations') loadRecommendations();
+        }
+
+        // Get students assigned to this mentor
+        function getMyStudents() {
+            const cases = ASET.getCases({ assignedMentor: currentUser.id });
+            const studentIds = [...new Set(cases.map(c => c.studentId))];
+
+            return studentIds.map(id => {
+                const studentCases = cases.filter(c => c.studentId === id);
+                const latestCase = studentCases[0];
+                return {
+                    id: id,
+                    name: latestCase.studentName,
+                    matricNumber: latestCase.matricNumber,
+                    faculty: latestCase.faculty,
+                    department: latestCase.department,
+                    cases: studentCases
+                };
+            });
+        }
+
+        // Dashboard
+        function loadDashboard() {
+            myStudents = getMyStudents();
+            const allCases = ASET.getCases({ assignedMentor: currentUser.id });
+
+            // Count all notes/recommendations made by this mentor
+            let totalRecommendations = 0;
+            allCases.forEach(c => {
+                totalRecommendations += c.notes.filter(n => n.authorId === currentUser.id).length;
+            });
+
+            document.getElementById('statStudents').textContent = myStudents.length;
+            document.getElementById('statActiveCases').textContent = allCases.filter(c =>
+                c.currentStage !== 'completed' && c.currentStage !== 'not_approved'
+            ).length;
+            document.getElementById('statRecommendations').textContent = totalRecommendations;
+            document.getElementById('statComments').textContent = totalRecommendations;
+            document.getElementById('notificationCount').textContent = myStudents.length;
+
+            // Students list
+            document.getElementById('studentsList').innerHTML = myStudents.length === 0
+                ? '<div class="p-4 text-center text-muted">No students assigned yet</div>'
+                : myStudents.slice(0, 5).map(s => {
+                    const initials = s.name.split(' ').map(n => n[0]).join('');
+                    const activeCases = s.cases.filter(c => c.currentStage !== 'completed' && c.currentStage !== 'not_approved');
+                    return `
+            <div class="d-flex align-items-center gap-4 p-4 border-bottom" style="cursor: pointer;" onclick="viewStudent('${s.id}')">
+              <div class="student-avatar">${initials}</div>
+              <div class="flex-grow-1">
+                <div class="fw-600">${s.name}</div>
+                <div class="text-muted">${s.matricNumber} • ${s.department}</div>
+              </div>
+              <div class="text-end">
+                <span class="badge ${activeCases.length > 0 ? 'badge-warning' : 'badge-success'}">
+                  ${activeCases.length > 0 ? `${activeCases.length} active` : 'All complete'}
+                </span>
+              </div>
+              <i class="fas fa-chevron-right text-muted"></i>
+            </div>
+          `;
+                }).join('');
+        }
+
+        // All Students
+        function loadAllStudents() {
+            myStudents = getMyStudents();
+
+            document.getElementById('allStudentsList').innerHTML = myStudents.length === 0
+                ? `<div class="empty-state">
+            <div class="empty-state-icon"><i class="fas fa-user-graduate"></i></div>
+            <h3 class="empty-state-title">No Students Assigned</h3>
+            <p class="empty-state-text">When students are assigned to you for mentorship, they will appear here.</p>
+          </div>`
+                : myStudents.map(s => {
+                    const initials = s.name.split(' ').map(n => n[0]).join('');
+                    const activeCases = s.cases.filter(c => c.currentStage !== 'completed' && c.currentStage !== 'not_approved');
+
+                    return `
+            <div class="student-card">
+              <div class="d-flex align-items-start gap-4 mb-3">
+                <div class="student-avatar">${initials}</div>
+                <div class="flex-grow-1">
+                  <h5 class="mb-1">${s.name}</h5>
+                  <div class="text-muted">${s.matricNumber}</div>
+                  <div class="text-muted">${s.faculty} • ${s.department}</div>
+                </div>
+                <span class="badge ${activeCases.length > 0 ? 'badge-warning' : 'badge-success'}">
+                  ${s.cases.length} case(s)
+                </span>
+              </div>
+              
+              <div class="mb-3">
+                <strong class="d-block mb-2">Cases:</strong>
+                ${s.cases.map(c => `
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="case-id" style="font-size: 0.85rem;">${c.id}</span>
+                    ${ASET.renderStatusBadge(c.currentStage)}
+                    <span class="text-muted" style="font-size: 0.85rem;">- ${ASET.getRequestTypeLabel(c.requestType)}</span>
+                  </div>
+                `).join('')}
+              </div>
+              
+              <div class="d-flex gap-2">
+                <button class="btn btn-secondary btn-sm" onclick="viewStudent('${s.id}')">
+                  <i class="fas fa-eye"></i> View Details
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="quickRecommendation('${s.id}', '${s.name}')">
+                  <i class="fas fa-plus"></i> Add Recommendation
+                </button>
+              </div>
+            </div>
+          `;
+                }).join('');
+        }
+
+        // View Student
+        function viewStudent(studentId) {
+            selectedStudent = myStudents.find(s => s.id === studentId);
+            if (!selectedStudent) return;
+
+            const initials = selectedStudent.name.split(' ').map(n => n[0]).join('');
+
+            // Get all recommendations for this student
+            const recommendations = [];
+            selectedStudent.cases.forEach(c => {
+                c.notes.filter(n => n.authorId === currentUser.id && !n.isInternal).forEach(n => {
+                    recommendations.push({ ...n, caseId: c.id });
+                });
+            });
+
+            document.getElementById('studentModalContent').innerHTML = `
+        <div class="d-flex align-items-center gap-4 mb-4 p-4 rounded" style="background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white;">
+          <div class="student-avatar" style="width: 64px; height: 64px; font-size: 1.5rem; background: rgba(255,255,255,0.2);">${initials}</div>
+          <div>
+            <h4 style="color: white; margin-bottom: 0.25rem;">${selectedStudent.name}</h4>
+            <div style="opacity: 0.9;">${selectedStudent.matricNumber}</div>
+            <div style="opacity: 0.8;">${selectedStudent.faculty} • ${selectedStudent.department}</div>
+          </div>
+        </div>
+        
+        <h6 class="mb-3">Cases</h6>
+        <div class="mb-4">
+          ${selectedStudent.cases.map(c => `
+            <div class="p-3 rounded mb-2" style="background: var(--gray-50);">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="case-id">${c.id}</span>
+                  <span class="ms-2">${ASET.getRequestTypeLabel(c.requestType)}</span>
+                </div>
+                ${ASET.renderStatusBadge(c.currentStage)}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <h6 class="mb-3">Your Recommendations</h6>
+        ${recommendations.length === 0
+                    ? '<p class="text-muted">No recommendations added yet.</p>'
+                    : recommendations.map(r => `
+            <div class="recommendation-card">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="case-id" style="font-size: 0.85rem;">${r.caseId}</span>
+                <span class="text-muted" style="font-size: 0.85rem;">${ASET.formatDate(r.createdAt)}</span>
+              </div>
+              <p class="mb-0">${r.content}</p>
+            </div>
+          `).join('')}
+      `;
+
+            openModal('studentModal');
+        }
+
+        // Recommendations
+        function loadRecommendations() {
+            myStudents = getMyStudents();
+
+            // Populate student dropdown
+            document.getElementById('recStudentSelect').innerHTML =
+                '<option value="">Select a student</option>' +
+                myStudents.map(s => `<option value="${s.id}">${s.name} (${s.matricNumber})</option>`).join('');
+
+            // Load my recommendations
+            const allRecs = [];
+            myStudents.forEach(s => {
+                s.cases.forEach(c => {
+                    c.notes.filter(n => n.authorId === currentUser.id).forEach(n => {
+                        allRecs.push({
+                            ...n,
+                            caseId: c.id,
+                            studentName: s.name
+                        });
+                    });
+                });
+            });
+
+            allRecs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            document.getElementById('myRecommendationsList').innerHTML = allRecs.length === 0
+                ? '<p class="text-muted text-center">No recommendations submitted yet.</p>'
+                : allRecs.map(r => `
+          <div class="recommendation-card">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div>
+                <span class="fw-600">${r.studentName}</span>
+                <span class="case-id ms-2" style="font-size: 0.85rem;">${r.caseId}</span>
+              </div>
+              <span class="text-muted" style="font-size: 0.85rem;">${ASET.formatDate(r.createdAt)}</span>
+            </div>
+            <p class="mb-0">${r.content}</p>
+            <div class="mt-2">
+              ${r.isInternal
+                        ? '<span class="badge badge-warning">Internal Only</span>'
+                        : '<span class="badge badge-success">Visible to Student</span>'}
+            </div>
+          </div>
+        `).join('');
+        }
+
+        // Recommendation form
+        document.getElementById('recommendationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const studentId = document.getElementById('recStudentSelect').value;
+            const recType = document.getElementById('recType').value;
+            const content = document.getElementById('recContent').value;
+            const isVisible = document.getElementById('recVisible').checked;
+
+            if (!studentId) {
+                ASET.showToast('Please select a student', 'error');
+                return;
+            }
+
+            // Find the student's active case
+            const student = myStudents.find(s => s.id === studentId);
+            const activeCase = student.cases.find(c =>
+                c.currentStage !== 'completed' && c.currentStage !== 'not_approved'
+            ) || student.cases[0];
+
+            const fullContent = `[${recType.toUpperCase()}] ${content}`;
+            ASET.addCaseNote(activeCase.id, fullContent, currentUser.id, currentUser.fullName, !isVisible);
+
+            ASET.showToast('Recommendation submitted successfully!', 'success');
+
+            // Reset form
+            document.getElementById('recStudentSelect').value = '';
+            document.getElementById('recType').value = '';
+            document.getElementById('recContent').value = '';
+
+            loadRecommendations();
+        });
+
+        function quickRecommendation(studentId, studentName) {
+            showPage('recommendations');
+            setTimeout(() => {
+                document.getElementById('recStudentSelect').value = studentId;
+                document.getElementById('recContent').focus();
+            }, 100);
+        }
+
+        function addRecommendationFromModal() {
+            if (selectedStudent) {
+                closeModal('studentModal');
+                quickRecommendation(selectedStudent.id, selectedStudent.name);
+            }
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+
+</html>

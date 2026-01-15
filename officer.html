@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Officer Dashboard - ASET TAMP</title>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="officer.html" class="sidebar-brand">
+                    <div class="logo-icon">A</div>
+                    <span>ASET</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Case Management</div>
+                    <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#my-cases" class="nav-item" data-page="my-cases">
+                        <i class="fas fa-folder-open"></i>
+                        <span>My Cases</span>
+                    </a>
+                    <a href="#pending" class="nav-item" data-page="pending">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span>Pending Action</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Tools</div>
+                    <a href="#notes" class="nav-item" data-page="notes">
+                        <i class="fas fa-sticky-note"></i>
+                        <span>My Notes</span>
+                    </a>
+                    <a href="#calendar" class="nav-item" data-page="calendar">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Schedule</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-menu" id="userMenu"></div>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <i class="fas fa-search text-muted"></i>
+                        <input type="text" placeholder="Search cases...">
+                    </div>
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationCount">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div class="page-section active" id="dashboard-page">
+                    <!-- Welcome -->
+                    <div class="card mb-6"
+                        style="background: linear-gradient(135deg, var(--success-500), var(--primary-700)); color: white; border: none;">
+                        <div class="card-body p-6">
+                            <h2 style="color: white;">Good day, <span id="welcomeName">Officer</span>! 👋</h2>
+                            <p class="mb-0" style="opacity: 0.9;">Here's an overview of your assigned cases and pending
+                                actions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="row g-4 mb-6">
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="stat-value" id="statAssigned">0</div>
+                                <div class="stat-label">Assigned Cases</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card warning">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="stat-value" id="statPendingAction">0</div>
+                                <div class="stat-label">Pending Action</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card success">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-value" id="statCompleted">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-lg-3">
+                            <div class="stat-card">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-value" id="statAvgTime">-</div>
+                                <div class="stat-label">Avg Process Time</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cases requiring action -->
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-exclamation-triangle text-warning"></i> Cases Requiring Action
+                            </h3>
+                        </div>
+                        <div class="card-body p-0" id="urgentCasesList"></div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Activity</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="activity-feed" id="recentActivity"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Cases Page -->
+                <div class="page-section" id="my-cases-page">
+                    <!-- Filter Tabs -->
+                    <div class="d-flex gap-2 mb-4 flex-wrap">
+                        <button class="btn btn-primary btn-sm filter-btn active" data-filter="all">All Cases</button>
+                        <button class="btn btn-secondary btn-sm filter-btn" data-filter="under_review">Under
+                            Review</button>
+                        <button class="btn btn-secondary btn-sm filter-btn" data-filter="department">Department
+                            Stage</button>
+                        <button class="btn btn-secondary btn-sm filter-btn" data-filter="faculty">Faculty Stage</button>
+                        <button class="btn btn-secondary btn-sm filter-btn" data-filter="registry">Registry
+                            Stage</button>
+                        <button class="btn btn-secondary btn-sm filter-btn" data-filter="completed">Completed</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Case ID</th>
+                                            <th>Student</th>
+                                            <th>Request Type</th>
+                                            <th>Current Stage</th>
+                                            <th>Created</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myCasesTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Action Page -->
+                <div class="page-section" id="pending-page">
+                    <div id="pendingCasesList"></div>
+                </div>
+
+                <!-- Notes Page -->
+                <div class="page-section" id="notes-page">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">My Processing Notes</h3>
+                        </div>
+                        <div class="card-body" id="myNotesList"></div>
+                    </div>
+                </div>
+
+                <!-- Calendar Page -->
+                <div class="page-section" id="calendar-page">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state">
+                                <div class="empty-state-icon"><i class="fas fa-calendar-alt"></i></div>
+                                <h3 class="empty-state-title">Schedule Coming Soon</h3>
+                                <p class="empty-state-text">This feature will allow you to schedule follow-ups and
+                                    reminders for your cases.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Case Detail Modal -->
+    <div class="modal-backdrop" id="caseModal">
+        <div class="modal" style="max-width: 750px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Case Details</h3>
+                <button class="modal-close" onclick="closeModal('caseModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="caseModalContent"></div>
+            <div class="modal-footer" id="caseModalFooter"></div>
+        </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div class="modal-backdrop" id="noteModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Processing Note</h3>
+                <button class="modal-close" onclick="closeModal('noteModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="noteCaseId">
+                <div class="form-group">
+                    <label class="form-label">Note</label>
+                    <textarea class="form-control" id="noteContent" rows="4"
+                        placeholder="Enter processing notes, observations, or next steps..."></textarea>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="noteInternal" checked>
+                    <label class="form-check-label" for="noteInternal">Internal note (not visible to student)</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('noteModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="submitNote()">
+                    <i class="fas fa-plus"></i> Add Note
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Stage Modal -->
+    <div class="modal-backdrop" id="stageModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Update Case Stage</h3>
+                <button class="modal-close" onclick="closeModal('stageModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="stageCaseId">
+                <div class="form-group">
+                    <label class="form-label">Move to Stage</label>
+                    <select class="form-control form-select" id="stageSelect"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Note (Optional)</label>
+                    <textarea class="form-control" id="stageNote" rows="3"
+                        placeholder="Add a note about this stage update..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('stageModal')">Cancel</button>
+                <button class="btn btn-success" onclick="confirmStageUpdate()">
+                    <i class="fas fa-check"></i> Update Stage
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-600) !important;
+            border-color: var(--primary-600) !important;
+            color: white !important;
+        }
+
+        .case-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .case-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .case-card.urgent {
+            border-left: 4px solid var(--warning-500);
+        }
+
+        .case-id {
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--primary-600);
+        }
+
+        .note-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        let currentUser = null;
+        let selectedCase = null;
+        let currentFilter = 'all';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            currentUser = ASET.requireAuth(['officer']);
+            if (!currentUser) return;
+
+            ASET.renderUserInfo(currentUser);
+            document.getElementById('welcomeName').textContent = currentUser.fullName.split(' ')[0];
+
+            setupNavigation();
+            setupFilters();
+            loadDashboard();
+        });
+
+        // Navigation
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(item.dataset.page);
+                });
+            });
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.page === page);
+            });
+
+            const titles = {
+                'dashboard': 'Dashboard',
+                'my-cases': 'My Cases',
+                'pending': 'Pending Action',
+                'notes': 'My Notes',
+                'calendar': 'Schedule'
+            };
+            document.getElementById('pageTitle').textContent = titles[page] || 'Dashboard';
+
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`${page}-page`).classList.add('active');
+
+            if (page === 'dashboard') loadDashboard();
+            if (page === 'my-cases') loadMyCases();
+            if (page === 'pending') loadPendingCases();
+            if (page === 'notes') loadMyNotes();
+        }
+
+        // Filter Buttons
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active', 'btn-primary');
+                        b.classList.add('btn-secondary');
+                    });
+                    btn.classList.add('active', 'btn-primary');
+                    btn.classList.remove('btn-secondary');
+                    currentFilter = btn.dataset.filter;
+                    loadMyCases();
+                });
+            });
+        }
+
+        // Dashboard
+        function loadDashboard() {
+            const myCases = ASET.getCases({ assignedOfficer: currentUser.id });
+
+            const pendingAction = myCases.filter(c =>
+                ['under_review', 'department', 'faculty', 'registry'].includes(c.currentStage)
+            );
+            const completed = myCases.filter(c => c.currentStage === 'completed');
+
+            document.getElementById('statAssigned').textContent = myCases.length;
+            document.getElementById('statPendingAction').textContent = pendingAction.length;
+            document.getElementById('statCompleted').textContent = completed.length;
+            document.getElementById('statAvgTime').textContent = '12 days';
+            document.getElementById('notificationCount').textContent = pendingAction.length;
+
+            // Urgent cases
+            const urgent = pendingAction.slice(0, 5);
+            document.getElementById('urgentCasesList').innerHTML = urgent.length === 0
+                ? '<div class="p-4 text-center text-muted"><i class="fas fa-check-circle text-success"></i> No cases requiring immediate action</div>'
+                : urgent.map(c => `
+          <div class="d-flex align-items-center gap-4 p-4 border-bottom" style="cursor: pointer;" onclick="viewCase('${c.id}')">
+            <div class="stat-icon ${ASET.getStageInfo(c.currentStage).color}">
+              <i class="fas fa-folder"></i>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-center gap-2">
+                <span class="case-id">${c.id}</span>
+                ${ASET.renderStatusBadge(c.currentStage)}
+              </div>
+              <div class="text-muted">${c.studentName} - ${ASET.getRequestTypeLabel(c.requestType)}</div>
+            </div>
+            <div class="text-end">
+              <div class="text-muted" style="font-size: 0.85rem;">Created</div>
+              <div class="fw-500">${ASET.formatDate(c.createdAt)}</div>
+            </div>
+            <i class="fas fa-chevron-right text-muted"></i>
+          </div>
+        `).join('');
+
+            // Recent activity
+            const logs = ASET.getActivityLogs({ userId: currentUser.id }).slice(0, 5);
+            document.getElementById('recentActivity').innerHTML = logs.length === 0
+                ? '<div class="p-4 text-center text-muted">No recent activity</div>'
+                : logs.map(log => `
+          <div class="activity-item">
+            <div class="activity-icon"><i class="fas fa-circle"></i></div>
+            <div class="activity-content">
+              <div class="activity-text">${log.details} ${log.caseId ? `<span class="case-id">(${log.caseId})</span>` : ''}</div>
+              <div class="activity-time">${ASET.formatDateTime(log.timestamp)}</div>
+            </div>
+          </div>
+        `).join('');
+        }
+
+        // My Cases
+        function loadMyCases() {
+            let cases = ASET.getCases({ assignedOfficer: currentUser.id });
+
+            if (currentFilter !== 'all') {
+                cases = cases.filter(c => c.currentStage === currentFilter);
+            }
+
+            document.getElementById('myCasesTableBody').innerHTML = cases.length === 0
+                ? '<tr><td colspan="6" class="text-center py-4 text-muted">No cases found</td></tr>'
+                : cases.map(c => `
+          <tr>
+            <td><span class="case-id" style="cursor: pointer;" onclick="viewCase('${c.id}')">${c.id}</span></td>
+            <td>
+              <div class="fw-500">${c.studentName}</div>
+              <div class="text-muted" style="font-size: 0.85rem;">${c.matricNumber}</div>
+            </td>
+            <td>${ASET.getRequestTypeLabel(c.requestType)}</td>
+            <td>${ASET.renderStatusBadge(c.currentStage)}</td>
+            <td>${ASET.formatDate(c.createdAt)}</td>
+            <td>
+              <div class="d-flex gap-2">
+                <button class="btn btn-icon btn-sm btn-secondary" onclick="viewCase('${c.id}')" title="View">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-icon btn-sm btn-primary" onclick="openNoteModal('${c.id}')" title="Add Note">
+                  <i class="fas fa-sticky-note"></i>
+                </button>
+                ${c.currentStage !== 'completed' && c.currentStage !== 'not_approved' ? `
+                  <button class="btn btn-icon btn-sm btn-success" onclick="openStageModal('${c.id}')" title="Update Stage">
+                    <i class="fas fa-arrow-right"></i>
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `).join('');
+        }
+
+        // Pending Cases
+        function loadPendingCases() {
+            const cases = ASET.getCases({ assignedOfficer: currentUser.id })
+                .filter(c => ['under_review', 'department', 'faculty', 'registry'].includes(c.currentStage));
+
+            document.getElementById('pendingCasesList').innerHTML = cases.length === 0
+                ? `<div class="empty-state">
+            <div class="empty-state-icon"><i class="fas fa-check-circle text-success"></i></div>
+            <h3 class="empty-state-title">All Caught Up!</h3>
+            <p class="empty-state-text">You have no cases requiring action at the moment.</p>
+          </div>`
+                : cases.map(c => `
+          <div class="case-card urgent">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div>
+                <span class="case-id">${c.id}</span>
+                <h5 class="mt-1 mb-0">${c.studentName}</h5>
+                <div class="text-muted">${ASET.getRequestTypeLabel(c.requestType)}</div>
+              </div>
+              ${ASET.renderStatusBadge(c.currentStage)}
+            </div>
+            <div class="stepper mb-4">
+              ${ASET.renderStepper(c.currentStage)}
+            </div>
+            <div class="d-flex gap-3">
+              <button class="btn btn-secondary flex-grow-1" onclick="viewCase('${c.id}')">
+                <i class="fas fa-eye"></i> View Details
+              </button>
+              <button class="btn btn-primary" onclick="openNoteModal('${c.id}')">
+                <i class="fas fa-sticky-note"></i>
+              </button>
+              <button class="btn btn-success" onclick="openStageModal('${c.id}')">
+                <i class="fas fa-arrow-right"></i> Next Stage
+              </button>
+            </div>
+          </div>
+        `).join('');
+        }
+
+        // My Notes
+        function loadMyNotes() {
+            const cases = ASET.getCases({ assignedOfficer: currentUser.id });
+            const allNotes = [];
+
+            cases.forEach(c => {
+                c.notes.filter(n => n.authorId === currentUser.id).forEach(n => {
+                    allNotes.push({ ...n, caseId: c.id, caseName: c.studentName });
+                });
+            });
+
+            allNotes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            document.getElementById('myNotesList').innerHTML = allNotes.length === 0
+                ? '<div class="text-center py-4 text-muted">No notes yet. Add notes to your cases to track your processing work.</div>'
+                : allNotes.map(n => `
+          <div class="note-card">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="case-id" style="cursor: pointer;" onclick="viewCase('${n.caseId}')">${n.caseId}</span>
+              <span class="text-muted">${ASET.formatDate(n.createdAt)}</span>
+            </div>
+            <p class="mb-0">${n.content}</p>
+          </div>
+        `).join('');
+        }
+
+        // View Case
+        function viewCase(caseId) {
+            selectedCase = ASET.getCaseById(caseId);
+            if (!selectedCase) return;
+
+            const mentor = selectedCase.assignedMentor ? ASET.getUserById(selectedCase.assignedMentor) : null;
+
+            document.getElementById('caseModalContent').innerHTML = `
+        <div class="d-flex justify-content-between align-items-start mb-4">
+          <div>
+            <span class="case-id" style="font-size: 1.1rem;">${selectedCase.id}</span>
+            ${selectedCase.isLocked ? '<span class="badge badge-danger ms-2"><i class="fas fa-lock"></i> Locked</span>' : ''}
+          </div>
+          ${ASET.renderStatusBadge(selectedCase.currentStage)}
+        </div>
+        
+        <div class="stepper mb-4">
+          ${ASET.renderStepper(selectedCase.currentStage)}
+        </div>
+        
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <div class="card" style="background: var(--gray-50);">
+              <div class="card-body">
+                <h6 class="text-muted mb-3">Student Information</h6>
+                <div class="mb-2"><strong>Name:</strong> ${selectedCase.studentName}</div>
+                <div class="mb-2"><strong>Matric:</strong> ${selectedCase.matricNumber}</div>
+                <div class="mb-2"><strong>Faculty:</strong> ${selectedCase.faculty}</div>
+                <div><strong>Department:</strong> ${selectedCase.department}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card" style="background: var(--gray-50);">
+              <div class="card-body">
+                <h6 class="text-muted mb-3">Request Details</h6>
+                <div class="mb-2"><strong>Type:</strong> ${ASET.getRequestTypeLabel(selectedCase.requestType)}</div>
+                <div class="mb-2"><strong>Payment:</strong> ${ASET.renderPaymentBadge(selectedCase.paymentStatus)}</div>
+                <div class="mb-2"><strong>Mentor:</strong> ${mentor ? mentor.fullName : 'None assigned'}</div>
+                <div><strong>Documents:</strong> ${selectedCase.documents.length} files</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <h6 class="mb-3">Timeline</h6>
+        <div class="case-timeline mb-4">
+          ${ASET.renderCaseTimeline(selectedCase.timeline)}
+        </div>
+        
+        ${selectedCase.notes.length > 0 ? `
+          <h6 class="mb-3">Notes</h6>
+          ${selectedCase.notes.map(n => `
+            <div class="note-card">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="fw-600">${n.authorName}</span>
+                <div>
+                  ${n.isInternal ? '<span class="badge badge-warning">Internal</span>' : '<span class="badge badge-info">Visible</span>'}
+                  <span class="text-muted ms-2">${ASET.formatDate(n.createdAt)}</span>
+                </div>
+              </div>
+              <p class="mb-0">${n.content}</p>
+            </div>
+          `).join('')}
+        ` : ''}
+      `;
+
+            document.getElementById('caseModalFooter').innerHTML = `
+        <button class="btn btn-secondary" onclick="openNoteModal('${selectedCase.id}')">
+          <i class="fas fa-sticky-note"></i> Add Note
+        </button>
+        ${selectedCase.currentStage !== 'completed' && selectedCase.currentStage !== 'not_approved' && !selectedCase.isLocked ? `
+          <button class="btn btn-success" onclick="openStageModal('${selectedCase.id}')">
+            <i class="fas fa-arrow-right"></i> Update Stage
+          </button>
+        ` : ''}
+      `;
+
+            openModal('caseModal');
+        }
+
+        // Note Modal
+        function openNoteModal(caseId) {
+            document.getElementById('noteCaseId').value = caseId;
+            document.getElementById('noteContent').value = '';
+            closeModal('caseModal');
+            openModal('noteModal');
+        }
+
+        function submitNote() {
+            const caseId = document.getElementById('noteCaseId').value;
+            const content = document.getElementById('noteContent').value;
+            const isInternal = document.getElementById('noteInternal').checked;
+
+            if (!content.trim()) {
+                ASET.showToast('Please enter a note', 'error');
+                return;
+            }
+
+            ASET.addCaseNote(caseId, content, currentUser.id, currentUser.fullName, isInternal);
+            ASET.showToast('Note added successfully!', 'success');
+            closeModal('noteModal');
+            loadDashboard();
+            loadMyCases();
+        }
+
+        // Stage Modal
+        function openStageModal(caseId) {
+            const caseData = ASET.getCaseById(caseId);
+            if (!caseData) return;
+
+            document.getElementById('stageCaseId').value = caseId;
+            document.getElementById('stageNote').value = '';
+
+            const stages = ASET.CASE_STAGES.filter(s =>
+                s.id !== 'submitted' &&
+                ASET.CASE_STAGES.findIndex(st => st.id === s.id) > ASET.CASE_STAGES.findIndex(st => st.id === caseData.currentStage)
+            );
+
+            document.getElementById('stageSelect').innerHTML = stages.map(s =>
+                `<option value="${s.id}">${s.label}</option>`
+            ).join('');
+
+            closeModal('caseModal');
+            openModal('stageModal');
+        }
+
+        function confirmStageUpdate() {
+            const caseId = document.getElementById('stageCaseId').value;
+            const newStage = document.getElementById('stageSelect').value;
+            const note = document.getElementById('stageNote').value;
+
+            const result = ASET.updateCaseStage(caseId, newStage, note, currentUser.id, currentUser.fullName);
+
+            if (result.error) {
+                ASET.showToast(result.error, 'error');
+                return;
+            }
+
+            ASET.showToast('Case stage updated successfully!', 'success');
+            closeModal('stageModal');
+            loadDashboard();
+            loadMyCases();
+            loadPendingCases();
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+
+</html>
