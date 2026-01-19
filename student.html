@@ -4,1094 +4,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard - ASET TAMP</title>
-
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <title>Student Portal | ASET</title>
+    <link href="styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="dashboard-wrapper">
+<body class="bg-light">
+
+    <div class="dashboard-layout">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <a href="student.html" class="sidebar-brand">
-                    <div class="logo-icon">A</div>
-                    <span>ASET</span>
+                <a href="#" class="d-flex align-items-center gap-2 text-white text-decoration-none fs-4 fw-bold">
+                    <span class="bg-white text-primary rounded px-2"><i class="bi bi-mortarboard-fill"></i></span>
+                    <span style="font-family: var(--font-display);">ASET</span>
                 </a>
             </div>
 
             <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Main Menu</div>
-                    <a href="#dashboard" class="nav-item active" data-page="dashboard">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="#new-case" class="nav-item" data-page="new-case">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>New Request</span>
-                    </a>
-                    <a href="#my-cases" class="nav-item" data-page="my-cases">
-                        <i class="fas fa-folder-open"></i>
-                        <span>My Cases</span>
-                    </a>
-                    <a href="#payments" class="nav-item" data-page="payments">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Payments</span>
-                    </a>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Support</div>
-                    <a href="#messages" class="nav-item" data-page="messages">
-                        <i class="fas fa-comments"></i>
-                        <span>Messages</span>
-                    </a>
-                    <a href="#help" class="nav-item" data-page="help">
-                        <i class="fas fa-question-circle"></i>
-                        <span>Help & FAQ</span>
-                    </a>
-                </div>
+                <a href="#" class="nav-link-custom active" onclick="showSection('dashboard')">
+                    <i class="bi bi-grid-fill"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link-custom" onclick="showSection('new-case')">
+                    <i class="bi bi-plus-circle-fill"></i> New Request
+                </a>
+                <a href="#" class="nav-link-custom" onclick="showSection('history')">
+                    <i class="bi bi-clock-history"></i> Case History
+                </a>
+                <a href="#" class="nav-link-custom" onclick="showSection('profile')">
+                    <i class="bi bi-person-circle"></i> Profile
+                </a>
             </nav>
 
-            <div class="sidebar-footer">
-                <div class="user-menu" id="userMenu"></div>
+            <div class="p-3 border-top border-white border-opacity-10">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="avatar rounded-circle bg-white text-primary fw-bold d-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px;">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <div class="fw-bold text-truncate small text-white" id="navName">Student</div>
+                        <div class="text-white-50 small text-truncate" style="font-size: 0.75rem;">student@aset.edu.ng
+                        </div>
+                    </div>
+                    <button class="btn btn-link text-white ms-auto" onclick="ASET.logout()"><i
+                            class="bi bi-box-arrow-right"></i></button>
+                </div>
             </div>
         </aside>
 
-        <!-- Sidebar Overlay -->
-        <div class="sidebar-overlay"></div>
-
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Topbar -->
-            <header class="topbar">
-                <div class="topbar-left">
-                    <button class="sidebar-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
-                </div>
-                <div class="topbar-right">
-                    <div class="search-box">
-                        <i class="fas fa-search text-muted"></i>
-                        <input type="text" placeholder="Search cases...">
-                    </div>
-                    <button class="notification-btn">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge">2</span>
-                    </button>
-                </div>
-            </header>
+            <button class="btn btn-light d-lg-none mb-3"
+                onclick="document.getElementById('sidebar').classList.toggle('show')">
+                <i class="bi bi-list"></i> Menu
+            </button>
 
-            <!-- Page Content -->
-            <div class="page-content">
-                <!-- Dashboard Page -->
-                <div class="page-section active" id="dashboard-page">
-                    <!-- Welcome Banner -->
-                    <div class="card mb-6"
-                        style="background: linear-gradient(135deg, var(--primary-600), var(--primary-800)); color: white; border: none;">
-                        <div class="card-body p-6">
-                            <div class="row align-items-center">
-                                <div class="col-lg-8">
-                                    <h2 class="mb-2" style="color: white;">Welcome back, <span
-                                            id="welcomeName">Student</span>! 👋</h2>
-                                    <p class="mb-0" style="opacity: 0.9;">Track your academic transition cases and get
-                                        updates on your progress.</p>
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="content-view">
+                <header class="mb-5">
+                    <h2 class="fw-bold" id="welcomeMsg">Welcome, Student!</h2>
+                    <p class="text-secondary">Here is an overview of your academic cases.</p>
+                </header>
+
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <!-- Active Case Card -->
+                        <div class="card-clean p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-mortarboard me-2"></i>My Cases
+                                </h5>
+                                <span class="badge bg-light text-secondary border">ID: <span
+                                        id="dashCaseId">--</span></span>
+                            </div>
+
+                            <div class="p-4 bg-light rounded-3 border mb-4">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h4 class="fw-bold mb-0" id="dashCaseType">No Active Case</h4>
+                                    <span class="badge bg-success-subtle text-success fs-6 px-3"
+                                        id="dashStatus">--</span>
                                 </div>
-                                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-                                    <button class="btn btn-lg" style="background: white; color: var(--primary-700);"
-                                        onclick="showPage('new-case')">
-                                        <i class="fas fa-plus"></i> New Request
-                                    </button>
+
+                                <div class="d-flex gap-4 text-secondary small">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-person-badge"></i>
+                                        Case Officer: <span class="fw-bold text-dark" id="dashOfficer">Unassigned</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-calendar"></i>
+                                        Last Update: <span id="dashDate">--</span>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <h6 class="fw-bold text-secondary mb-3 text-uppercase small ls-1">Case Progress</h6>
+                            <!-- Horizontal Stepper from Image -->
+                            <div class="h-stepper" id="dashStepper">
+                                <!-- Populated by JS -->
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Stats -->
-                    <div class="row g-4 mb-6">
-                        <div class="col-6 col-lg-3">
-                            <div class="stat-card">
-                                <div class="stat-icon primary">
-                                    <i class="fas fa-folder"></i>
-                                </div>
-                                <div class="stat-value" id="statTotalCases">0</div>
-                                <div class="stat-label">Total Cases</div>
+                        <!-- Submit New CTA -->
+                        <div
+                            class="bg-primary text-white rounded-4 p-4 d-flex align-items-center justify-content-between shadow-lg">
+                            <div>
+                                <h4 class="fw-bold mb-1">Need something else?</h4>
+                                <p class="mb-0 text-white-50">Start a new request for transfer, withdrawal, or
+                                    probation.</p>
                             </div>
-                        </div>
-                        <div class="col-6 col-lg-3">
-                            <div class="stat-card warning">
-                                <div class="stat-icon warning">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                                <div class="stat-value" id="statPending">0</div>
-                                <div class="stat-label">In Progress</div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-3">
-                            <div class="stat-card success">
-                                <div class="stat-icon success">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div class="stat-value" id="statCompleted">0</div>
-                                <div class="stat-label">Completed</div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-3">
-                            <div class="stat-card danger">
-                                <div class="stat-icon danger">
-                                    <i class="fas fa-times-circle"></i>
-                                </div>
-                                <div class="stat-value" id="statRejected">0</div>
-                                <div class="stat-label">Not Approved</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Cases -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Recent Cases</h3>
-                            <button class="btn btn-sm btn-secondary" onclick="showPage('my-cases')">View All</button>
-                        </div>
-                        <div class="card-body p-0">
-                            <div id="recentCasesList"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- New Case Page -->
-                <div class="page-section" id="new-case-page">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <!-- Step Indicator -->
-                            <div class="card mb-6">
-                                <div class="card-body">
-                                    <div class="stepper" id="newCaseStepper">
-                                        <div class="stepper-step current" data-step="1">
-                                            <div class="step-marker">1</div>
-                                            <div class="step-label">Request Type</div>
-                                        </div>
-                                        <div class="stepper-step pending" data-step="2">
-                                            <div class="step-marker">2</div>
-                                            <div class="step-label">Documents</div>
-                                        </div>
-                                        <div class="stepper-step pending" data-step="3">
-                                            <div class="step-marker">3</div>
-                                            <div class="step-label">Payment</div>
-                                        </div>
-                                        <div class="stepper-step pending" data-step="4">
-                                            <div class="step-marker">4</div>
-                                            <div class="step-label">Confirm</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 1: Request Type -->
-                            <div class="case-step active" id="step1">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Select Request Type</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="text-muted mb-4">Choose the type of academic transition assistance you
-                                            need.</p>
-                                        <div class="request-type-grid" id="requestTypeGrid"></div>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-end">
-                                        <button class="btn btn-primary" onclick="goToStep(2)" id="step1Next" disabled>
-                                            Continue <i class="fas fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 2: Documents -->
-                            <div class="case-step" id="step2">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Upload Documents</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="text-muted mb-4">Upload the required documents for your request.</p>
-
-                                        <div class="file-upload mb-4" id="fileUploadArea">
-                                            <div class="file-upload-icon">
-                                                <i class="fas fa-cloud-upload-alt"></i>
-                                            </div>
-                                            <div class="file-upload-text">
-                                                <span>Click to upload</span> or drag and drop<br>
-                                                <small class="text-muted">PDF, JPG, PNG up to 10MB</small>
-                                            </div>
-                                            <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png"
-                                                style="display: none;">
-                                        </div>
-
-                                        <div id="uploadedFiles" class="mb-4"></div>
-
-                                        <div class="alert"
-                                            style="background: var(--info-50); border: 1px solid var(--info-500); border-radius: var(--radius-lg);">
-                                            <div class="d-flex gap-3">
-                                                <i class="fas fa-info-circle text-primary"></i>
-                                                <div>
-                                                    <strong>Required Documents:</strong>
-                                                    <ul class="mb-0 mt-2">
-                                                        <li>Academic result slips</li>
-                                                        <li>Application letter</li>
-                                                        <li>Student ID card copy</li>
-                                                        <li>Any supporting documents</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-between">
-                                        <button class="btn btn-secondary" onclick="goToStep(1)">
-                                            <i class="fas fa-arrow-left"></i> Back
-                                        </button>
-                                        <button class="btn btn-primary" onclick="goToStep(3)">
-                                            Continue <i class="fas fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 3: Payment -->
-                            <div class="case-step" id="step3">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Payment</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="payment-card mb-6">
-                                            <div class="payment-label">ASET Service Fee</div>
-                                            <div class="payment-amount">₦5,000</div>
-                                            <div class="payment-status" id="paymentStatusBadge">
-                                                <i class="fas fa-clock"></i> Pending Payment
-                                            </div>
-                                        </div>
-
-                                        <div class="card mb-4" style="background: var(--gray-50);">
-                                            <div class="card-body">
-                                                <h5 class="mb-3">Payment Breakdown</h5>
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <span>Processing Fee</span>
-                                                    <span>₦3,500</span>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <span>Documentation Fee</span>
-                                                    <span>₦1,000</span>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <span>Service Charge</span>
-                                                    <span>₦500</span>
-                                                </div>
-                                                <hr>
-                                                <div class="d-flex justify-content-between fw-700">
-                                                    <span>Total</span>
-                                                    <span>₦5,000</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <button class="btn btn-success btn-lg w-100" id="payNowBtn"
-                                            onclick="simulatePayment()">
-                                            <i class="fas fa-lock"></i> Pay Now - ₦5,000
-                                        </button>
-
-                                        <p class="text-center text-muted mt-3" style="font-size: 0.85rem;">
-                                            <i class="fas fa-shield-alt"></i> Secured payment powered by Paystack
-                                        </p>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-between">
-                                        <button class="btn btn-secondary" onclick="goToStep(2)">
-                                            <i class="fas fa-arrow-left"></i> Back
-                                        </button>
-                                        <button class="btn btn-primary" onclick="goToStep(4)" id="step3Next" disabled>
-                                            Continue <i class="fas fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 4: Confirm -->
-                            <div class="case-step" id="step4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Confirm & Submit</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="alert mb-4"
-                                            style="background: var(--success-50); border: 1px solid var(--success-500); border-radius: var(--radius-lg);">
-                                            <div class="d-flex gap-3">
-                                                <i class="fas fa-check-circle text-success"
-                                                    style="font-size: 1.5rem;"></i>
-                                                <div>
-                                                    <strong>Payment Confirmed!</strong>
-                                                    <p class="mb-0">Your payment has been verified. Review your request
-                                                        details below and submit.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <h5 class="mb-3">Request Summary</h5>
-                                        <div class="card mb-4" style="background: var(--gray-50);">
-                                            <div class="card-body">
-                                                <div class="row g-3">
-                                                    <div class="col-md-6">
-                                                        <div class="text-muted" style="font-size: 0.85rem;">Request Type
-                                                        </div>
-                                                        <div class="fw-600" id="summaryRequestType">-</div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="text-muted" style="font-size: 0.85rem;">Documents
-                                                            Uploaded</div>
-                                                        <div class="fw-600" id="summaryDocCount">0 files</div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="text-muted" style="font-size: 0.85rem;">Payment
-                                                            Status</div>
-                                                        <div class="fw-600 text-success">Paid - ₦5,000</div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="text-muted" style="font-size: 0.85rem;">Submission
-                                                            Date</div>
-                                                        <div class="fw-600" id="summaryDate">-</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-check mb-4">
-                                            <input type="checkbox" class="form-check-input" id="confirmCheck">
-                                            <label class="form-check-label" for="confirmCheck">
-                                                I confirm that all information provided is accurate and I agree to the
-                                                terms and conditions.
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-between">
-                                        <button class="btn btn-secondary" onclick="goToStep(3)">
-                                            <i class="fas fa-arrow-left"></i> Back
-                                        </button>
-                                        <button class="btn btn-success btn-lg" onclick="submitCase()" id="submitCaseBtn"
-                                            disabled>
-                                            <i class="fas fa-paper-plane"></i> Submit Request
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- My Cases Page -->
-                <div class="page-section" id="my-cases-page">
-                    <div id="casesList"></div>
-                </div>
-
-                <!-- Case Detail Modal -->
-                <div class="modal-backdrop" id="caseDetailModal">
-                    <div class="modal" style="max-width: 700px;">
-                        <div class="modal-header">
-                            <h3 class="modal-title">Case Details</h3>
-                            <button class="modal-close" onclick="closeModal('caseDetailModal')">
-                                <i class="fas fa-times"></i>
+                            <button class="btn btn-light text-primary fw-bold px-4 py-2"
+                                onclick="showSection('new-case')">
+                                Submit New Request <i class="bi bi-plus-lg"></i>
                             </button>
                         </div>
-                        <div class="modal-body" id="caseDetailContent"></div>
                     </div>
-                </div>
 
-                <!-- Payments Page -->
-                <div class="page-section" id="payments-page">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Payment History</h3>
-                        </div>
-                        <div class="card-body p-0">
-                            <div id="paymentsList"></div>
+                    <div class="col-lg-4">
+                        <div class="card-clean p-4 h-100">
+                            <h5 class="fw-bold mb-4">Notifications</h5>
+                            <div class="text-center text-secondary py-5">
+                                <i class="bi bi-bell-slash fs-1 mb-2"></i>
+                                <p>No new notifications</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Messages Page -->
-                <div class="page-section" id="messages-page">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <h3 class="empty-state-title">No Messages Yet</h3>
-                        <p class="empty-state-text">When you receive updates or messages about your cases, they will
-                            appear here.</p>
-                    </div>
-                </div>
+            <!-- New Case Grid (Grid from Image) -->
+            <div id="view-new-case" class="content-view d-none">
+                <header class="mb-4">
+                    <button class="btn btn-sm btn-light border mb-2" onclick="showSection('dashboard')"><i
+                            class="bi bi-arrow-left"></i> Back</button>
+                    <h2 class="fw-bold">New Case Request</h2>
+                    <p class="text-secondary">Select the type of assistance you need.</p>
+                </header>
 
-                <!-- Help Page -->
-                <div class="page-section" id="help-page">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex gap-3 mb-3">
-                                        <div class="stat-icon primary">
-                                            <i class="fas fa-book"></i>
-                                        </div>
-                                        <div>
-                                            <h5 class="mb-1">Documentation Guide</h5>
-                                            <p class="text-muted mb-0">Learn what documents you need for each request
-                                                type</p>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">Read Guide</a>
+                <div class="row g-4">
+                    <!-- Card 1 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="request-type-card" onclick="selectCaseType('Change of Programme')">
+                            <div class="d-flex  gap-3">
+                                <div class="rounded-3 bg-primary-subtle text-primary p-3 fs-3 d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="bi bi-arrow-left-right"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Change of Programme</h5>
+                                    <p class="text-secondary small mb-0">Start the intra-university transfer to another
+                                        department.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex gap-3 mb-3">
-                                        <div class="stat-icon success">
-                                            <i class="fas fa-headset"></i>
-                                        </div>
-                                        <div>
-                                            <h5 class="mb-1">Contact Support</h5>
-                                            <p class="text-muted mb-0">Get help from our support team</p>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-outline-primary btn-sm">Contact Us</a>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="request-type-card" onclick="selectCaseType('Probation Recovery')">
+                            <div class="d-flex gap-3">
+                                <div class="rounded-3 bg-warning-subtle text-warning p-3 fs-3 d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="bi bi-life-preserver"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">On Probation</h5>
+                                    <p class="text-secondary small mb-0">Get help with academic recovery and counseling
+                                        plans.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Frequently Asked Questions</h3>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="request-type-card" onclick="selectCaseType('University Transfer')">
+                            <div class="d-flex gap-3">
+                                <div class="rounded-3 bg-success-subtle text-success p-3 fs-3 d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="bi bi-buildings"></i>
                                 </div>
-                                <div class="card-body">
-                                    <div class="accordion" id="faqAccordion">
-                                        <div class="accordion-item border-0 mb-3">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#faq1">
-                                                    How long does the case processing take?
-                                                </button>
-                                            </h2>
-                                            <div id="faq1" class="accordion-collapse collapse"
-                                                data-bs-parent="#faqAccordion">
-                                                <div class="accordion-body text-muted">
-                                                    Processing time varies depending on the request type and university.
-                                                    Typically, cases are processed within 2-4 weeks from submission.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-item border-0 mb-3">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#faq2">
-                                                    Can I track my case progress?
-                                                </button>
-                                            </h2>
-                                            <div id="faq2" class="accordion-collapse collapse"
-                                                data-bs-parent="#faqAccordion">
-                                                <div class="accordion-body text-muted">
-                                                    Yes! You can track your case progress in real-time from your
-                                                    dashboard. Each stage has a timestamp and status update.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-item border-0">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#faq3">
-                                                    What happens if my request is not approved?
-                                                </button>
-                                            </h2>
-                                            <div id="faq3" class="accordion-collapse collapse"
-                                                data-bs-parent="#faqAccordion">
-                                                <div class="accordion-body text-muted">
-                                                    If your request is not approved, you will receive detailed feedback
-                                                    on why. Our mentors can help you understand your options and next
-                                                    steps.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Transfer to Another University</h5>
+                                    <p class="text-secondary small mb-0">Process transcripts and clearance for external
+                                        transfer.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="request-type-card" onclick="selectCaseType('Withdrawal')">
+                            <div class="d-flex gap-3">
+                                <div class="rounded-3 bg-danger-subtle text-danger p-3 fs-3 d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="bi bi-x-circle"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Withdrawal Process</h5>
+                                    <p class="text-secondary small mb-0">Formal voluntary withdrawal from the
+                                        university.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="request-type-card" onclick="selectCaseType('Deferment')">
+                            <div class="d-flex gap-3">
+                                <div class="rounded-3 bg-info-subtle text-info p-3 fs-3 d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="bi bi-pause-circle"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Deferment / Suspension</h5>
+                                    <p class="text-secondary small mb-0">Pause your studies for a semester or session.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="request-type-card" onclick="selectCaseType('Matric Number')">
+                            <div class="d-flex gap-3">
+                                <div class="rounded-3 bg-secondary-subtle text-secondary p-3 fs-3 d-flex align-items-center justify-content-center"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="bi bi-123"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Matric Number Generation</h5>
+                                    <p class="text-secondary small mb-0">Request a standardized registration number.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Doc Upload View (Step 2) -->
+            <div id="view-upload" class="content-view d-none">
+                <header class="mb-4">
+                    <button class="btn btn-sm btn-light border mb-2" onclick="showSection('new-case')"><i
+                            class="bi bi-arrow-left"></i> Back</button>
+                    <h2 class="fw-bold">Upload Documents</h2>
+                    <p class="text-secondary">Please provide evidence for your <strong class="text-primary"
+                            id="uploadCaseType">request</strong>.</p>
+                </header>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card-clean p-5 text-center mb-4">
+                            <i class="bi bi-cloud-arrow-up fs-1 text-primary mb-3"></i>
+                            <h5>Drag & Drop Files Here</h5>
+                            <p class="text-muted small">Result Slips, Letters, ID Cards (PDF/JPG)</p>
+                            <button class="btn btn-outline-primary btn-sm mt-2">Browse Files</button>
+                        </div>
+                        <button class="btn btn-primary w-100 py-3" onclick="goToPayment()">Continue to Payment <i
+                                class="bi bi-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Page (Dedicated View as per Image) -->
+            <div id="view-payment" class="content-view d-none">
+                <header class="mb-4 text-center">
+                    <h2 class="fw-bold">Payment Page</h2>
+                </header>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card-clean p-4">
+                            <h5 class="fw-bold border-bottom pb-3 mb-4">Review & Pay</h5>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <span class="text-secondary">Case Summary: <strong class="text-dark"
+                                        id="paySummary">Change of Programme</strong></span>
+                                <span class="fs-4 fw-bold text-dark">₦5,000</span>
+                            </div>
+
+                            <label class="form-label small fw-bold text-secondary text-uppercase mb-2">Payment
+                                Method</label>
+                            <div class="d-flex gap-2 mb-4">
+                                <button class="btn btn-primary flex-fill"><i
+                                        class="bi bi-credit-card-fill me-2"></i>Credit / Debit Card</button>
+                                <button class="btn btn-light border flex-fill text-muted"><i
+                                        class="bi bi-bank me-2"></i>Bank Transfer</button>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Card Number</label>
+                                <input type="text" class="form-control" placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div class="row g-2 mb-4">
+                                <div class="col-6">
+                                    <label class="form-label small text-muted">Expiry</label>
+                                    <input type="text" class="form-control" placeholder="MM/YY">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small text-muted">CVV</label>
+                                    <input type="text" class="form-control" placeholder="123">
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary w-100 py-3 fw-bold" onclick="processPayment()">
+                                Pay ₦5,000
+                            </button>
+                            <p class="text-center mt-3 text-muted small">Note: Payment does not guarantee approval by
+                                the university.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
-    <style>
-        .page-section {
-            display: none;
-        }
-
-        .page-section.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .case-step {
-            display: none;
-        }
-
-        .case-step.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .request-type-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-
-        .request-type-card {
-            background: var(--gray-50);
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .request-type-card:hover {
-            border-color: var(--primary-300);
-            background: var(--primary-50);
-        }
-
-        .request-type-card.selected {
-            border-color: var(--primary-600);
-            background: var(--primary-50);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
-        .request-type-card i {
-            font-size: 2rem;
-            color: var(--primary-600);
-            margin-bottom: 0.75rem;
-        }
-
-        .request-type-card span {
-            display: block;
-            font-weight: 600;
-            color: var(--gray-700);
-        }
-
-        .uploaded-file {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem 1rem;
-            background: var(--gray-50);
-            border-radius: var(--radius-md);
-            margin-bottom: 0.5rem;
-        }
-
-        .uploaded-file i {
-            color: var(--primary-600);
-        }
-
-        .uploaded-file .file-name {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .uploaded-file .remove-file {
-            color: var(--danger-500);
-            cursor: pointer;
-        }
-
-        .case-card {
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius-xl);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background: white;
-            transition: all 0.2s ease;
-        }
-
-        .case-card:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .case-id {
-            font-family: monospace;
-            font-weight: 600;
-            color: var(--primary-600);
-        }
-
-        .accordion-button {
-            font-weight: 600;
-            padding: 1rem 1.25rem;
-            background: var(--gray-50);
-            border-radius: var(--radius-lg) !important;
-        }
-
-        .accordion-button:not(.collapsed) {
-            background: var(--primary-50);
-            color: var(--primary-700);
-        }
-    </style>
-
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
     <script>
-        // State
-        let currentUser = null;
-        let newCaseData = {
-            requestType: null,
-            documents: [],
-            paymentStatus: 'pending'
-        };
-        let currentStep = 1;
+        ASET.checkAuth('student');
+        const currentUser = ASET.getCurrentUser();
+        document.getElementById('navName').innerText = currentUser.name;
+        document.getElementById('welcomeMsg').innerText = `Welcome, ${currentUser.name.split(' ')[0]}!`;
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            currentUser = ASET.requireAuth(['student']);
-            if (!currentUser) return;
-
-            ASET.renderUserInfo(currentUser);
-            document.getElementById('welcomeName').textContent = currentUser.fullName.split(' ')[0];
-
-            loadDashboard();
-            renderRequestTypes();
-            setupNavigation();
-            setupFileUpload();
-        });
-
-        // Navigation
-        function setupNavigation() {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const page = item.dataset.page;
-                    showPage(page);
-                });
-            });
+        function showSection(id) {
+            document.querySelectorAll('.content-view').forEach(el => el.classList.add('d-none'));
+            document.getElementById('view-' + id).classList.remove('d-none');
+            // update nav active state logic here if needed
         }
 
-        function showPage(page) {
-            // Update nav
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.toggle('active', item.dataset.page === page);
-            });
+        let currentSelection = null;
 
-            // Update title
-            const titles = {
-                'dashboard': 'Dashboard',
-                'new-case': 'New Request',
-                'my-cases': 'My Cases',
-                'payments': 'Payments',
-                'messages': 'Messages',
-                'help': 'Help & FAQ'
-            };
-            document.getElementById('pageTitle').textContent = titles[page] || 'Dashboard';
-
-            // Show page
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(`${page}-page`).classList.add('active');
-
-            // Load page data
-            if (page === 'dashboard') loadDashboard();
-            if (page === 'my-cases') loadCases();
-            if (page === 'payments') loadPayments();
-            if (page === 'new-case') resetNewCase();
+        function selectCaseType(type) {
+            currentSelection = type;
+            document.getElementById('uploadCaseType').innerText = type;
+            showSection('upload');
         }
 
-        // Dashboard
-        function loadDashboard() {
-            const cases = ASET.getCases({ studentId: currentUser.id });
-
-            document.getElementById('statTotalCases').textContent = cases.length;
-            document.getElementById('statPending').textContent = cases.filter(c =>
-                ['submitted', 'under_review', 'department', 'faculty', 'registry'].includes(c.currentStage)
-            ).length;
-            document.getElementById('statCompleted').textContent = cases.filter(c => c.currentStage === 'completed').length;
-            document.getElementById('statRejected').textContent = cases.filter(c => c.currentStage === 'not_approved').length;
-
-            renderRecentCases(cases.slice(0, 3));
+        function goToPayment() {
+            document.getElementById('paySummary').innerText = currentSelection;
+            showSection('payment');
         }
 
-        function renderRecentCases(cases) {
-            const container = document.getElementById('recentCasesList');
-
-            if (cases.length === 0) {
-                container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon"><i class="fas fa-folder-open"></i></div>
-            <h3 class="empty-state-title">No Cases Yet</h3>
-            <p class="empty-state-text">Start by creating a new request for academic transition assistance.</p>
-            <button class="btn btn-primary" onclick="showPage('new-case')">
-              <i class="fas fa-plus"></i> Create New Request
-            </button>
-          </div>
-        `;
-                return;
-            }
-
-            container.innerHTML = cases.map(c => `
-        <div class="d-flex align-items-center gap-4 p-4 border-bottom" style="cursor: pointer;" onclick="viewCase('${c.id}')">
-          <div class="stat-icon ${ASET.getStageInfo(c.currentStage).color}">
-            <i class="fas fa-folder"></i>
-          </div>
-          <div class="flex-grow-1">
-            <div class="d-flex align-items-center gap-2 mb-1">
-              <span class="case-id">${c.id}</span>
-              ${ASET.renderStatusBadge(c.currentStage)}
-            </div>
-            <div class="text-muted">${ASET.getRequestTypeLabel(c.requestType)}</div>
-          </div>
-          <div class="text-muted text-end">
-            <div>${ASET.formatDate(c.createdAt)}</div>
-          </div>
-          <i class="fas fa-chevron-right text-muted"></i>
-        </div>
-      `).join('');
-        }
-
-        // Cases
-        function loadCases() {
-            const cases = ASET.getCases({ studentId: currentUser.id });
-            const container = document.getElementById('casesList');
-
-            if (cases.length === 0) {
-                container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon"><i class="fas fa-folder-open"></i></div>
-            <h3 class="empty-state-title">No Cases Yet</h3>
-            <p class="empty-state-text">Create your first request to get started.</p>
-            <button class="btn btn-primary" onclick="showPage('new-case')">
-              <i class="fas fa-plus"></i> Create New Request
-            </button>
-          </div>
-        `;
-                return;
-            }
-
-            container.innerHTML = cases.map(c => `
-        <div class="case-card">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <div>
-              <span class="case-id">${c.id}</span>
-              <h5 class="mt-1 mb-0">${ASET.getRequestTypeLabel(c.requestType)}</h5>
-            </div>
-            ${ASET.renderStatusBadge(c.currentStage)}
-          </div>
-          <div class="stepper mb-4">
-            ${ASET.renderStepper(c.currentStage)}
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="text-muted">
-              <i class="fas fa-calendar"></i> Created: ${ASET.formatDate(c.createdAt)}
-            </div>
-            <button class="btn btn-primary btn-sm" onclick="viewCase('${c.id}')">
-              <i class="fas fa-eye"></i> View Details
-            </button>
-          </div>
-        </div>
-      `).join('');
-        }
-
-        function viewCase(caseId) {
-            const caseData = ASET.getCaseById(caseId);
-            if (!caseData) return;
-
-            const officer = caseData.assignedOfficer ? ASET.getUserById(caseData.assignedOfficer) : null;
-            const mentor = caseData.assignedMentor ? ASET.getUserById(caseData.assignedMentor) : null;
-
-            document.getElementById('caseDetailContent').innerHTML = `
-        <div class="mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="case-id" style="font-size: 1.1rem;">${caseData.id}</span>
-            ${ASET.renderStatusBadge(caseData.currentStage)}
-          </div>
-          <h4>${ASET.getRequestTypeLabel(caseData.requestType)}</h4>
-        </div>
-        
-        <div class="stepper mb-6">
-          ${ASET.renderStepper(caseData.currentStage)}
-        </div>
-        
-        <div class="row g-4 mb-4">
-          <div class="col-6">
-            <div class="text-muted mb-1">Created</div>
-            <div class="fw-600">${ASET.formatDateTime(caseData.createdAt)}</div>
-          </div>
-          <div class="col-6">
-            <div class="text-muted mb-1">Payment</div>
-            <div class="fw-600">${ASET.renderPaymentBadge(caseData.paymentStatus)}</div>
-          </div>
-          <div class="col-6">
-            <div class="text-muted mb-1">Case Officer</div>
-            <div class="fw-600">${officer ? officer.fullName : 'Not assigned yet'}</div>
-          </div>
-          <div class="col-6">
-            <div class="text-muted mb-1">Mentor</div>
-            <div class="fw-600">${mentor ? mentor.fullName : 'Not assigned yet'}</div>
-          </div>
-        </div>
-        
-        <h5 class="mb-3">Case Timeline</h5>
-        <div class="case-timeline">
-          ${ASET.renderCaseTimeline(caseData.timeline)}
-        </div>
-        
-        ${caseData.notes.filter(n => !n.isInternal).length > 0 ? `
-          <h5 class="mt-4 mb-3">Notes & Recommendations</h5>
-          ${caseData.notes.filter(n => !n.isInternal).map(note => `
-            <div class="p-3 bg-primary-light rounded mb-2">
-              <div class="d-flex justify-content-between mb-1">
-                <span class="fw-600">${note.authorName}</span>
-                <span class="text-muted">${ASET.formatDate(note.createdAt)}</span>
-              </div>
-              <p class="mb-0">${note.content}</p>
-            </div>
-          `).join('')}
-        ` : ''}
-      `;
-
-            openModal('caseDetailModal');
-        }
-
-        // New Case
-        function resetNewCase() {
-            newCaseData = {
-                requestType: null,
-                documents: [],
-                paymentStatus: 'pending'
-            };
-            currentStep = 1;
-            updateStepperUI();
-            showStep(1);
-            document.querySelectorAll('.request-type-card').forEach(card => card.classList.remove('selected'));
-            document.getElementById('step1Next').disabled = true;
-            document.getElementById('step3Next').disabled = true;
-            document.getElementById('uploadedFiles').innerHTML = '';
-            document.getElementById('paymentStatusBadge').innerHTML = '<i class="fas fa-clock"></i> Pending Payment';
-            document.getElementById('payNowBtn').disabled = false;
-        }
-
-        function renderRequestTypes() {
-            const container = document.getElementById('requestTypeGrid');
-            container.innerHTML = ASET.REQUEST_TYPES.map(type => `
-        <div class="request-type-card" data-type="${type.id}" onclick="selectRequestType('${type.id}')">
-          <i class="${type.icon}"></i>
-          <span>${type.label}</span>
-        </div>
-      `).join('');
-        }
-
-        function selectRequestType(typeId) {
-            newCaseData.requestType = typeId;
-            document.querySelectorAll('.request-type-card').forEach(card => {
-                card.classList.toggle('selected', card.dataset.type === typeId);
-            });
-            document.getElementById('step1Next').disabled = false;
-        }
-
-        function setupFileUpload() {
-            const uploadArea = document.getElementById('fileUploadArea');
-            const fileInput = document.getElementById('fileInput');
-
-            uploadArea.addEventListener('click', () => fileInput.click());
-
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.style.borderColor = 'var(--primary-500)';
-            });
-
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.style.borderColor = 'var(--gray-300)';
-            });
-
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.style.borderColor = 'var(--gray-300)';
-                handleFiles(e.dataTransfer.files);
-            });
-
-            fileInput.addEventListener('change', () => {
-                handleFiles(fileInput.files);
-            });
-        }
-
-        function handleFiles(files) {
-            Array.from(files).forEach(file => {
-                if (!newCaseData.documents.find(d => d.name === file.name)) {
-                    newCaseData.documents.push({
-                        name: file.name,
-                        size: file.size,
-                        type: file.type
-                    });
-                }
-            });
-            renderUploadedFiles();
-        }
-
-        function renderUploadedFiles() {
-            const container = document.getElementById('uploadedFiles');
-            container.innerHTML = newCaseData.documents.map((doc, i) => `
-        <div class="uploaded-file">
-          <i class="fas fa-file-pdf"></i>
-          <span class="file-name">${doc.name}</span>
-          <span class="text-muted">${(doc.size / 1024).toFixed(1)} KB</span>
-          <i class="fas fa-times remove-file" onclick="removeFile(${i})"></i>
-        </div>
-      `).join('');
-        }
-
-        function removeFile(index) {
-            newCaseData.documents.splice(index, 1);
-            renderUploadedFiles();
-        }
-
-        function goToStep(step) {
-            currentStep = step;
-            showStep(step);
-            updateStepperUI();
-
-            if (step === 4) {
-                document.getElementById('summaryRequestType').textContent = ASET.getRequestTypeLabel(newCaseData.requestType);
-                document.getElementById('summaryDocCount').textContent = `${newCaseData.documents.length} files`;
-                document.getElementById('summaryDate').textContent = ASET.formatDate(new Date().toISOString());
-            }
-        }
-
-        function showStep(step) {
-            document.querySelectorAll('.case-step').forEach(s => s.classList.remove('active'));
-            document.getElementById(`step${step}`).classList.add('active');
-        }
-
-        function updateStepperUI() {
-            document.querySelectorAll('#newCaseStepper .stepper-step').forEach((step, i) => {
-                step.classList.remove('completed', 'current', 'pending');
-                if (i + 1 < currentStep) step.classList.add('completed');
-                else if (i + 1 === currentStep) step.classList.add('current');
-                else step.classList.add('pending');
-
-                step.querySelector('.step-marker').innerHTML = i + 1 < currentStep
-                    ? '<i class="fas fa-check"></i>'
-                    : i + 1;
-            });
-        }
-
-        function simulatePayment() {
-            const btn = document.getElementById('payNowBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner"></span> Processing...';
-
-            setTimeout(() => {
-                newCaseData.paymentStatus = 'paid';
-                btn.innerHTML = '<i class="fas fa-check"></i> Payment Successful';
-                btn.classList.remove('btn-success');
-                btn.classList.add('btn-secondary');
-
-                document.getElementById('paymentStatusBadge').innerHTML = '<i class="fas fa-check-circle"></i> Paid';
-                document.getElementById('step3Next').disabled = false;
-
-                ASET.showToast('Payment successful!', 'success');
-            }, 2000);
-        }
-
-        document.getElementById('confirmCheck').addEventListener('change', function () {
-            document.getElementById('submitCaseBtn').disabled = !this.checked;
-        });
-
-        function submitCase() {
+        function processPayment() {
+            // Create Case
             const newCase = ASET.createCase({
-                requestType: newCaseData.requestType,
-                documents: newCaseData.documents.map(d => d.name)
-            }, currentUser);
+                studentId: currentUser.id,
+                studentName: currentUser.name,
+                type: currentSelection,
+                paymentStatus: 'paid'
+            });
 
-            // Simulate payment
-            ASET.simulatePayment(newCase.id, currentUser.id);
-
-            ASET.showToast('Case submitted successfully!', 'success');
-
-            setTimeout(() => {
-                showPage('my-cases');
-            }, 1000);
+            alert('Payment Successful!');
+            renderDashboard();
+            showSection('dashboard');
         }
 
-        // Payments
-        function loadPayments() {
-            const cases = ASET.getCases({ studentId: currentUser.id });
-            const container = document.getElementById('paymentsList');
+        function renderDashboard() {
+            const cases = ASET.getCases().filter(c => c.studentId === currentUser.id);
+            const activeCase = cases[cases.length - 1];
 
-            const paidCases = cases.filter(c => c.paymentStatus === 'paid');
+            if (activeCase) {
+                document.getElementById('dashCaseId').innerText = activeCase.id;
+                document.getElementById('dashCaseType').innerText = activeCase.type;
+                document.getElementById('dashStatus').innerText = activeCase.status;
+                if (activeCase.officer) document.getElementById('dashOfficer').innerText = activeCase.officer;
+                document.getElementById('dashDate').innerText = ASET.formatDate(activeCase.timeline[activeCase.timeline.length - 1].date).split(',')[0];
 
-            if (paidCases.length === 0) {
-                container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon"><i class="fas fa-receipt"></i></div>
-            <h3 class="empty-state-title">No Payments</h3>
-            <p class="empty-state-text">Your payment history will appear here.</p>
-          </div>
-        `;
-                return;
+                // Render Horizontal Stepper
+                const stages = ['Submitted', 'Under Review', 'Department Review', 'Faculty Review', 'Registry Review', 'Completed'];
+                const currentStageIdx = stages.findIndex(s => s === activeCase.status) !== -1 ? stages.findIndex(s => s === activeCase.status) : 1;
+
+                const stepper = document.getElementById('dashStepper');
+                stepper.innerHTML = '';
+
+                // For spacing in horizontal stepper, limit to 4-5 major steps logic or map exact stages
+                const visualStages = ['Submitted', 'Under Review', 'Faculty Stage', 'Registry Stage', 'Final Decision'];
+                // simple map logic for demo
+                let visualIdx = 0;
+                if (activeCase.status.includes('Department')) visualIdx = 2; // map to faculty stage visual area
+                else if (activeCase.status.includes('Faculty')) visualIdx = 2;
+                else if (activeCase.status.includes('Registry')) visualIdx = 3;
+                else if (activeCase.status === 'Completed' || activeCase.status === 'Approved') visualIdx = 4;
+                else if (activeCase.status === 'Submitted') visualIdx = 0;
+                else visualIdx = 1;
+
+                visualStages.forEach((stage, idx) => {
+                    const isCompleted = idx <= visualIdx;
+                    const isActive = idx === visualIdx;
+
+                    const div = document.createElement('div');
+                    div.className = `h-step ${isActive ? 'active' : ''} ${idx < visualIdx ? 'completed' : ''}`;
+                    div.innerHTML = `
+                        <div class="h-step-circle"></div>
+                        <div class="h-step-label">${stage}</div>
+                     `;
+                    stepper.appendChild(div);
+                });
             }
-
-            container.innerHTML = `
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Case ID</th>
-                <th>Request Type</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${paidCases.map(c => `
-                <tr>
-                  <td><span class="case-id">${c.id}</span></td>
-                  <td>${ASET.getRequestTypeLabel(c.requestType)}</td>
-                  <td class="fw-600">₦5,000</td>
-                  <td><span class="badge badge-success">Paid</span></td>
-                  <td>${ASET.formatDate(c.createdAt)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
         }
 
-        // Modal functions
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.body.style.overflow = '';
-        }
+        renderDashboard();
+        showSection('dashboard');
     </script>
 </body>
 
