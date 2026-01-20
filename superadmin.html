@@ -13,7 +13,7 @@
 <body class="bg-light">
 
     <div class="dashboard-layout">
-        <aside class="sidebar" style="background: #1e293b;"> <!-- Darker sidebar for Super Admin -->
+        <aside class="sidebar" style="background: #0f172a;">
             <div class="sidebar-header">
                 <a href="#" class="d-flex align-items-center gap-2 text-white text-decoration-none fs-4 fw-bold">
                     <span class="bg-danger text-white rounded px-2"><i class="bi bi-cpu-fill"></i></span>
@@ -22,9 +22,14 @@
             </div>
 
             <nav class="sidebar-nav">
-                <a href="#" class="nav-link-custom active"><i class="bi bi-activity"></i> Audit Logs</a>
-                <a href="#" class="nav-link-custom"><i class="bi bi-shield-lock-fill"></i> Access Control</a>
-                <a href="#" class="nav-link-custom"><i class="bi bi-server"></i> Database</a>
+                <a href="#" class="nav-link-custom active" onclick="showView('audit')"><i class="bi bi-activity"></i>
+                    Audit Logs</a>
+                <a href="#" class="nav-link-custom" onclick="showView('users')"><i class="bi bi-people-fill"></i> User
+                    Management</a>
+                <a href="#" class="nav-link-custom" onclick="showView('database')"><i class="bi bi-server"></i>
+                    Database</a>
+                <a href="#" class="nav-link-custom" onclick="showView('access')"><i class="bi bi-shield-lock-fill"></i>
+                    Access Control</a>
             </nav>
 
             <div class="p-3 border-top border-white border-opacity-10">
@@ -37,38 +42,218 @@
         <main class="main-content">
             <header class="d-flex justify-content-between align-items-center mb-5">
                 <div>
-                    <h2 class="fw-bold mb-1">System Audit Trail</h2>
-                    <p class="text-secondary">Monitor all system activities and user actions in real-time.</p>
+                    <h2 class="fw-bold mb-1" id="pageTitle">System Audit Trail</h2>
+                    <p class="text-secondary" id="pageDesc">Monitor all system activities and user actions in real-time.
+                    </p>
                 </div>
                 <button class="btn btn-outline-danger btn-sm fw-bold">
-                    <i class="bi bi-lock-fill me-1"></i> Security Level: High
+                    <i class="bi bi-lock-fill me-1"></i> Security: MAX
                 </button>
             </header>
 
-            <div class="card-clean p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="fw-bold"><i class="bi bi-list-columns-reverse me-2 text-primary"></i>Activity Log</h5>
-                    <button class="btn btn-sm btn-light border" onclick="exportLogs()"><i
-                            class="bi bi-download me-2"></i>Export CSV</button>
+            <!-- Audit Logs View -->
+            <section id="view-audit" class="content-view active">
+                <div class="card-clean p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold"><i class="bi bi-list-columns-reverse me-2 text-primary"></i>Live Log Stream
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter logs..."
+                                style="width: 200px;">
+                            <button class="btn btn-sm btn-light border"><i
+                                    class="bi bi-download me-2"></i>Export</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover">
+                            <thead class="bg-light text-secondary small text-uppercase">
+                                <tr>
+                                    <th class="ps-3 border-0 py-3">Timestamp</th>
+                                    <th class="border-0 py-3">User</th>
+                                    <th class="border-0 py-3">Role</th>
+                                    <th class="border-0 py-3">Event</th>
+                                    <th class="border-0 py-3">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTable" class="border-top-0">
+                                <!-- Populated JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Management View -->
+            <section id="view-users" class="content-view">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="stat-card p-4">
+                            <div class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-people"></i></div>
+                            <div>
+                                <h4 class="fw-bold mb-0">2,405</h4><small class="text-muted">Students</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card p-4">
+                            <div class="stat-icon bg-info-subtle text-info"><i class="bi bi-person-badge"></i></div>
+                            <div>
+                                <h4 class="fw-bold mb-0">15</h4><small class="text-muted">Staff</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table align-middle table-hover">
-                        <thead class="bg-light text-secondary small text-uppercase">
+                <div class="card-clean p-4">
+                    <h5 class="fw-bold mb-4">Active User Sessions</h5>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4">User</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Last Login</th>
+                                    <th class="text-end pe-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-4 fw-bold">student@aset.edu.ng</td>
+                                    <td><span class="badge bg-light text-dark border">Student</span></td>
+                                    <td><span class="badge bg-success-subtle text-success">Online</span></td>
+                                    <td class="small text-muted">Just now</td>
+                                    <td class="text-end pe-4"><button
+                                            class="btn btn-sm btn-light border text-danger">Kick</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4 fw-bold">admin@aset.edu.ng</td>
+                                    <td><span class="badge bg-primary-subtle text-primary border">Admin</span></td>
+                                    <td><span class="badge bg-success-subtle text-success">Online</span></td>
+                                    <td class="small text-muted">2 mins ago</td>
+                                    <td class="text-end pe-4"><button
+                                            class="btn btn-sm btn-light border text-danger">Kick</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Database View -->
+            <section id="view-database" class="content-view">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="card-clean p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="fw-bold">Database Health</h5>
+                                <span class="badge bg-success">Healthy</span>
+                            </div>
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-1 small">
+                                    <span>Storage Usage</span>
+                                    <span class="fw-bold">45%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-primary" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <div class="p-3 bg-light rounded border text-center">
+                                        <div class="text-muted small">Total Records</div>
+                                        <div class="fw-bold fs-4">15,402</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-3 bg-light rounded border text-center">
+                                        <div class="text-muted small">Query Latency</div>
+                                        <div class="fw-bold fs-4 text-success">12ms</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-3 bg-light rounded border text-center">
+                                        <div class="text-muted small">Backups</div>
+                                        <div class="fw-bold fs-4">Daily</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-clean p-4">
+                            <h5 class="fw-bold mb-3">Raw Data Query</h5>
+                            <div class="bg-dark text-success p-3 rounded font-monospace small mb-3">
+                                > SELECT * FROM cases WHERE status = 'PENDING' LIMIT 5;<br>
+                                > Querying...<br>
+                                > 5 rows returned.
+                            </div>
+                            <button class="btn btn-primary btn-sm"><i class="bi bi-play-fill"></i> Run Query</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card-clean p-4 h-100">
+                            <h5 class="fw-bold mb-3">Backup Controls</h5>
+                            <p class="text-muted small mb-4">Manage automated snapshot policies.</p>
+                            <button class="btn btn-outline-primary w-100 mb-2">Create Snapshot</button>
+                            <button class="btn btn-outline-secondary w-100 mb-2">Restore from Point</button>
+                            <hr>
+                            <div class="small text-muted">Last backup: Today, 04:00 AM</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Access Control View -->
+            <section id="view-access" class="content-view">
+                <div class="card-clean p-4">
+                    <h5 class="fw-bold mb-4">Role Based Access Control (RBAC)</h5>
+                    <table class="table table-bordered">
+                        <thead class="bg-light">
                             <tr>
-                                <th class="ps-3 border-0 py-3">Timestamp</th>
-                                <th class="border-0 py-3">User</th>
-                                <th class="border-0 py-3">Role</th>
-                                <th class="border-0 py-3">Action Type</th>
-                                <th class="border-0 py-3">Details</th>
+                                <th>Role Permission</th>
+                                <th class="text-center">Student</th>
+                                <th class="text-center">Officer</th>
+                                <th class="text-center">Admin</th>
+                                <th class="text-center">Super</th>
                             </tr>
                         </thead>
-                        <tbody id="logsTable" class="border-top-0">
-                            <!-- JS Populated -->
+                        <tbody>
+                            <tr>
+                                <td>View Own Cases</td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Process Cases</td>
+                                <td class="text-center text-muted">-</td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Delete Records</td>
+                                <td class="text-center text-muted">-</td>
+                                <td class="text-center text-muted">-</td>
+                                <td class="text-center text-muted">-</td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Manage Users</td>
+                                <td class="text-center text-muted">-</td>
+                                <td class="text-center text-muted">-</td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                                <td class="text-center text-success"><i class="bi bi-check-lg"></i></td>
+                            </tr>
                         </tbody>
                     </table>
+                    <div class="alert alert-warning mt-3 mb-0 border-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> Only Super Admin can modify high-level
+                        permission sets.
+                    </div>
                 </div>
-            </div>
+            </section>
 
         </main>
     </div>
@@ -78,10 +263,11 @@
     <script>
         ASET.checkAuth('superadmin');
 
+        // Render Logs
         const logs = ASET.getLogs();
         const tbody = document.getElementById('logsTable');
 
-        if (logs.length === 0) { // Should rarely happen as initial seed creates logs or user login creates logs
+        if (logs.length === 0) {
             tbody.innerHTML = '<tr><td colspan="5" class="text-center py-5 text-muted">No activities recorded yet.</td></tr>';
         } else {
             logs.forEach(log => {
@@ -97,8 +283,29 @@
             });
         }
 
-        function exportLogs() {
-            alert('Exporting system logs to secured CSV format...');
+        function showView(viewId) {
+            // Hide all
+            document.querySelectorAll('.content-view').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-link-custom').forEach(el => el.classList.remove('active'));
+
+            // Show Target
+            document.getElementById('view-' + viewId).classList.add('active');
+
+            // Highlight Nav (Rough match)
+            const navs = document.querySelectorAll('.nav-link-custom');
+            if (viewId === 'audit') navs[0].classList.add('active');
+            if (viewId === 'users') navs[1].classList.add('active');
+            if (viewId === 'database') navs[2].classList.add('active');
+            if (viewId === 'access') navs[3].classList.add('active');
+
+            // Update Header
+            const title = document.getElementById('pageTitle');
+            const desc = document.getElementById('pageDesc');
+
+            if (viewId === 'audit') { title.innerText = 'System Audit Trail'; desc.innerText = 'Monitor all system activities.'; }
+            if (viewId === 'users') { title.innerText = 'User Management'; desc.innerText = 'Manage accounts and sessions.'; }
+            if (viewId === 'database') { title.innerText = 'Database Overview'; desc.innerText = 'System health and storage stats.'; }
+            if (viewId === 'access') { title.innerText = 'Access Control'; desc.innerText = 'RBAC Matrix and permissions.'; }
         }
     </script>
 </body>

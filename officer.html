@@ -39,31 +39,84 @@
                     <h2 class="fw-bold mb-1">My Worklist</h2>
                     <p class="text-secondary">Manage and process your assigned student cases.</p>
                 </div>
-                <!-- Officer Profile Pill -->
                 <div class="bg-white rounded-pill px-3 py-2 shadow-sm border d-flex align-items-center gap-2">
                     <div class="avatar rounded-circle bg-info text-white d-flex align-items-center justify-content-center"
-                        style="width: 32px; height: 32px;">
-                        O
-                    </div>
+                        style="width: 32px; height: 32px;">O</div>
                     <span class="small fw-bold text-secondary">Officer Panel</span>
                 </div>
             </header>
 
+            <!-- Officer Stats -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="stat-card p-4">
+                        <div class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-inbox-fill"></i></div>
+                        <div>
+                            <h4 class="fw-bold mb-0">8</h4><span class="text-secondary small">Pending Actions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-4">
+                        <div class="stat-icon bg-success-subtle text-success"><i class="bi bi-check-all"></i></div>
+                        <div>
+                            <h4 class="fw-bold mb-0">24</h4><span class="text-secondary small">Processed Today</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card p-4">
+                        <div class="stat-icon bg-warning-subtle text-warning"><i class="bi bi-clock-history"></i></div>
+                        <div>
+                            <h4 class="fw-bold mb-0">2h</h4><span class="text-secondary small">Avg. Response</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Views -->
             <div class="card-clean p-4">
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead class="text-secondary small text-uppercase">
-                            <tr>
-                                <th class="ps-3 border-0">Case Details</th>
-                                <th class="border-0">Service</th>
-                                <th class="border-0">Current Stage</th>
-                                <th class="border-0 text-end pe-3">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="officerTableBody" class="border-top-0">
-                            <!-- JS Populated -->
-                        </tbody>
-                    </table>
+                <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-bold small" id="pills-active-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-active" type="button">Active Cases</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-bold small text-secondary" id="pills-history-tab"
+                            data-bs-toggle="pill" data-bs-target="#pills-history" type="button">Processing
+                            History</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- Active Cases Tab -->
+                    <div class="tab-pane fade show active" id="pills-active" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead class="text-secondary small text-uppercase">
+                                    <tr>
+                                        <th class="ps-3 border-0">Case Details</th>
+                                        <th class="border-0">Service</th>
+                                        <th class="border-0">Priority</th>
+                                        <th class="border-0">Stage</th>
+                                        <th class="border-0 text-end pe-3">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="officerTableBody" class="border-top-0">
+                                    <!-- JS Populated -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- History Tab (Mock) -->
+                    <div class="tab-pane fade" id="pills-history" role="tabpanel">
+                        <div class="text-center py-5 text-secondary">
+                            <i class="bi bi-search fs-1 mb-2"></i>
+                            <p>Search past records to view details.</p>
+                            <button class="btn btn-sm btn-light border">Load Archives</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -116,7 +169,6 @@
         function renderTable() {
             const cases = ASET.getCases();
             // In a real app we'd filter by current user assignment: c.officer === currentUser.name
-            // For demo purposes, we show all or just a subset to simulate worklist
             const tbody = document.getElementById('officerTableBody');
             tbody.innerHTML = '';
 
@@ -128,6 +180,7 @@
                         <div class="small text-secondary">${c.id}</div>
                     </td>
                     <td><span class="badge bg-light text-dark border">${c.type}</span></td>
+                    <td><span class="badge bg-danger-subtle text-danger border border-danger-subtle"><i class="bi bi-clock-fill me-1"></i>High</span></td> 
                     <td><span class="badge-pill bg-status-info">${c.status}</span></td>
                     <td class="text-end pe-3">
                         <button class="btn btn-sm btn-primary shadow-sm" onclick="openProcess('${c.id}')">Process Case</button>

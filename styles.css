@@ -3,7 +3,7 @@
 :root {
     /* Brand Colors - Matching the Reference Image */
     --aset-blue: #0044cc;
-    /* Deep Royal Blue from reference */
+    /* Deep Royal Blue */
     --aset-blue-dark: #003399;
     --aset-blue-light: #e6f0ff;
 
@@ -53,8 +53,21 @@ h5,
 h6 {
     font-family: var(--font-display);
     color: var(--aset-blue);
-    /* Default headings to brand color */
     font-weight: 700;
+}
+
+/* Animations */
+.animate-fade-up {
+    animation: fadeUp 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* --- Components --- */
@@ -98,6 +111,7 @@ h6 {
     box-shadow: var(--shadow-card);
     transition: all 0.3s ease;
     overflow: hidden;
+    position: relative;
 }
 
 .card-clean:hover {
@@ -138,6 +152,7 @@ h6 {
     z-index: 50;
     display: flex;
     flex-direction: column;
+    transition: transform 0.3s ease;
 }
 
 .sidebar-header {
@@ -147,6 +162,7 @@ h6 {
 .sidebar-nav {
     padding: 1rem 1rem;
     flex-grow: 1;
+    overflow-y: auto;
 }
 
 .nav-link-custom {
@@ -160,6 +176,7 @@ h6 {
     margin-bottom: 0.5rem;
     font-weight: 500;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .nav-link-custom:hover,
@@ -171,13 +188,25 @@ h6 {
 .nav-link-custom.active {
     background: rgba(255, 255, 255, 0.15);
     font-weight: 600;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .main-content {
     flex-grow: 1;
     margin-left: 280px;
     padding: 2rem;
-    max-width: 1400px;
+    max-width: 100%;
+    width: calc(100% - 280px);
+}
+
+/* New Content View Management */
+.content-view {
+    display: none;
+    animation: fadeUp 0.4s ease-out forwards;
+}
+
+.content-view.active {
+    display: block;
 }
 
 /* Horizontal Stepper (Reference Image Style) */
@@ -266,11 +295,16 @@ h6 {
 .stat-card {
     background: white;
     border-radius: var(--radius-lg);
-    padding: 1.5rem;
     box-shadow: var(--shadow-card);
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    height: 100%;
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
 }
 
 .stat-icon {
@@ -281,14 +315,17 @@ h6 {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
 /* Badges */
 .badge-pill {
     padding: 0.5em 1em;
     border-radius: 9999px;
-    font-weight: 500;
-    font-size: 0.8rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .bg-status-success {
@@ -333,10 +370,25 @@ h6 {
     border-radius: 50%;
 }
 
+/* Tables */
+.table>:not(caption)>*>* {
+    padding: 1rem 1rem;
+    background-color: transparent;
+    border-bottom-color: var(--border-color);
+}
+
+.table thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 992px) {
     .sidebar {
         transform: translateX(-100%);
-        transition: transform 0.3s;
     }
 
     .sidebar.show {
@@ -345,5 +397,7 @@ h6 {
 
     .main-content {
         margin-left: 0;
+        width: 100%;
+        padding: 1.5rem;
     }
 }
