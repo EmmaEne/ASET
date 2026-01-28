@@ -47,6 +47,12 @@ function switchView(viewId, btn) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function openTrackProgress(caseId) {
+    // In a real app, you'd fetch data for caseId here
+    // For demo, we just switch to the track-progress view
+    switchView('track-progress');
+}
+
 /* ============================
    NEW REQUEST WIZARD FLOW
    =========================== */
