@@ -27,18 +27,25 @@ function switchView(viewId, btn) {
         }, 10);
     }
 
-    // 3. Update Nav Buttons
+    // 3. Update Nav Buttons (Mobile & Desktop)
+    const allNavItems = document.querySelectorAll('.nav-btn, .nav-item');
+    allNavItems.forEach(el => el.classList.remove('active'));
+
     if (btn) {
-        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
         btn.classList.add('active');
-    } else {
-        // Find matching nav button if switched programmatically
-        document.querySelectorAll('.nav-btn').forEach(el => {
+        // If we clicked a sidebar item, also find the matching mobile item and vice versa
+        allNavItems.forEach(el => {
             const onclick = el.getAttribute('onclick');
             if (onclick && onclick.includes(`'${viewId}'`)) {
                 el.classList.add('active');
-            } else {
-                el.classList.remove('active');
+            }
+        });
+    } else {
+        // Find matching nav items if switched programmatically
+        allNavItems.forEach(el => {
+            const onclick = el.getAttribute('onclick');
+            if (onclick && onclick.includes(`'${viewId}'`)) {
+                el.classList.add('active');
             }
         });
     }
@@ -118,6 +125,11 @@ function processWizardPayment() {
         // Add to activity feed
         addActivityItem(currentRequestData.type, 'Case submitted and fee paid.', 'Just now');
 
+        // Show success toast
+        if (typeof UIStates !== 'undefined') {
+            UIStates.showToast('Request submitted successfully!', 'success');
+        }
+
         // Reset button
         payBtn.disabled = false;
         payBtn.innerHTML = originalText;
@@ -155,6 +167,11 @@ function startSimulatedUpload(input) {
                 document.getElementById('uploadMain').classList.add('d-none');
                 document.getElementById('uploadSuccess').classList.remove('d-none');
                 addActivityItem('Document Upload', input.files[0].name + ' verified', 'Just now');
+
+                // Show success toast
+                if (typeof UIStates !== 'undefined') {
+                    UIStates.showToast('Document uploaded successfully!', 'success');
+                }
             }, 500);
         }
         progressBar.style.width = progress + '%';
@@ -179,6 +196,11 @@ function handlePayment(btn) {
         addActivityItem('Manual Payment', '₦5,000 confirmed', 'Just now');
         btn.disabled = false;
         btn.innerHTML = originalText;
+
+        // Show success toast
+        if (typeof UIStates !== 'undefined') {
+            UIStates.showToast('Payment processed successfully!', 'success');
+        }
     }, 2000);
 }
 
@@ -194,6 +216,12 @@ function handleProfileUpdate(e) {
     setTimeout(() => {
         btn.disabled = false;
         btn.innerText = 'Saved Successfully!';
+
+        // Show success toast
+        if (typeof UIStates !== 'undefined') {
+            UIStates.showToast('Profile updated successfully!', 'success');
+        }
+
         setTimeout(() => {
             bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
             btn.innerText = 'Save Changes';
@@ -210,6 +238,12 @@ function handlePasswordUpdate(e) {
     setTimeout(() => {
         btn.disabled = false;
         btn.innerText = 'Password Updated!';
+
+        // Show success toast
+        if (typeof UIStates !== 'undefined') {
+            UIStates.showToast('Password updated successfully!', 'success');
+        }
+
         setTimeout(() => {
             bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
             btn.innerText = 'Update Password';
@@ -293,4 +327,152 @@ function addActivityItem(title, text, time) {
         </div>
     `;
     feed.prepend(item);
+}
+
+/* ============================
+   CASE SUBMISSION FORM LOGIC
+   =========================== */
+
+// 1. Modal Management
+function openCaseSubmissionModal() {
+    const modal = new bootstrap.Modal(document.getElementById('caseSubmissionModal'));
+    modal.show();
+}
+
+// 2. Searchable Dropdown Functionality
+function toggleDropdown(dropdownId, show) {
+    const dropdown = document.getElementById(dropdownId);
+    if (show) {
+        dropdown.classList.add('show');
+    } else {
+        setTimeout(() => dropdown.classList.remove('show'), 200); // Small delay to allow click selection
+    }
+}
+
+function filterDropdown(dropdownId, query) {
+    const dropdown = document.getElementById(dropdownId);
+    const items = dropdown.querySelectorAll('.dropdown-item');
+    const searchTerm = query.toLowerCase();
+
+    items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        if (text.includes(searchTerm)) {
+            item.classList.remove('hidden');
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+
+    // Show or hide dropdown based on search
+    if (searchTerm === '') {
+        dropdown.classList.add('show');
+    }
+}
+
+// Global click listener to select items
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('dropdown-item')) {
+        const item = e.target;
+        const dropdownMenu = item.parentElement;
+        const dropdownWrapper = dropdownMenu.parentElement;
+        const searchInput = dropdownWrapper.querySelector('input[type="text"]');
+        const hiddenInput = dropdownWrapper.querySelector('input[type="hidden"]');
+
+        searchInput.value = item.innerText;
+        hiddenInput.value = item.dataset.value;
+
+        // Visual feedback
+        dropdownMenu.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('selected'));
+        item.classList.add('selected');
+
+        dropdownMenu.classList.remove('show');
+    }
+
+    // Close dropdowns if clicking outside
+    if (!e.target.closest('.searchable-dropdown')) {
+        document.querySelectorAll('.searchable-dropdown .dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
+});
+
+// 2. Character Count for Textarea
+document.addEventListener('DOMContentLoaded', () => {
+    const descTextarea = document.getElementById('problemDescription');
+    const charCountSpan = document.getElementById('charCount');
+
+    if (descTextarea && charCountSpan) {
+        descTextarea.addEventListener('input', () => {
+            const count = descTextarea.value.length;
+            charCountSpan.innerText = count;
+
+            if (count >= 500) {
+                charCountSpan.classList.add('text-danger');
+            } else {
+                charCountSpan.classList.remove('text-danger');
+            }
+        });
+    }
+});
+
+// 3. Form Submission Handling
+function handleCaseSubmission(event) {
+    event.preventDefault();
+    const form = event.target;
+    const btn = document.getElementById('submitCaseBtn');
+    const descError = document.getElementById('descriptionError');
+
+    // Custom validation for description length
+    const desc = document.getElementById('problemDescription').value;
+    if (desc.length < 20) {
+        descError.style.setProperty('display', 'block', 'important');
+        return;
+    } else {
+        descError.style.setProperty('display', 'none', 'important');
+    }
+
+    // Standard Bootstrap validation
+    if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+    }
+
+    // Loading State
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Submitting...`;
+
+    // Simulated Server Request
+    setTimeout(() => {
+        // Success Logic
+        if (typeof UIStates !== 'undefined') {
+            UIStates.showToast('Case submitted successfully! We will review it shortly.', 'success');
+        }
+
+        // Add to recent activity
+        const issueTypeObj = document.getElementById('issueType');
+        const issueTypeName = issueTypeObj.options[issueTypeObj.selectedIndex].text;
+        addActivityItem(issueTypeName, 'Case submitted and awaiting review.', 'Just now');
+
+        // Reset Form
+        form.reset();
+        form.classList.remove('was-validated');
+        document.getElementById('charCount').innerText = '0';
+        document.querySelectorAll('.searchable-dropdown input[type="hidden"]').forEach(input => input.value = '');
+
+        // Restore Button
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+
+        // Close Modal
+        const modalEl = document.getElementById('caseSubmissionModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        // Scroll to the activity to show the user it's done
+        setTimeout(() => {
+            document.querySelector('.section-title').scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+
+    }, 2000);
 }

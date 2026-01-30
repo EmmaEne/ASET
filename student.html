@@ -8,782 +8,1264 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="student-dashboard.css" rel="stylesheet">
+    <link href="ui-states.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- App Container -->
-    <div class="app-container">
+    <!-- App Layout Wrapper -->
+    <div class="app-layout">
 
-        <!-- Mobile Top Bar -->
-        <header class="top-bar">
-            <div class="user-welcome">
-                <div class="avatar-circle">
+        <!-- Desktop Sidebar (Visible only on desktop >= 1024px) -->
+        <aside class="desktop-sidebar d-none d-lg-flex">
+            <div class="sidebar-brand">
+                <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                <span class="brand-name">ASET Portal</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="javascript:void(0)" class="nav-item active" onclick="switchView('dashboard', this)">
+                    <i class="bi bi-grid-1x2"></i> <span>Dashboard</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" onclick="switchView('cases', this)">
+                    <i class="bi bi-folder2-open"></i> <span>My Cases</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" onclick="switchView('messages', this)">
+                    <i class="bi bi-chat-dots"></i> <span>Messages</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" onclick="switchView('profile', this)">
+                    <i class="bi bi-person"></i> <span>Profile</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user-card" onclick="switchView('profile')">
                     <img src="https://ui-avatars.com/api/?name=Adebayo+O&background=f0f9ff&color=0284c7&bold=true"
-                        alt="User">
-                </div>
-                <div class="welcome-text">
-                    <span class="greeting">Hello, Adebayo 👋</span>
-                    <span class="status-indicator">Online</span>
-                </div>
-            </div>
-            <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#notificationModal">
-                <i class="bi bi-bell"></i>
-                <span class="notify-badge"></span>
-            </button>
-        </header>
-
-        <!-- Main Content Scroll Area -->
-        <main class="main-content">
-
-            <!-- Dashboard View -->
-            <div id="view-dashboard" class="app-view active">
-                <!-- Status Card -->
-                <div class="status-card-big">
-                    <div class="status-header">
-                        <span class="label">Active Case</span>
-                        <span class="status-pill warning">Under Review</span>
-                    </div>
-                    <div class="case-details">
-                        <h2>Change of Programme</h2>
-                        <p>ID: ASET-2024-00847</p>
-                    </div>
-                    <div class="progress-section">
-                        <div class="step-dots">
-                            <span class="dot active"></span>
-                            <span class="dot active"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
-                        <span class="step-text">Faculty Stage</span>
-                    </div>
-                    <button class="btn-card-action" onclick="openTrackProgress('ASET-2024-00847')">
-                        Track Progress
-                    </button>
-                </div>
-
-                <!-- Quick Actions Grid -->
-                <div class="section-title">Quick Actions</div>
-                <div class="quick-grid">
-                    <button class="quick-btn" id="newRequestBtn" onclick="openNewRequestModal()">
-                        <div class="icon-sq blue"><i class="bi bi-folder-plus"></i></div>
-                        <span>New Request</span>
-                    </button>
-                    <button class="quick-btn" onclick="openUploadModal()">
-                        <div class="icon-sq purple"><i class="bi bi-upload"></i></div>
-                        <span>Upload Doc</span>
-                    </button>
-                    <button class="quick-btn" onclick="openPaymentModal()">
-                        <div class="icon-sq green"><i class="bi bi-credit-card"></i></div>
-                        <span>Pay Fee</span>
-                    </button>
-                    <button class="quick-btn" onclick="switchView('messages')">
-                        <div class="icon-sq orange"><i class="bi bi-chat-dots"></i></div>
-                        <span>Message</span>
-                    </button>
-                </div>
-
-                <!-- Recent Activity Feed -->
-                <div class="section-title">Recent Activity</div>
-                <div class="activity-feed">
-                    <div class="feed-item">
-                        <div class="feed-icon"><i class="bi bi-envelope"></i></div>
-                        <div class="feed-content">
-                            <h4>Message from Admin</h4>
-                            <p>Your case officer has been assigned.</p>
-                            <span class="time">2h ago</span>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <div class="feed-icon"><i class="bi bi-file-earmark-check"></i></div>
-                        <div class="feed-content">
-                            <h4>Document Verified</h4>
-                            <p>Result Slip 2024 was approved.</p>
-                            <span class="time">1d ago</span>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <div class="feed-icon"><i class="bi bi-currency-dollar"></i></div>
-                        <div class="feed-content">
-                            <h4>Payment Pending</h4>
-                            <p>Change of Programme fee is due.</p>
-                            <span class="time">3d ago</span>
-                        </div>
+                        class="avatar-sm">
+                    <div class="user-details ms-2">
+                        <div class="name fw-bold small">Adebayo O.</div>
+                        <div class="role text-muted" style="font-size: 0.7rem;">Student</div>
                     </div>
                 </div>
             </div>
+        </aside>
 
-            <!-- Cases View -->
-            <div id="view-cases" class="app-view">
-                <div class="view-header">
-                    <h2>My Cases</h2>
-                    <button class="btn-clean" onclick="openNewRequestModal()"><i class="bi bi-plus-lg"></i></button>
-                </div>
-                <!-- Case List -->
-                <div class="card-list">
-                    <div class="minimal-card" onclick="new bootstrap.Modal('#caseTimelineModal').show()"
-                        style="cursor: pointer;">
-                        <div class="mc-header">
-                            <span class="mc-title">Change of Programme</span>
-                            <span class="mc-status warning">Review</span>
-                        </div>
-                        <p class="mc-sub">ASET-2024-00847</p>
-                        <div class="mc-footer">
-                            <span><i class="bi bi-person"></i> Mrs. Adekoya F.</span>
-                            <span>Jan 15</span>
-                        </div>
-                    </div>
-                    <div class="minimal-card" onclick="new bootstrap.Modal('#caseTimelineModal').show()"
-                        style="cursor: pointer;">
-                        <div class="mc-header">
-                            <span class="mc-title">Matric Generation</span>
-                            <span class="mc-status success">Done</span>
-                        </div>
-                        <p class="mc-sub">ASET-2024-00623</p>
-                        <div class="mc-footer">
-                            <span><i class="bi bi-hdd-network"></i> System</span>
-                            <span>Dec 10</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- App Container -->
+        <div class="app-container">
 
-            <!-- Messages View -->
-            <div id="view-messages" class="app-view">
-                <div class="view-header">
-                    <h2>Messages</h2>
-                    <button class="btn-clean"><i class="bi bi-pencil-square"></i></button>
-                </div>
-                <div class="message-threads">
-                    <div class="thread-item unread"
-                        onclick="openChat('Admin Office', 'https://ui-avatars.com/api/?name=Admin+Office&background=e0e7ff&color=4338ca')">
-                        <img src="https://ui-avatars.com/api/?name=Admin+Office&background=e0e7ff&color=4338ca"
-                            class="avatar-sm">
-                        <div class="thread-info">
-                            <div class="thread-top">
-                                <span class="sender">Admin Office</span>
-                                <span class="time">10:30 AM</span>
-                            </div>
-                            <p class="preview">Please upload the missing documents...</p>
-                        </div>
-                        <span class="unread-dot"></span>
-                    </div>
-                    <div class="thread-item"
-                        onclick="openChat('Mrs. Adekoya', 'https://ui-avatars.com/api/?name=Mrs+Adekoya&background=fef3c7&color=d97706')">
-                        <img src="https://ui-avatars.com/api/?name=Mrs+Adekoya&background=fef3c7&color=d97706"
-                            class="avatar-sm">
-                        <div class="thread-info">
-                            <div class="thread-top">
-                                <span class="sender">Mrs. Adekoya</span>
-                                <span class="time">Yesterday</span>
-                            </div>
-                            <p class="preview">Your application is progressing well.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Profile View -->
-            <div id="view-profile" class="app-view">
-                <div class="view-header">
-                    <h2>Profile</h2>
-                    <button class="btn-clean"><i class="bi bi-gear"></i></button>
-                </div>
-                <div class="profile-hero">
-                    <div class="ph-avatar">AO</div>
-                    <h3>Adebayo Oluwaseun</h3>
-                    <p>Computer Science • 200 Lvl</p>
-                </div>
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="user-welcome">
+                    <div class="avatar-circle d-lg-none">
+                        <img src="https://ui-avatars.com/api/?name=Adebayo+O&background=f0f9ff&color=0284c7&bold=true"
+                            alt="User">
+                    </div>
+                    <div class="welcome-text">
+                        <span class="greeting">Hello, Adebayo </span>
 
-                <div class="settings-list">
-                    <div class="set-item" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                        <div class="set-icon"><i class="bi bi-person"></i></div>
-                        <span>Personal Info</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="set-item" data-bs-toggle="modal" data-bs-target="#academicInfoModal">
-                        <div class="set-icon"><i class="bi bi-mortarboard"></i></div>
-                        <span>Academic Info</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="set-item" data-bs-toggle="modal" data-bs-target="#passwordModal">
-                        <div class="set-icon"><i class="bi bi-shield-lock"></i></div>
-                        <span>Change Password</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="set-item text-danger" onclick="handleLogout()">
-                        <div class="set-icon"><i class="bi bi-box-arrow-right"></i></div>
-                        <span>Log Out</span>
                     </div>
                 </div>
-            </div>
+                <div class="d-flex align-items-center gap-3">
 
-            <!-- Track Progress View -->
-            <div id="view-track-progress" class="app-view">
-                <div class="view-header">
-                    <button class="btn-clean me-2" onclick="switchView('dashboard')"><i
-                            class="bi bi-arrow-left"></i></button>
-                    <h2>Case Progress</h2>
+                    <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#notificationModal">
+                        <i class="bi bi-bell"></i>
+                        <span class="notify-badge"></span>
+                    </button>
                 </div>
+            </header>
 
-                <div class="card-list">
-                    <!-- Case Overview Card -->
-                    <div class="minimal-card mb-4 border-primary" style="background: var(--primary-soft);">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h4 class="fw-bold mb-1" id="trackCaseType">Change of Programme</h4>
-                                <span class="text-muted small" id="trackCaseID">ID: ASET-2024-00847</span>
-                            </div>
-                            <span class="mc-status warning">Under Review</span>
-                        </div>
-                        <div class="row g-3">
-                            <div class="col-6">
-                                <label class="text-muted small d-block">Assigned Officer</label>
-                                <span class="fw-bold small">Mrs. Adekoya F.</span>
-                            </div>
-                            <div class="col-6 text-end">
-                                <label class="text-muted small d-block">Registry Queue</label>
-                                <span class="fw-bold small text-primary">#14 of 42</span>
+            <!-- Main Content Scroll Area -->
+            <main class="main-content">
+
+                <!-- Dashboard View -->
+                <div id="view-dashboard" class="app-view active container-fluid">
+
+                    <!-- SKELETON LOADER (shows while loading) -->
+                    <div class="skeleton-wrapper" id="dashboardSkeleton">
+                        <!-- Welcome Panel Skeleton -->
+                        <div class="skeleton-welcome-panel">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton-welcome-actions">
+                                <div class="skeleton skeleton-button"></div>
+                                <div class="skeleton skeleton-button"></div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Internal Notes -->
-                    <div class="section-title">Case Notes</div>
-                    <div class="bg-white p-3 rounded-4 shadow-sm border mb-4">
-                        <div class="d-flex gap-3 mb-2">
-                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center"
-                                style="width: 32px; height:32px;">
-                                <i class="bi bi-sticky text-primary"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between">
-                                    <span class="fw-bold small">Administrative Note</span>
-                                    <span class="text-muted" style="font-size: 0.65rem;">Yesterday</span>
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <!-- Status Card Skeleton -->
+                                <div class="skeleton-status-card">
+                                    <div class="skeleton-status-header">
+                                        <div class="skeleton skeleton-text"></div>
+                                        <div class="skeleton skeleton-badge"></div>
+                                    </div>
+                                    <div class="skeleton-case-info">
+                                        <div class="skeleton skeleton-title"></div>
+                                        <div class="skeleton skeleton-text"></div>
+                                    </div>
+                                    <div class="skeleton skeleton-progress"></div>
+                                    <div class="skeleton skeleton-button"></div>
                                 </div>
-                                <p class="small text-muted mb-0">Documents verified at department level. Moving to
-                                    faculty review for final clearance.</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Detailed Timeline -->
-                    <div class="section-title">Full Timeline</div>
-                    <div class="bg-white p-4 rounded-4 shadow-sm border mb-5">
-                        <div class="d-flex flex-column gap-4">
-                            <!-- Stage: Submitted -->
-                            <div class="d-flex gap-3 position-relative">
-                                <div class="timeline-line bg-success"
-                                    style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;"></div>
-                                <div class="bg-success rounded-circle z-1 d-flex align-items-center justify-content-center"
-                                    style="width:24px;height:24px; min-width:24px;">
-                                    <i class="bi bi-check text-white small"></i>
-                                </div>
-                                <div>
-                                    <h6 class="m-0 fw-bold">Submitted</h6>
-                                    <p class="small text-muted mb-1">Application successfully received.</p>
-                                    <small class="text-muted opacity-75">Jan 15, 10:30 AM</small>
-                                </div>
-                            </div>
-
-                            <!-- Stage: Dept -->
-                            <div class="d-flex gap-3 position-relative">
-                                <div class="timeline-line bg-success"
-                                    style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;"></div>
-                                <div class="bg-success rounded-circle z-1 d-flex align-items-center justify-content-center"
-                                    style="width:24px;height:24px; min-width:24px;">
-                                    <i class="bi bi-check text-white small"></i>
-                                </div>
-                                <div>
-                                    <h6 class="m-0 fw-bold">Department Stage</h6>
-                                    <p class="small text-muted mb-1">Cleared by HOD Computer Science.</p>
-                                    <small class="text-muted opacity-75">Jan 18, 02:15 PM</small>
-                                </div>
-                            </div>
-
-                            <!-- Stage: Faculty -->
-                            <div class="d-flex gap-3 position-relative">
-                                <div class="timeline-line bg-primary-subtle"
-                                    style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;"></div>
-                                <div class="bg-primary rounded-circle z-1 d-flex align-items-center justify-content-center shadow"
-                                    style="width:24px;height:24px; min-width:24px; border: 4px solid var(--primary-soft);">
-                                </div>
-                                <div>
-                                    <h6 class="m-0 fw-bold text-primary">Faculty Stage</h6>
-                                    <p class="small text-muted mb-1">Under review by the Sub-Dean.</p>
-                                    <span class="badge bg-primary-subtle text-primary fw-bold"
-                                        style="font-size: 0.6rem;">IN PROGRESS</span>
-                                    <div class="mt-2"><small class="text-muted opacity-75">Jan 20, 09:10 AM</small>
+                                <!-- Activity Section Skeleton -->
+                                <div class="skeleton skeleton-text lg" style="width: 140px; margin-bottom: 1rem;"></div>
+                                <div class="skeleton-activity-feed">
+                                    <div class="skeleton-feed-item">
+                                        <div class="skeleton skeleton-icon md"></div>
+                                        <div class="skeleton-feed-content">
+                                            <div class="skeleton skeleton-text"></div>
+                                            <div class="skeleton skeleton-text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="skeleton-feed-item">
+                                        <div class="skeleton skeleton-icon md"></div>
+                                        <div class="skeleton-feed-content">
+                                            <div class="skeleton skeleton-text"></div>
+                                            <div class="skeleton skeleton-text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="skeleton-feed-item">
+                                        <div class="skeleton skeleton-icon md"></div>
+                                        <div class="skeleton-feed-content">
+                                            <div class="skeleton skeleton-text"></div>
+                                            <div class="skeleton skeleton-text"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Stage: Registry -->
-                            <div class="d-flex gap-3 position-relative">
-                                <div class="timeline-line bg-light shadow-none"
-                                    style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;"></div>
-                                <div class="bg-secondary opacity-25 rounded-circle z-1"
-                                    style="width:24px;height:24px; min-width:24px;"></div>
-                                <div>
-                                    <h6 class="m-0 fw-bold text-muted">Registry Review</h6>
-                                    <p class="small text-muted mb-1">Final validation of credentials.</p>
-                                    <small class="text-muted opacity-50">Pending Stage</small>
-                                </div>
-                            </div>
-
-                            <!-- Stage: Decision -->
-                            <div class="d-flex gap-3">
-                                <div class="bg-secondary opacity-25 rounded-circle z-1"
-                                    style="width:24px;height:24px; min-width:24px;"></div>
-                                <div>
-                                    <h6 class="m-0 fw-bold text-muted">Final Decision</h6>
-                                    <p class="small text-muted mb-0">Approval or Rejection notification.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- Mobile Bottom Nav -->
-        <nav class="bottom-nav">
-            <a href="#" class="nav-btn active" onclick="switchView('dashboard', this)">
-                <i class="bi bi-house-door"></i>
-                <span>Home</span>
-            </a>
-            <a href="#" class="nav-btn" onclick="switchView('cases', this)">
-                <i class="bi bi-folder2-open"></i>
-                <span>Cases</span>
-            </a>
-            <div class="nav-fab-wrapper">
-                <button class="nav-fab" onclick="openNewRequestModal()"><i class="bi bi-plus-lg"></i></button>
-            </div>
-            <a href="#" class="nav-btn" onclick="switchView('messages', this)">
-                <i class="bi bi-chat-dots"></i>
-                <span>Chat</span>
-            </a>
-            <a href="#" class="nav-btn" onclick="switchView('profile', this)">
-                <i class="bi bi-person"></i>
-                <span>Profile</span>
-            </a>
-        </nav>
-
-        <!-- Functional Modals -->
-        <!-- New Request Modal -->
-        <div class="modal fade" id="newRequestModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="fw-bold px-2 pt-2">New Request</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div id="requestMain">
-                            <form id="newRequestForm" onsubmit="handleRequestSubmit(event)">
-                                <div id="requestWizard">
-                                    <!-- Step 1: Type Selection -->
-                                    <div class="wizard-step" id="step1">
-                                        <label class="form-label small text-muted fw-bold">Select Request Type</label>
-                                        <div class="list-group list-group-flush rounded-3 overflow-hidden border">
-                                            <button type="button"
-                                                class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
-                                                onclick="goToStep(2, 'Change of Programme')">
-                                                <i class="bi bi-arrow-left-right text-primary fs-5"></i>
-                                                <div>
-                                                    <div class="fw-bold small">Change of Programme</div>
-                                                    <div class="text-muted" style="font-size: 0.65rem;">Switch
-                                                        department or faculty</div>
-                                                </div>
-                                            </button>
-                                            <button type="button"
-                                                class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
-                                                onclick="goToStep(2, 'Transcript Request')">
-                                                <i class="bi bi-file-earmark-text text-primary fs-5"></i>
-                                                <div>
-                                                    <div class="fw-bold small">Transcript Request</div>
-                                                    <div class="text-muted" style="font-size: 0.65rem;">Request academic
-                                                        records</div>
-                                                </div>
-                                            </button>
-                                            <button type="button"
-                                                class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
-                                                onclick="goToStep(2, 'Deferment of Admission')">
-                                                <i class="bi bi-pause-circle text-primary fs-5"></i>
-                                                <div>
-                                                    <div class="fw-bold small">Deferment</div>
-                                                    <div class="text-muted" style="font-size: 0.65rem;">Pause studies
-                                                        for a session</div>
-                                                </div>
-                                            </button>
-                                        </div>
+                            <!-- Side Column Skeleton (Desktop) -->
+                            <div class="col-lg-4 d-none d-lg-block">
+                                <div class="skeleton-side-card">
+                                    <div class="skeleton skeleton-text lg" style="width: 120px; margin-bottom: 1rem;">
                                     </div>
-
-                                    <!-- Step 2: Details & Upload -->
-                                    <div class="wizard-step d-none" id="step2">
-                                        <h6 class="fw-bold mb-3" id="selectedRequestType">Details</h6>
-                                        <div class="mb-3">
-                                            <label class="form-label small text-muted fw-bold">Reason for
-                                                Request</label>
-                                            <textarea class="form-control border-0 bg-light rounded-3 py-2" rows="3"
-                                                id="requestDesc" placeholder="Explain your request..."></textarea>
-                                        </div>
-                                        <label class="form-label small text-muted fw-bold">Required Documents</label>
-                                        <div class="upload-zone text-center p-3 rounded-4 border-2 border-dashed bg-light text-muted mb-3"
-                                            onclick="document.getElementById('wizFileInput').click()"
-                                            style="border-style: dashed !important; cursor: pointer;">
-                                            <i class="bi bi-cloud-arrow-up fs-2 mb-1 d-block"></i>
-                                            <span class="small fw-bold">Click to upload doc</span>
-                                            <input type="file" id="wizFileInput" class="d-none"
-                                                onchange="handleWizardUpload(this)">
-                                        </div>
-                                        <div id="wizUploadBadge" class="d-none mb-3">
-                                            <div
-                                                class="p-2 bg-success-subtle text-success rounded-3 small d-flex align-items-center gap-2">
-                                                <i class="bi bi-check-circle-fill"></i>
-                                                <span id="fileName">document.pdf</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex gap-2 mt-4">
-                                            <button type="button"
-                                                class="btn btn-light flex-grow-1 py-2 rounded-3 fw-bold"
-                                                onclick="goToStep(1)">Back</button>
-                                            <button type="button"
-                                                class="btn btn-primary flex-grow-1 py-2 rounded-3 fw-bold"
-                                                onclick="goToStep(3)">Continue</button>
-                                        </div>
+                                    <div class="skeleton skeleton-button" style="margin-bottom: 0.75rem;"></div>
+                                    <div class="skeleton skeleton-button" style="margin-bottom: 0.75rem;"></div>
+                                </div>
+                                <div class="skeleton-side-card">
+                                    <div class="skeleton skeleton-text lg" style="width: 100px; margin-bottom: 1rem;">
                                     </div>
-
-                                    <!-- Step 3: Payment -->
-                                    <div class="wizard-step d-none" id="step3">
-                                        <div class="bg-light p-3 rounded-4 mb-4">
-                                            <div class="d-flex justify-content-between mb-2">
-                                                <span class="text-muted small">Processing Fee</span>
-                                                <span class="fw-bold small">₦5,000.00</span>
-                                            </div>
-                                            <div class="d-flex justify-content-between mb-2">
-                                                <span class="text-muted small">Service Charge</span>
-                                                <span class="fw-bold small">₦250.00</span>
-                                            </div>
-                                            <hr class="my-2 opacity-10">
-                                            <div class="d-flex justify-content-between">
-                                                <span class="fw-bold small">Total Amount</span>
-                                                <span class="fw-bold text-primary">₦5,250.00</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label class="form-label small text-muted fw-bold">Payment Method</label>
-                                            <div class="form-check p-3 border rounded-3 mb-2 active"
-                                                style="border-color: #0284c7 !important;">
-                                                <input class="form-check-input ms-0 me-3" type="radio" checked>
-                                                <label class="form-check-label small fw-bold">Debit / Credit Card
-                                                    (Paystack)</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex gap-2 mt-4">
-                                            <button type="button"
-                                                class="btn btn-light flex-grow-1 py-2 rounded-3 fw-bold"
-                                                onclick="goToStep(2)">Back</button>
-                                            <button type="button"
-                                                class="btn btn-primary flex-grow-1 py-2 rounded-3 fw-bold"
-                                                id="wizPayBtn" onclick="processWizardPayment()">Pay Now</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                        </div>
-                        <div id="requestSuccess" class="text-center d-none py-4">
-                            <div class="bg-success-subtle text-success p-3 rounded-circle d-inline-block mb-3">
-                                <i class="bi bi-check-lg fs-2"></i>
-                            </div>
-                            <h5 class="fw-bold">Request Submitted!</h5>
-                            <p class="text-muted small">Your case has been created successfully. A case officer will be
-                                assigned shortly.</p>
-                            <button class="btn btn-light w-100 rounded-3 py-2 mt-2"
-                                data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Upload Document Modal -->
-        <div class="modal fade" id="uploadDocModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="fw-bold px-2 pt-2">Upload Document</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div id="uploadMain">
-                            <div class="upload-zone text-center p-4 rounded-4 border-2 border-dashed bg-light text-muted mb-3 cursor-pointer"
-                                onclick="document.getElementById('fileInput').click()"
-                                style="border-style: dashed !important;">
-                                <i class="bi bi-cloud-arrow-up fs-1 mb-2 d-block"></i>
-                                <span class="small fw-bold">Click or drag & drop to upload</span>
-                                <input type="file" id="fileInput" class="d-none" onchange="startSimulatedUpload(this)">
-                            </div>
-                            <div id="uploadProgress" class="d-none">
-                                <div class="progress rounded-pill mb-2" style="height: 6px;">
-                                    <div id="progressBar"
-                                        class="progress-bar progress-bar-striped progress-bar-animated"
-                                        style="width: 0%"></div>
-                                </div>
-                                <div class="d-flex justify-content-between small text-muted">
-                                    <span id="uploadStatusText">Uploading...</span>
-                                    <span id="progressText">0%</span>
+                                    <div class="skeleton skeleton-text w-100"></div>
+                                    <div class="skeleton skeleton-text w-75"></div>
+                                    <div class="skeleton skeleton-text w-50"></div>
                                 </div>
                             </div>
                         </div>
-                        <div id="uploadSuccess" class="text-center d-none py-3">
-                            <i class="bi bi-check-circle-fill text-success fs-1 mb-2 d-block"></i>
-                            <h6 class="fw-bold">Upload Complete!</h6>
-                            <button class="btn btn-primary btn-sm rounded-pill px-4 mt-2" data-bs-dismiss="modal">Got
-                                it</button>
-                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Payment Modal -->
-        <div class="modal fade" id="paymentModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="fw-bold px-2 pt-2">Make Payment</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div id="paymentMain">
-                            <div class="bg-light p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-muted small">Amount Due</span>
-                                    <h4 class="fw-bold mb-0">₦5,000.00</h4>
-                                </div>
-                                <span class="badge bg-danger rounded-pill">Pending</span>
-                            </div>
-                            <button class="btn btn-primary w-100 py-3 rounded-4 fw-bold" id="payBtn"
-                                onclick="handlePayment(this)">
-                                Secure Pay with Paystack
+                    <!-- ACTUAL CONTENT (hidden initially, shown after load) -->
+                    <div class="dashboard-content content-loaded" id="dashboardContent" style="display: none;">
+                        <!-- Welcome Panel (First-time users) -->
+                        <div class="welcome-panel" id="welcomePanel">
+                            <button class="welcome-panel-dismiss" onclick="UIStates.dismissWelcome()"
+                                aria-label="Dismiss">
+                                <i class="bi bi-x-lg"></i>
                             </button>
+                            <div class="welcome-panel-header">
+                                <span class="welcome-panel-emoji">👋</span>
+                                <h3 class="welcome-panel-title">Welcome to ASET Portal!</h3>
+                            </div>
+                            <p class="welcome-panel-text">Track your academic requests, upload documents, and
+                                communicate
+                                with your case officers — all in one place.</p>
+                            <div class="welcome-panel-actions">
+                                <button class="welcome-action"
+                                    onclick="openCaseSubmissionModal(); UIStates.dismissWelcome();">
+                                    <i class="bi bi-plus-lg"></i> Start a Request
+                                </button>
+                                <button class="welcome-action"
+                                    onclick="switchView('cases'); UIStates.dismissWelcome();">
+                                    <i class="bi bi-folder2-open"></i> View Cases
+                                </button>
+                            </div>
                         </div>
-                        <div id="paymentSuccess" class="text-center d-none py-4">
-                            <i class="bi bi-patch-check-fill text-success fs-1 mb-2 d-block"></i>
-                            <h5 class="fw-bold">Payment Successful!</h5>
-                            <p class="text-muted small">Your receipt has been sent to your email.</p>
-                            <button class="btn btn-light w-100 rounded-3 py-2 mt-2"
-                                data-bs-dismiss="modal">Done</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Notifications Modal -->
-        <div class="modal fade" id="notificationModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-header border-bottom py-3">
-                        <h5 class="fw-bold m-0">Notifications</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body p-0">
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item p-3 border-0 bg-light-subtle">
-                                <div class="d-flex gap-3">
-                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                                        style="width: 40px; height: 40px;">
-                                        <i class="bi bi-chat-dots"></i>
+                        <div class="row g-4">
+                            <!-- Dashboard Main Column -->
+                            <div class="col-lg-8">
+                                <!-- Status Card -->
+                                <div class="status-card-big shadow-sm">
+                                    <div class="status-header">
+                                        <span class="label">Active Case</span>
+                                        <span class="status-pill warning">Under Review</span>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex justify-content-between mb-1">
-                                            <span class="fw-bold small text-primary">New Message</span>
-                                            <span class="text-muted" style="font-size: 0.65rem;">2h ago</span>
+                                    <div class="case-details">
+                                        <h2>Change of Programme</h2>
+                                        <p>ID: ASET-2024-00847</p>
+                                    </div>
+                                    <div class="progress-section">
+                                        <div class="step-dots">
+                                            <span class="dot active"></span>
+                                            <span class="dot active"></span>
+                                            <span class="dot"></span>
+                                            <span class="dot"></span>
                                         </div>
-                                        <p class="small text-muted mb-0">Admin: "Your application ASET-00847 is under
-                                            faculty review..."</p>
+                                        <span class="step-text">Faculty Stage</span>
+                                    </div>
+                                    <button class="btn-card-action" onclick="openTrackProgress('ASET-2024-00847')">
+                                        Track Progress
+                                    </button>
+                                </div>
+
+                                <!-- Recent Activity Feed (Desktop Header) -->
+                                <div class="section-title">Recent Activity</div>
+                                <div class="activity-feed">
+                                    <div class="feed-item border">
+                                        <div class="feed-icon"><i class="bi bi-envelope"></i></div>
+                                        <div class="feed-content">
+                                            <h4>Message from Admin</h4>
+                                            <p>Your case officer has been assigned.</p>
+                                            <span class="time">2h ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="feed-item border">
+                                        <div class="feed-icon"><i class="bi bi-file-earmark-check"></i></div>
+                                        <div class="feed-content">
+                                            <h4>Document Verified</h4>
+                                            <p>Result Slip 2024 was approved.</p>
+                                            <span class="time">1d ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="feed-item border">
+                                        <div class="feed-icon"><i class="bi bi-currency-dollar"></i></div>
+                                        <div class="feed-content">
+                                            <h4>Payment Pending</h4>
+                                            <p>Change of Programme fee is due.</p>
+                                            <span class="time">3d ago</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="list-group-item p-3 border-0">
-                                <div class="d-flex gap-3">
-                                    <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                                        style="width: 40px; height: 40px;">
-                                        <i class="bi bi-check-circle"></i>
+
+                            <!-- Dashboard Side Column (Desktop Only Sidebar Widget) -->
+                            <div class="col-lg-4 d-none d-lg-block">
+
+                                <div class="desktop-side-card p-3 mb-4">
+                                    <h5 class="mt-0 fw-bold mt-2 mb-3">Quick Actions</h5>
+                                    <div class="d-grid gap-2">
+                                        <button
+                                            class="btn btn-primary d-flex align-items-center gap-3 p-3 rounded-4 border-0"
+                                            onclick="openNewRequestModal()">
+                                            <div class="bg-white text-primary rounded-3 px-2 py-1"><i
+                                                    class="bi bi-plus-lg"></i></div>
+                                            <span class="fw-bold">New Request</span>
+                                        </button>
+                                        <button
+                                            class="btn bg-light d-flex align-items-center gap-3 p-3 rounded-4 border-0 text-start"
+                                            onclick="openUploadModal()">
+                                            <i class="bi bi-upload text-primary fs-5"></i>
+                                            <div>
+                                                <div class="fw-bold small">Upload Docs</div>
+                                                <div class="text-muted" style="font-size: 0.7rem;">Submit results or IDs
+                                                </div>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="btn bg-light d-flex align-items-center gap-3 p-3 rounded-4 border-0 text-start"
+                                            onclick="openPaymentModal()">
+                                            <i class="bi bi-credit-card text-primary fs-5"></i>
+                                            <div>
+                                                <div class="fw-bold small">Pay Processing Fee</div>
+                                                <div class="text-muted" style="font-size: 0.7rem;">Clear pending
+                                                    requests
+                                                </div>
+                                            </div>
+                                        </button>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex justify-content-between mb-1">
-                                            <span class="fw-bold small text-success">Document Verified</span>
-                                            <span class="text-muted" style="font-size: 0.65rem;">1d ago</span>
-                                        </div>
-                                        <p class="small text-muted mb-0">The Registry has verified your Result Slip
-                                            upload.</p>
+                                </div>
+
+                                <h5 class="section-title">Case Mentor</h5>
+                                <div class="desktop-side-card p-3 d-flex align-items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name=Dr+Okonkwo&background=f0f9ff&color=0284c7&bold=true"
+                                        class="rounded-pill" style="width: 48px; height: 48px;">
+                                    <div>
+                                        <h6 class="fw-bold mb-0">Dr. Okonkwo</h6>
+                                        <span class="text-muted small">Assigned Mentor</span>
+                                        <button class="btn btn-link p-0 d-block mt-1 small fw-bold"
+                                            onclick="switchView('messages')">Chat Now</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="list-group-item p-3 border-0">
-                                <div class="d-flex gap-3">
-                                    <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                                        style="width: 40px; height: 40px;">
-                                        <i class="bi bi-credit-card"></i>
+                        </div>
+
+                        <!-- Quick Actions Grid (Mobile ONLY) -->
+                        <div class="d-lg-none">
+                            <div class="section-title">Quick Actions</div>
+                            <div class="quick-grid">
+                                <button class="quick-btn" id="newRequestBtn" onclick="openNewRequestModal()">
+                                    <div class="icon-sq blue"><i class="bi bi-folder-plus"></i></div>
+                                    <span>New Request</span>
+                                </button>
+                                <button class="quick-btn" onclick="openUploadModal()">
+                                    <div class="icon-sq purple"><i class="bi bi-upload"></i></div>
+                                    <span>Upload Doc</span>
+                                </button>
+                                <button class="quick-btn" onclick="openPaymentModal()">
+                                    <div class="icon-sq green"><i class="bi bi-credit-card"></i></div>
+                                    <span>Pay Fee</span>
+                                </button>
+                                <button class="quick-btn" onclick="switchView('messages')">
+                                    <div class="icon-sq orange"><i class="bi bi-chat-dots"></i></div>
+                                    <span>Message</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div><!-- End dashboard-content -->
+                </div><!-- End view-dashboard -->
+                <div id="view-cases" class="app-view container-fluid">
+                    <!-- Cases Skeleton -->
+                    <div class="skeleton-wrapper" id="casesSkeleton">
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="view-header">
+                                    <div class="skeleton skeleton-title"></div>
+                                    <div class="skeleton skeleton-icon sm"></div>
+                                </div>
+                                <div class="skeleton-case-card">
+                                    <div class="skeleton-case-header">
+                                        <div class="skeleton skeleton-title w-50"></div>
+                                        <div class="skeleton skeleton-badge"></div>
                                     </div>
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex justify-content-between mb-1">
-                                            <span class="fw-bold small">Payment Due</span>
-                                            <span class="text-muted" style="font-size: 0.65rem;">3d ago</span>
-                                        </div>
-                                        <p class="small text-muted mb-0">Academic processing fee for 'Change of
-                                            Programme' is pending.</p>
+                                    <div class="skeleton skeleton-text w-25"></div>
+                                    <div class="skeleton-case-footer">
+                                        <div class="skeleton skeleton-text" style="width: 120px;"></div>
+                                        <div class="skeleton skeleton-text" style="width: 80px;"></div>
+                                    </div>
+                                </div>
+                                <div class="skeleton-case-card">
+                                    <div class="skeleton-case-header">
+                                        <div class="skeleton skeleton-title w-50"></div>
+                                        <div class="skeleton skeleton-badge"></div>
+                                    </div>
+                                    <div class="skeleton skeleton-text w-25"></div>
+                                    <div class="skeleton-case-footer">
+                                        <div class="skeleton skeleton-text" style="width: 120px;"></div>
+                                        <div class="skeleton skeleton-text" style="width: 80px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 d-none d-lg-block">
+                                <div class="skeleton skeleton-text lg" style="width: 120px; margin-bottom: 1rem;"></div>
+                                <div class="skeleton-side-card">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="skeleton skeleton-text w-50"></div>
+                                        <div class="skeleton skeleton-text w-25"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="skeleton skeleton-text w-50"></div>
+                                        <div class="skeleton skeleton-text w-25"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-0">
+                                        <div class="skeleton skeleton-text w-50"></div>
+                                        <div class="skeleton skeleton-text w-25"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer border-top p-2">
-                        <button class="btn btn-light w-100 py-2 small fw-bold" onclick="markAllAsRead()">Mark all as
-                            read</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Edit Profile Modal -->
-        <div class="modal fade" id="editProfileModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="fw-bold px-2 pt-2">Personal Information</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <form onsubmit="handleProfileUpdate(event)">
-                            <div class="mb-3">
-                                <label class="form-label small text-muted fw-bold">Full Name</label>
-                                <input type="text" class="form-control border-0 bg-light rounded-3 py-2"
-                                    value="Adebayo Oluwaseun">
+                    <!-- Cases Actual Content -->
+                    <div id="casesContent" style="display: none;" class="content-loaded">
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="view-header">
+                                    <h2>My Cases</h2>
+                                    <button class="btn-clean" onclick="openNewRequestModal()"><i
+                                            class="bi bi-plus-lg"></i></button>
+                                </div>
+                                <!-- Case List -->
+                                <div class="card-list">
+                                    <div class="minimal-card mb-3 shadow-sm border"
+                                        onclick="openTrackProgress('ASET-2024-00847')" style="cursor: pointer;">
+                                        <div class="mc-header">
+                                            <span class="mc-title">Change of Programme</span>
+                                            <span class="mc-status warning">Review</span>
+                                        </div>
+                                        <p class="mc-sub">ASET-2024-00847</p>
+                                        <div class="mc-footer">
+                                            <span><i class="bi bi-person"></i> Mrs. Adekoya F.</span>
+                                            <span>Jan 15, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="minimal-card mb-3 shadow-sm border"
+                                        onclick="new bootstrap.Modal('#caseTimelineModal').show()"
+                                        style="cursor: pointer;">
+                                        <div class="mc-header">
+                                            <span class="mc-title">Matric Generation</span>
+                                            <span class="mc-status success">Done</span>
+                                        </div>
+                                        <p class="mc-sub">ASET-2024-00623</p>
+                                        <div class="mc-footer">
+                                            <span><i class="bi bi-hdd-network"></i> System</span>
+                                            <span>Dec 10, 2023</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label small text-muted fw-bold">Email Address</label>
-                                <input type="email" class="form-control border-0 bg-light rounded-3 py-2"
-                                    value="adebayo.o@student.edu.ng">
+                            <!-- Desktop Case Summary Widget -->
+                            <div class="col-lg-4 d-none d-lg-block">
+                                <div class="section-title mt-0">Case Summary</div>
+                                <div class="desktop-side-card p-4">
+                                    <canvas id="casesChart" class="d-none"></canvas> <!-- For future expansion -->
+                                    <div class="case-stats-summary">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="small text-muted">Total Submissions</span>
+                                            <span class="fw-bold">3</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-3 text-success">
+                                            <span class="small">Completed</span>
+                                            <span class="fw-bold">2</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-0 text-warning">
+                                            <span class="small">Ongoing</span>
+                                            <span class="fw-bold">1</span>
+                                        </div>
+                                    </div>
+                                    <hr class="my-3">
+                                    <div class="p-3 bg-light rounded-3">
+                                        <h6 class="fw-bold small mb-1">Last Update</h6>
+                                        <p class="small text-muted mb-0">Registry verified your matric generation
+                                            request on
+                                            Dec 10.</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label small text-muted fw-bold">Phone Number</label>
-                                <input type="tel" class="form-control border-0 bg-light rounded-3 py-2"
-                                    value="+234 803 456 7890">
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold mt-4">Save
-                                Changes</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Academic Info Modal -->
-        <div class="modal fade" id="academicInfoModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="fw-bold px-2 pt-2">Academic Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div class="mb-4">
-                            <div class="d-flex justify-content-between py-2 border-bottom">
-                                <span class="text-muted small">Student ID</span>
-                                <span class="fw-bold small">STU/2024/001234</span>
-                            </div>
-                            <div class="d-flex justify-content-between py-2 border-bottom">
-                                <span class="text-muted small">Faculty</span>
-                                <span class="fw-bold small">Science</span>
-                            </div>
-                            <div class="d-flex justify-content-between py-2 border-bottom">
-                                <span class="text-muted small">Department</span>
-                                <span class="fw-bold small">Computer Science</span>
-                            </div>
-                            <div class="d-flex justify-content-between py-2 border-bottom">
-                                <span class="text-muted small">Level</span>
-                                <span class="fw-bold small">200 Level</span>
-                            </div>
-                            <div class="d-flex justify-content-between py-2 border-bottom">
-                                <span class="text-muted small">Cumulative GPA</span>
-                                <span class="fw-bold small text-success">3.85 / 5.0</span>
-                            </div>
-                        </div>
-                        <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3">
-                            <i class="bi bi-info-circle text-primary"></i>
-                            <span class="small text-muted">Academic records are verified by the registry and can only be
-                                updated via the portal admin.</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Change Password Modal -->
-        <div class="modal fade" id="passwordModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="fw-bold px-2 pt-2">Security Settings</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <!-- Messages View -->
+                <div id="view-messages" class="app-view">
+                    <!-- Messages Skeleton -->
+                    <div class="skeleton-wrapper" id="messagesSkeleton">
+                        <div class="view-header">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-icon sm"></div>
+                        </div>
+                        <div class="skeleton-thread-list">
+                            <div class="skeleton-thread-item">
+                                <div class="skeleton skeleton-avatar sm"></div>
+                                <div class="skeleton-thread-content">
+                                    <div class="skeleton-thread-header">
+                                        <div class="skeleton skeleton-text w-50"></div>
+                                        <div class="skeleton skeleton-text w-25"></div>
+                                    </div>
+                                    <div class="skeleton skeleton-text w-75"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-thread-item">
+                                <div class="skeleton skeleton-avatar sm"></div>
+                                <div class="skeleton-thread-content">
+                                    <div class="skeleton-thread-header">
+                                        <div class="skeleton skeleton-text w-50"></div>
+                                        <div class="skeleton skeleton-text w-25"></div>
+                                    </div>
+                                    <div class="skeleton skeleton-text w-75"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body p-4">
-                        <form onsubmit="handlePasswordUpdate(event)">
-                            <div class="mb-3">
-                                <label class="form-label small text-muted fw-bold">Current Password</label>
-                                <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
-                                    placeholder="••••••••">
+
+                    <!-- Messages Actual Content -->
+                    <div id="messagesContent" style="display: none;" class="content-loaded">
+                        <div class="view-header">
+                            <h2>Messages</h2>
+                            <button class="btn-clean"><i class="bi bi-pencil-square"></i></button>
+                        </div>
+                        <div class="message-threads">
+                            <div class="thread-item unread"
+                                onclick="openChat('Admin Office', 'https://ui-avatars.com/api/?name=Admin+Office&background=e0e7ff&color=4338ca')">
+                                <img src="https://ui-avatars.com/api/?name=Admin+Office&background=e0e7ff&color=4338ca"
+                                    class="avatar-sm">
+                                <div class="thread-info">
+                                    <div class="thread-top">
+                                        <span class="sender">Admin Office</span>
+                                        <span class="time">10:30 AM</span>
+                                    </div>
+                                    <p class="preview">Please upload the missing documents...</p>
+                                </div>
+                                <span class="unread-dot"></span>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label small text-muted fw-bold">New Password</label>
-                                <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
-                                    placeholder="••••••••">
+                            <div class="thread-item"
+                                onclick="openChat('Mrs. Adekoya', 'https://ui-avatars.com/api/?name=Mrs+Adekoya&background=fef3c7&color=d97706')">
+                                <img src="https://ui-avatars.com/api/?name=Mrs+Adekoya&background=fef3c7&color=d97706"
+                                    class="avatar-sm">
+                                <div class="thread-info">
+                                    <div class="thread-top">
+                                        <span class="sender">Mrs. Adekoya</span>
+                                        <span class="time">Yesterday</span>
+                                    </div>
+                                    <p class="preview">Your application is progressing well.</p>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label small text-muted fw-bold">Confirm New Password</label>
-                                <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
-                                    placeholder="••••••••">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile View -->
+                <div id="view-profile" class="app-view">
+                    <!-- Profile Skeleton -->
+                    <div class="skeleton-wrapper" id="profileSkeleton">
+                        <div class="skeleton-profile-hero">
+                            <div class="skeleton skeleton-avatar xl"></div>
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-text w-50"></div>
+                        </div>
+                        <div class="skeleton-settings-list">
+                            <div class="skeleton-settings-item">
+                                <div class="skeleton skeleton-icon sm"></div>
+                                <div class="skeleton skeleton-text w-50"></div>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold mt-4">Update
-                                Password</button>
-                        </form>
+                            <div class="skeleton-settings-item">
+                                <div class="skeleton skeleton-icon sm"></div>
+                                <div class="skeleton skeleton-text w-50"></div>
+                            </div>
+                            <div class="skeleton-settings-item">
+                                <div class="skeleton skeleton-icon sm"></div>
+                                <div class="skeleton skeleton-text w-50"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Actual Content -->
+                    <div id="profileContent" style="display: none;" class="content-loaded">
+                        <div class="view-header">
+                            <h2>Profile</h2>
+                            <button class="btn-clean"><i class="bi bi-gear"></i></button>
+                        </div>
+                        <div class="profile-hero">
+                            <div class="ph-avatar">AO</div>
+                            <h3>Adebayo Oluwaseun</h3>
+                            <p>Computer Science • 200 Lvl</p>
+                        </div>
+                        <div class="settings-list">
+                            <div class="set-item" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <div class="set-icon"><i class="bi bi-person"></i></div>
+                                <span>Personal Info</span>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                            <div class="set-item" data-bs-toggle="modal" data-bs-target="#academicInfoModal">
+                                <div class="set-icon"><i class="bi bi-mortarboard"></i></div>
+                                <span>Academic Info</span>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                            <div class="set-item" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                                <div class="set-icon"><i class="bi bi-shield-lock"></i></div>
+                                <span>Change Password</span>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                            <div class="set-item text-danger" onclick="handleLogout()">
+                                <div class="set-icon"><i class="bi bi-box-arrow-right"></i></div>
+                                <span>Log Out</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track Progress View -->
+                <div id="view-track-progress" class="app-view">
+                    <div class="view-header">
+                        <button class="btn-clean me-2" onclick="switchView('dashboard')"><i
+                                class="bi bi-arrow-left"></i></button>
+                        <h2>Case Progress</h2>
+                    </div>
+
+                    <div class="card-list">
+                        <!-- Case Overview Card -->
+                        <div class="minimal-card mb-4 border-primary" style="background: var(--primary-soft);">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h4 class="fw-bold mb-1" id="trackCaseType">Change of Programme</h4>
+                                    <span class="text-muted small" id="trackCaseID">ID: ASET-2024-00847</span>
+                                </div>
+                                <span class="mc-status warning">Under Review</span>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <label class="text-muted small d-block">Assigned Officer</label>
+                                    <span class="fw-bold small">Mrs. Adekoya F.</span>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <label class="text-muted small d-block">Registry Queue</label>
+                                    <span class="fw-bold small text-primary">#14 of 42</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Internal Notes -->
+                        <div class="section-title">Case Notes</div>
+                        <div class="bg-white p-3 rounded-4 shadow-sm border mb-4">
+                            <div class="d-flex gap-3 mb-2">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 32px; height:32px;">
+                                    <i class="bi bi-sticky text-primary"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="fw-bold small">Administrative Note</span>
+                                        <span class="text-muted" style="font-size: 0.65rem;">Yesterday</span>
+                                    </div>
+                                    <p class="small text-muted mb-0">Documents verified at department level. Moving
+                                        to
+                                        faculty review for final clearance.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Timeline -->
+                        <div class="section-title">Full Timeline</div>
+                        <div class="bg-white p-4 rounded-4 shadow-sm border mb-5">
+                            <div class="d-flex flex-column gap-4">
+                                <!-- Stage: Submitted -->
+                                <div class="d-flex gap-3 position-relative">
+                                    <div class="timeline-line bg-success"
+                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                                    </div>
+                                    <div class="bg-success rounded-circle z-1 d-flex align-items-center justify-content-center"
+                                        style="width:24px;height:24px; min-width:24px;">
+                                        <i class="bi bi-check text-white small"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold">Submitted</h6>
+                                        <p class="small text-muted mb-1">Application successfully received.</p>
+                                        <small class="text-muted opacity-75">Jan 15, 10:30 AM</small>
+                                    </div>
+                                </div>
+
+                                <!-- Stage: Dept -->
+                                <div class="d-flex gap-3 position-relative">
+                                    <div class="timeline-line bg-success"
+                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                                    </div>
+                                    <div class="bg-success rounded-circle z-1 d-flex align-items-center justify-content-center"
+                                        style="width:24px;height:24px; min-width:24px;">
+                                        <i class="bi bi-check text-white small"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold">Department Stage</h6>
+                                        <p class="small text-muted mb-1">Cleared by HOD Computer Science.</p>
+                                        <small class="text-muted opacity-75">Jan 18, 02:15 PM</small>
+                                    </div>
+                                </div>
+
+                                <!-- Stage: Faculty -->
+                                <div class="d-flex gap-3 position-relative">
+                                    <div class="timeline-line bg-primary-subtle"
+                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                                    </div>
+                                    <div class="bg-primary rounded-circle z-1 d-flex align-items-center justify-content-center shadow"
+                                        style="width:24px;height:24px; min-width:24px; border: 4px solid var(--primary-soft);">
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-primary">Faculty Stage</h6>
+                                        <p class="small text-muted mb-1">Under review by the Sub-Dean.</p>
+                                        <span class="badge bg-primary-subtle text-primary fw-bold"
+                                            style="font-size: 0.6rem;">IN PROGRESS</span>
+                                        <div class="mt-2"><small class="text-muted opacity-75">Jan 20, 09:10
+                                                AM</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Stage: Registry -->
+                                <div class="d-flex gap-3 position-relative">
+                                    <div class="timeline-line bg-light shadow-none"
+                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                                    </div>
+                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
+                                        style="width:24px;height:24px; min-width:24px;"></div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-muted">Registry Review</h6>
+                                        <p class="small text-muted mb-1">Final validation of credentials.</p>
+                                        <small class="text-muted opacity-50">Pending Stage</small>
+                                    </div>
+                                </div>
+
+                                <!-- Stage: Decision -->
+                                <div class="d-flex gap-3">
+                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
+                                        style="width:24px;height:24px; min-width:24px;"></div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-muted">Final Decision</h6>
+                                        <p class="small text-muted mb-0">Approval or Rejection notification.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+            <!-- Mobile Bottom Nav -->
+            <nav class="bottom-nav">
+                <a href="javascript:void(0)" class="nav-btn active" onclick="switchView('dashboard', this)">
+                    <i class="bi bi-house-door"></i>
+                    <span>Home</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-btn" onclick="switchView('cases', this)">
+                    <i class="bi bi-folder2-open"></i>
+                    <span>Cases</span>
+                </a>
+                <div class="nav-fab-wrapper">
+                    <button class="nav-fab" onclick="openNewRequestModal()"><i class="bi bi-plus-lg"></i></button>
+                </div>
+                <a href="javascript:void(0)" class="nav-btn" onclick="switchView('messages', this)">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Chat</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-btn" onclick="switchView('profile', this)">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+        </div> <!-- End .app-container -->
+    </div> <!-- End .app-layout -->
+    <!-- Functional Modals -->
+    <!-- New Request Modal -->
+    <div class="modal fade" id="newRequestModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold px-2 pt-2">New Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="requestMain">
+                        <form id="newRequestForm" onsubmit="handleRequestSubmit(event)">
+                            <div id="requestWizard">
+                                <!-- Step 1: Type Selection -->
+                                <div class="wizard-step" id="step1">
+                                    <label class="form-label small text-muted fw-bold">Select Request Type</label>
+                                    <div class="list-group list-group-flush rounded-3 overflow-hidden border">
+                                        <button type="button"
+                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
+                                            onclick="goToStep(2, 'Change of Programme')">
+                                            <i class="bi bi-arrow-left-right text-primary fs-5"></i>
+                                            <div>
+                                                <div class="fw-bold small">Change of Programme</div>
+                                                <div class="text-muted" style="font-size: 0.65rem;">Switch
+                                                    department or faculty</div>
+                                            </div>
+                                        </button>
+                                        <button type="button"
+                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
+                                            onclick="goToStep(2, 'Transcript Request')">
+                                            <i class="bi bi-file-earmark-text text-primary fs-5"></i>
+                                            <div>
+                                                <div class="fw-bold small">Transcript Request</div>
+                                                <div class="text-muted" style="font-size: 0.65rem;">Request academic
+                                                    records</div>
+                                            </div>
+                                        </button>
+                                        <button type="button"
+                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
+                                            onclick="goToStep(2, 'Deferment of Admission')">
+                                            <i class="bi bi-pause-circle text-primary fs-5"></i>
+                                            <div>
+                                                <div class="fw-bold small">Deferment</div>
+                                                <div class="text-muted" style="font-size: 0.65rem;">Pause studies
+                                                    for a session</div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Details & Upload -->
+                                <div class="wizard-step d-none" id="step2">
+                                    <h6 class="fw-bold mb-3" id="selectedRequestType">Details</h6>
+                                    <div class="mb-3">
+                                        <label class="form-label small text-muted fw-bold">Reason for
+                                            Request</label>
+                                        <textarea class="form-control border-0 bg-light rounded-3 py-2" rows="3"
+                                            id="requestDesc" placeholder="Explain your request..."></textarea>
+                                    </div>
+                                    <label class="form-label small text-muted fw-bold">Required Documents</label>
+                                    <div class="upload-zone text-center p-3 rounded-4 border-2 border-dashed bg-light text-muted mb-3"
+                                        onclick="document.getElementById('wizFileInput').click()"
+                                        style="border-style: dashed !important; cursor: pointer;">
+                                        <i class="bi bi-cloud-arrow-up fs-2 mb-1 d-block"></i>
+                                        <span class="small fw-bold">Click to upload doc</span>
+                                        <input type="file" id="wizFileInput" class="d-none"
+                                            onchange="handleWizardUpload(this)">
+                                    </div>
+                                    <div id="wizUploadBadge" class="d-none mb-3">
+                                        <div
+                                            class="p-2 bg-success-subtle text-success rounded-3 small d-flex align-items-center gap-2">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            <span id="fileName">document.pdf</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-2 mt-4">
+                                        <button type="button" class="btn btn-light flex-grow-1 py-2 rounded-3 fw-bold"
+                                            onclick="goToStep(1)">Back</button>
+                                        <button type="button" class="btn btn-primary flex-grow-1 py-2 rounded-3 fw-bold"
+                                            onclick="goToStep(3)">Continue</button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Payment -->
+                                <div class="wizard-step d-none" id="step3">
+                                    <div class="bg-light p-3 rounded-4 mb-4">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="text-muted small">Processing Fee</span>
+                                            <span class="fw-bold small">₦5,000.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="text-muted small">Service Charge</span>
+                                            <span class="fw-bold small">₦250.00</span>
+                                        </div>
+                                        <hr class="my-2 opacity-10">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-bold small">Total Amount</span>
+                                            <span class="fw-bold text-primary">₦5,250.00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label small text-muted fw-bold">Payment Method</label>
+                                        <div class="form-check p-3 border rounded-3 mb-2 active"
+                                            style="border-color: #0284c7 !important;">
+                                            <input class="form-check-input ms-0 me-3" type="radio" checked>
+                                            <label class="form-check-label small fw-bold">Debit / Credit Card
+                                                (Paystack)</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-2 mt-4">
+                                        <button type="button" class="btn btn-light flex-grow-1 py-2 rounded-3 fw-bold"
+                                            onclick="goToStep(2)">Back</button>
+                                        <button type="button" class="btn btn-primary flex-grow-1 py-2 rounded-3 fw-bold"
+                                            id="wizPayBtn" onclick="processWizardPayment()">Pay Now</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                    <div id="requestSuccess" class="text-center d-none py-4">
+                        <div class="bg-success-subtle text-success p-3 rounded-circle d-inline-block mb-3">
+                            <i class="bi bi-check-lg fs-2"></i>
+                        </div>
+                        <h5 class="fw-bold">Request Submitted!</h5>
+                        <p class="text-muted small">Your case has been created successfully. A case officer will be
+                            assigned shortly.</p>
+                        <button class="btn btn-light w-100 rounded-3 py-2 mt-2" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Confirmation Modal (Logout replacement) -->
-        <div class="modal fade" id="confirmModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
-                    <div class="modal-body p-4 text-center">
-                        <div class="bg-danger-subtle text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                            style="width: 50px; height: 50px;">
-                            <i class="bi bi-box-arrow-right fs-4"></i>
+    <!-- Upload Document Modal -->
+    <div class="modal fade" id="uploadDocModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold px-2 pt-2">Upload Document</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="uploadMain">
+                        <div class="upload-zone text-center p-4 rounded-4 border-2 border-dashed bg-light text-muted mb-3 cursor-pointer"
+                            onclick="document.getElementById('fileInput').click()"
+                            style="border-style: dashed !important;">
+                            <i class="bi bi-cloud-arrow-up fs-1 mb-2 d-block"></i>
+                            <span class="small fw-bold">Click or drag & drop to upload</span>
+                            <input type="file" id="fileInput" class="d-none" onchange="startSimulatedUpload(this)">
                         </div>
-                        <h6 class="fw-bold">Sign Out</h6>
-                        <p class="text-muted small mb-4">Are you sure you want to log out of your student account?</p>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-light flex-grow-1 py-2 rounded-pill small fw-bold"
-                                data-bs-dismiss="modal">Cancel</button>
-                            <button class="btn btn-danger flex-grow-1 py-2 rounded-pill small fw-bold"
-                                onclick="window.location.href='index.html'">Sign Out</button>
+                        <div id="uploadProgress" class="d-none">
+                            <div class="progress rounded-pill mb-2" style="height: 6px;">
+                                <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated"
+                                    style="width: 0%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span id="uploadStatusText">Uploading...</span>
+                                <span id="progressText">0%</span>
+                            </div>
                         </div>
+                    </div>
+                    <div id="uploadSuccess" class="text-center d-none py-3">
+                        <i class="bi bi-check-circle-fill text-success fs-1 mb-2 d-block"></i>
+                        <h6 class="fw-bold">Upload Complete!</h6>
+                        <button class="btn btn-primary btn-sm rounded-pill px-4 mt-2" data-bs-dismiss="modal">Got
+                            it</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="student-logic.js"></script>
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold px-2 pt-2">Make Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="paymentMain">
+                        <div class="bg-light p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-muted small">Amount Due</span>
+                                <h4 class="fw-bold mb-0">₦5,000.00</h4>
+                            </div>
+                            <span class="badge bg-danger rounded-pill">Pending</span>
+                        </div>
+                        <button class="btn btn-primary w-100 py-3 rounded-4 fw-bold" id="payBtn"
+                            onclick="handlePayment(this)">
+                            Secure Pay with Paystack
+                        </button>
+                    </div>
+                    <div id="paymentSuccess" class="text-center d-none py-4">
+                        <i class="bi bi-patch-check-fill text-success fs-1 mb-2 d-block"></i>
+                        <h5 class="fw-bold">Payment Successful!</h5>
+                        <p class="text-muted small">Your receipt has been sent to your email.</p>
+                        <button class="btn btn-light w-100 rounded-3 py-2 mt-2" data-bs-dismiss="modal">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-bottom py-3">
+                    <h5 class="fw-bold m-0">Notifications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item p-3 border-0 bg-light-subtle">
+                            <div class="d-flex gap-3">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width: 40px; height: 40px;">
+                                    <i class="bi bi-chat-dots"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="fw-bold small text-primary">New Message</span>
+                                        <span class="text-muted" style="font-size: 0.65rem;">2h ago</span>
+                                    </div>
+                                    <p class="small text-muted mb-0">Admin: "Your application ASET-00847 is under
+                                        faculty review..."</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item p-3 border-0">
+                            <div class="d-flex gap-3">
+                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width: 40px; height: 40px;">
+                                    <i class="bi bi-check-circle"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="fw-bold small text-success">Document Verified</span>
+                                        <span class="text-muted" style="font-size: 0.65rem;">1d ago</span>
+                                    </div>
+                                    <p class="small text-muted mb-0">The Registry has verified your Result Slip
+                                        upload.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item p-3 border-0">
+                            <div class="d-flex gap-3">
+                                <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width: 40px; height: 40px;">
+                                    <i class="bi bi-credit-card"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="fw-bold small">Payment Due</span>
+                                        <span class="text-muted" style="font-size: 0.65rem;">3d ago</span>
+                                    </div>
+                                    <p class="small text-muted mb-0">Academic processing fee for 'Change of
+                                        Programme' is pending.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top p-2">
+                    <button class="btn btn-light w-100 py-2 small fw-bold" onclick="markAllAsRead()">Mark all as
+                        read</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold px-2 pt-2">Personal Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form onsubmit="handleProfileUpdate(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Full Name</label>
+                            <input type="text" class="form-control border-0 bg-light rounded-3 py-2"
+                                value="Adebayo Oluwaseun">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Email Address</label>
+                            <input type="email" class="form-control border-0 bg-light rounded-3 py-2"
+                                value="adebayo.o@student.edu.ng">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Phone Number</label>
+                            <input type="tel" class="form-control border-0 bg-light rounded-3 py-2"
+                                value="+234 803 456 7890">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold mt-4">Save
+                            Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Academic Info Modal -->
+    <div class="modal fade" id="academicInfoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold px-2 pt-2">Academic Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span class="text-muted small">Student ID</span>
+                            <span class="fw-bold small">STU/2024/001234</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span class="text-muted small">Faculty</span>
+                            <span class="fw-bold small">Science</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span class="text-muted small">Department</span>
+                            <span class="fw-bold small">Computer Science</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span class="text-muted small">Level</span>
+                            <span class="fw-bold small">200 Level</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span class="text-muted small">Cumulative GPA</span>
+                            <span class="fw-bold small text-success">3.85 / 5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3">
+                        <i class="bi bi-info-circle text-primary"></i>
+                        <span class="small text-muted">Academic records are verified by the registry and can only be
+                            updated via the portal admin.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold px-2 pt-2">Security Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form onsubmit="handlePasswordUpdate(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Current Password</label>
+                            <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
+                                placeholder="••••••••">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">New Password</label>
+                            <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
+                                placeholder="••••••••">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Confirm New Password</label>
+                            <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
+                                placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold mt-4">Update
+                            Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal (Logout replacement) -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-body p-4 text-center">
+                    <div class="bg-danger-subtle text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                        style="width: 50px; height: 50px;">
+                        <i class="bi bi-box-arrow-right fs-4"></i>
+                    </div>
+                    <h6 class="fw-bold">Sign Out</h6>
+                    <p class="text-muted small mb-4">Are you sure you want to log out of your student account?</p>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-light flex-grow-1 py-2 rounded-pill small fw-bold"
+                            data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-danger flex-grow-1 py-2 rounded-pill small fw-bold"
+                            onclick="ASET.logout()">Sign Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case Submission Modal -->
+    <div class="modal fade" id="caseSubmissionModal" tabindex="-1" aria-labelledby="caseSubmissionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0 pe-4 pt-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="icon-box bg-primary text-white rounded-3 d-flex align-items-center justify-content-center"
+                            style="width: 48px; height: 48px;">
+                            <i class="bi bi-file-earmark-plus fs-5"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0" id="caseSubmissionModalLabel">Submit a New Case</h5>
+                            <p class="text-muted small mb-0">Tell us about your academic issue and we'll help resolve
+                                it.</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="caseSubmissionForm" onsubmit="handleCaseSubmission(event)" novalidate>
+                        <div class="row g-3">
+                            <!-- Current Institution -->
+                            <div class="col-md-6">
+                                <label for="currentInstitution" class="form-label fw-semibold small">Current Institution
+                                    <span class="text-danger">*</span></label>
+                                <div class="searchable-dropdown">
+                                    <input type="text" class="form-control form-control-lg" id="institutionSearch"
+                                        placeholder="Search university..." autocomplete="off"
+                                        onfocus="toggleDropdown('institutionDropdown', true)"
+                                        oninput="filterDropdown('institutionDropdown', this.value)">
+                                    <input type="hidden" id="currentInstitution" name="currentInstitution" required>
+                                    <div class="dropdown-menu w-100 shadow-sm" id="institutionDropdown">
+                                        <div class="dropdown-item" data-value="unilag">University of Lagos</div>
+                                        <div class="dropdown-item" data-value="ui">University of Ibadan</div>
+                                        <div class="dropdown-item" data-value="oau">Obafemi Awolowo University</div>
+                                        <div class="dropdown-item" data-value="unn">University of Nigeria, Nsukka</div>
+                                        <div class="dropdown-item" data-value="abu">Ahmadu Bello University</div>
+                                        <div class="dropdown-item" data-value="lasu">Lagos State University</div>
+                                        <div class="dropdown-item" data-value="uniben">University of Benin</div>
+                                        <div class="dropdown-item" data-value="futa">Federal University of Technology,
+                                            Akure</div>
+                                        <div class="dropdown-item" data-value="unilorin">University of Ilorin</div>
+                                        <div class="dropdown-item" data-value="covenant">Covenant University</div>
+                                        <div class="dropdown-item" data-value="babcock">Babcock University</div>
+                                        <div class="dropdown-item" data-value="bowen">Bowen University</div>
+                                        <div class="dropdown-item" data-value="aau">Ambrose Alli University</div>
+                                        <div class="dropdown-item" data-value="uniosun">Osun State University</div>
+                                        <div class="dropdown-item" data-value="other">Other Institution</div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback">Please select your institution.</div>
+                            </div>
+
+                            <!-- Current Department -->
+                            <div class="col-md-6">
+                                <label for="currentDepartment" class="form-label fw-semibold small">Current Department
+                                    <span class="text-danger">*</span></label>
+                                <div class="searchable-dropdown">
+                                    <input type="text" class="form-control form-control-lg" id="departmentSearch"
+                                        placeholder="Search department..." autocomplete="off"
+                                        onfocus="toggleDropdown('departmentDropdown', true)"
+                                        oninput="filterDropdown('departmentDropdown', this.value)">
+                                    <input type="hidden" id="currentDepartment" name="currentDepartment" required>
+                                    <div class="dropdown-menu w-100 shadow-sm" id="departmentDropdown">
+                                        <div class="dropdown-item" data-value="compsci">Computer Science</div>
+                                        <div class="dropdown-item" data-value="medicine">Medicine & Surgery</div>
+                                        <div class="dropdown-item" data-value="law">Law</div>
+                                        <div class="dropdown-item" data-value="accounting">Accounting</div>
+                                        <div class="dropdown-item" data-value="economics">Economics</div>
+                                        <div class="dropdown-item" data-value="engr-civil">Civil Engineering</div>
+                                        <div class="dropdown-item" data-value="engr-mech">Mechanical Engineering</div>
+                                        <div class="dropdown-item" data-value="engr-elec">Electrical Engineering</div>
+                                        <div class="dropdown-item" data-value="pharmacy">Pharmacy</div>
+                                        <div class="dropdown-item" data-value="nursing">Nursing Science</div>
+                                        <div class="dropdown-item" data-value="masscomm">Mass Communication</div>
+                                        <div class="dropdown-item" data-value="polsci">Political Science</div>
+                                        <div class="dropdown-item" data-value="biology">Biology</div>
+                                        <div class="dropdown-item" data-value="chemistry">Chemistry</div>
+                                        <div class="dropdown-item" data-value="physics">Physics</div>
+                                        <div class="dropdown-item" data-value="maths">Mathematics</div>
+                                        <div class="dropdown-item" data-value="other">Other Department</div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback">Please select your department.</div>
+                            </div>
+
+                            <!-- Issue Type -->
+                            <div class="col-12">
+                                <label for="issueType" class="form-label fw-semibold small">Issue Type <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select form-select-lg" id="issueType" name="issueType" required>
+                                    <option value="" disabled selected>Select your issue type...</option>
+                                    <option value="change-of-department">Change of Department</option>
+                                    <option value="transfer">Transfer (Inter-faculty / Inter-school)</option>
+                                    <option value="probation">Probation Assistance</option>
+                                    <option value="deferment">Deferment / Suspension</option>
+                                    <option value="withdrawal">Withdrawal</option>
+                                    <option value="other">Other Academic Issue</option>
+                                </select>
+                                <div class="invalid-feedback">Please select an issue type.</div>
+                            </div>
+
+                            <!-- Problem Description -->
+                            <div class="col-12">
+                                <label for="problemDescription" class="form-label fw-semibold small">Short Description
+                                    of Problem <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="problemDescription" name="problemDescription"
+                                    rows="4" placeholder="Briefly describe your academic issue or challenge..." required
+                                    minlength="20" maxlength="500"></textarea>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <div class="invalid-feedback d-block" id="descriptionError"
+                                        style="display: none !important;">Please provide a description (min 20
+                                        characters).</div>
+                                    <small class="text-muted ms-auto"><span id="charCount">0</span>/500</small>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="col-12 mt-4 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-3 rounded-3"
+                                    id="submitCaseBtn">
+                                    <i class="bi bi-send me-2"></i> Submit Case
+                                </button>
+                                <p class="text-muted small mt-3 mb-0">
+                                    <i class="bi bi-shield-check me-1"></i> Your information is secure and confidential.
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script src="ui-states.js"></script>
+    <script src="student-logic.js"></script>
 </body>
 
 </html>
