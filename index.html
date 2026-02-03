@@ -76,7 +76,7 @@
                     </div>
 
                     <button class="btn btn-light btn-lg px-5 text-primary fw-bold hero-animate hero-animate-delay-4"
-                        data-bs-toggle="modal" data-bs-target="#loginModal">
+                        data-bs-toggle="modal" data-bs-target="#intakeModal">
                         Start Your Case <i class="bi bi-arrow-right ms-2"></i>
                     </button>
                 </div>
@@ -308,7 +308,8 @@
                 <p class="lead text-muted mb-4">Start your request and track it seamlessly from submission to
                     resolution.
                 </p>
-                <a href="student.html" class="btn btn-primary btn-lg px-5 fw-bold shadow">Get Started</a>
+                <button class="btn btn-primary btn-lg px-5 fw-bold shadow" data-bs-toggle="modal"
+                    data-bs-target="#intakeModal">Get Started</button>
             </div>
         </div>
     </section>
@@ -377,7 +378,6 @@
                             <div class="p-4 p-md-5 text-center position-relative">
                                 <button type="button" class="btn-close position-absolute top-0 end-0 m-4"
                                     data-bs-dismiss="modal"></button>
-
                                 <div class="mb-4 d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle"
                                     style="width: 80px; height: 80px;">
                                     <i class="bi bi-shield-lock text-primary fs-1"></i>
@@ -385,7 +385,6 @@
                                 <h3 class="fw-bold mb-1">Portal Login</h3>
                                 <p class="text-secondary opacity-75">Enter your credentials to access your account</p>
                             </div>
-
                             <!-- Form Area -->
                             <div class="px-4 px-md-5 pb-5">
                                 <form id="loginForm">
@@ -418,19 +417,15 @@
                                             </button>
                                         </div>
                                     </div>
-
                                     <div class="mb-4 form-check d-flex align-items-center gap-2">
                                         <input type="checkbox" class="form-check-input mt-0" id="rememberMe">
                                         <label class="form-check-label small text-secondary" for="rememberMe">Remember
                                             me</label>
                                     </div>
-
                                     <button type="submit" class="btn btn-primary w-100 btn-lg shadow-sm">
                                         Sign In <i class="bi bi-arrow-right ms-2 small"></i>
                                     </button>
                                 </form>
-
-
                             </div>
                         </div>
                     </div>
@@ -439,31 +434,361 @@
         </div>
     </div>
 
+    <!-- Intake Modal -->
+    <div class="modal fade" id="intakeModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-body p-0">
+                    <!-- Step 1: Issue Selection -->
+                    <div id="intakeStep1" class="intake-step active p-5">
+                        <div class="text-center mb-4">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle"
+                                style="width: 64px; height: 64px;">
+                                <i class="bi bi-patch-question text-primary fs-1"></i>
+                            </div>
+                            <h3 class="fw-bold">What issue are you facing?</h3>
+                            <p class="text-muted">Select a category to help us route your case</p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-secondary">Issue Type</label>
+                            <select id="issueType" class="form-select form-select-lg" onchange="validateStep1()">
+                                <option value="" selected disabled>Choose your issue...</option>
+                                <option value="Change Program & Departmental Issues">Change Program & Departmental
+                                    Issues</option>
+                                <option value="Probation / Withdrawal Issues">Probation / Withdrawal Issues</option>
+                                <option value="Result & Examination Issues">Result & Examination Issues</option>
+                                <option value="Course Registration Problems">Course Registration Problems</option>
+                                <option value="Portal & Payment Issues">Portal & Payment Issues</option>
+                                <option value="Transfer to Another Nigerian University (Interschool)">Transfer to
+                                    Another Nigerian University (Interschool)</option>
+                                <option value="Financial, Loan & Scholarship Support">Financial, Loan & Scholarship
+                                    Support</option>
+                                <option value="Multiple / Complex Issues">Multiple / Complex Issues</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary w-100 btn-lg py-3" id="btnContinueStep1" disabled
+                            onclick="goToStep(2)">Continue</button>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-link text-muted text-decoration-none small"
+                                data-bs-dismiss="modal">Cancel and exit</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Personal Details -->
+                    <div id="intakeStep2" class="intake-step p-5">
+                        <div class="text-center mb-4">
+                            <h3 class="fw-bold">Tell us about yourself</h3>
+                            <p class="text-muted">Fill in your information to proceed</p>
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Full Name</label>
+                                <input type="text" class="form-control" id="intakeName" placeholder="e.g. John Doe">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Matriculation Number</label>
+                                <input type="text" class="form-control" id="intakeMatric"
+                                    placeholder="e.g. 2024/123456">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Current Institution</label>
+                                <input type="text" class="form-control" id="intakeInstitution" list="institutionsList"
+                                    placeholder="Search or select university">
+                                <datalist id="institutionsList">
+                                    <option value="University of Lagos (UNILAG)">
+                                    <option value="University of Ibadan (UI)">
+                                    <option value="Obafemi Awolowo University (OAU)">
+                                    <option value="University of Nigeria, Nsukka (UNN)">
+                                    <option value="Covenant University">
+                                    <option value="Lagos State University (LASU)">
+                                    <option value="Ahmadu Bello University (ABU)">
+                                    <option value="University of Benin (UNIBEN)">
+                                    <option value="Babcock University">
+                                    <option value="Pan-Atlantic University">
+                                </datalist>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Faculty</label>
+                                <input type="text" class="form-control" id="intakeFaculty" list="facultiesList"
+                                    placeholder="Search or select faculty">
+                                <datalist id="facultiesList">
+                                    <option value="Faculty of Science">
+                                    <option value="Faculty of Engineering">
+                                    <option value="Faculty of Arts">
+                                    <option value="Faculty of Social Sciences">
+                                    <option value="Faculty of Clinical Sciences">
+                                    <option value="Faculty of Law">
+                                    <option value="Faculty of Environmental Sciences">
+                                    <option value="Faculty of Education">
+                                    <option value="Faculty of Management Sciences">
+                                </datalist>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Department</label>
+                                <input type="text" class="form-control" id="intakeDepartment" list="departmentsList"
+                                    placeholder="Search or select department">
+                                <datalist id="departmentsList">
+                                    <option value="Computer Science">
+                                    <option value="Mechanical Engineering">
+                                    <option value="Electrical/Electronics Engineering">
+                                    <option value="Economics">
+                                    <option value="Accounting">
+                                    <option value="Medicine and Surgery">
+                                    <option value="Political Science">
+                                    <option value="Mass Communication">
+                                    <option value="Civil Engineering">
+                                    <option value="Business Administration">
+                                    <option value="Microbiology">
+                                    <option value="Biochemistry">
+                                </datalist>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Level / Year</label>
+                                <select class="form-select" id="intakeLevel">
+                                    <option value="100">100 Level</option>
+                                    <option value="200">200 Level</option>
+                                    <option value="300">300 Level</option>
+                                    <option value="400">400 Level</option>
+                                    <option value="500">500 Level</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label small fw-bold">Email Address</label>
+                                <input type="email" class="form-control" id="intakeEmail" placeholder="name@email.com">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Phone Number</label>
+                                <input type="tel" class="form-control" id="intakePhone" placeholder="080 000 0000">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-100 btn-lg py-3" onclick="goToStep(3)">Continue</button>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-link text-muted text-decoration-none small"
+                                onclick="goToStep(1)">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Auth -->
+                    <div id="intakeStep3" class="intake-step p-5">
+                        <div class="text-center mb-4">
+                            <h3 class="fw-bold">Secure your account</h3>
+                            <p class="text-muted">Authenticate to access your dashboard</p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Matriculation Number</label>
+                            <input type="text" class="form-control bg-light" id="authMatric" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Password</label>
+                            <input type="password" class="form-control" id="authPassword"
+                                placeholder="Minimum 6 characters">
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100 btn-lg"
+                                    onclick="finishFlow('login')">Login</button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-outline-primary w-100 btn-lg"
+                                    onclick="finishFlow('signup')">Create Account</button>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-link text-muted text-decoration-none small"
+                                onclick="goToStep(2)">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard View (Initially Hidden) -->
+    <div id="dashboardView" class="py-5" style="display:none; min-height: 100vh; background: #f8f9fc;">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="bg-primary text-white rounded p-1 fs-5"><i
+                                    class="bi bi-mortarboard-fill"></i></span>
+                            <h2 class="fw-bold mb-0" style="color: var(--aset-blue);">ASET Dashboard</h2>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm px-4" onclick="location.reload()">Logout</button>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="fw-bold mb-1">Welcome back, <span id="studentNameDisplay">Student</span></h2>
+                        <p class="text-muted">Your current case status and dashboard.</p>
+                    </div>
+
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="row align-items-center">
+                                <div class="col-md-7">
+                                    <div class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">Case ID:
+                                        ASET-2026-X8429</div>
+                                    <h3 class="fw-bold mb-3" id="selectedIssueDisplay">Issue Type</h3>
+                                    <p class="text-muted mb-4">Your request has been received and is currently in the
+                                        initial review phase. A coordinator will be assigned shortly.</p>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="status-dot bg-warning"
+                                            style="width: 12px; height: 12px; border-radius: 50%;"></div>
+                                        <span class="fw-bold text-dark" id="caseStatusDisplay">Pending Review</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 text-center d-none d-md-block">
+                                    <div class="p-4 bg-light rounded-circle d-inline-block">
+                                        <i class="bi bi-clock-history text-primary" style="font-size: 4rem;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-8">
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-4">Case Timeline</h5>
+                                    <div class="timeline-small">
+                                        <div class="d-flex gap-3 mb-4">
+                                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                                                style="width: 28px; height: 28px;"><i class="bi bi-check-lg small"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-0">Case Submission</h6><small
+                                                    class="text-muted">Completed just now</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-3 mb-4">
+                                            <div class="rounded-circle bg-primary bg-opacity-20 text-primary d-flex align-items-center justify-content-center flex-shrink-0"
+                                                style="width: 28px; height: 28px;"><i
+                                                    class="bi bi-arrow-right small"></i></div>
+                                            <div>
+                                                <h6 class="fw-bold mb-0 text-dark">Institutional Verification</h6><small
+                                                    class="text-muted">Estimated: 24-48 hours</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-3">
+                                            <div class="rounded-circle bg-light text-muted d-flex align-items-center justify-content-center flex-shrink-0"
+                                                style="width: 28px; height: 28px;"><i class="bi bi-dot"></i></div>
+                                            <div>
+                                                <h6 class="fw-bold mb-0 text-muted">Final Approval</h6><small
+                                                    class="text-muted">Awaiting verification</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm rounded-4 h-100 text-white"
+                                style="background: linear-gradient(135deg, var(--aset-blue) 0%, #002266 100%);">
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-3">Priority Support</h5>
+                                    <p class="small opacity-75 mb-4">Need urgent help? Our mentors are available for
+                                        1-on-1 consultations.</p>
+                                    <button class="btn btn-light w-100 text-primary fw-bold py-3">Chat with
+                                        Advisor</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .intake-step {
+            display: none;
+        }
+
+        .intake-step.active {
+            display: block;
+            animation: intakeFade 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes intakeFade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-backdrop.show {
+            opacity: 0.8 !important;
+            background-color: #020617 !important;
+            backdrop-filter: blur(4px);
+        }
+
+        .intake-step .form-control:focus,
+        .intake-step .form-select:focus {
+            border-color: var(--aset-blue);
+            box-shadow: 0 0 0 4px rgba(0, 68, 204, 0.1);
+        }
+    </style>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
     <script src="ui-states.js"></script>
     <script>
+        function validateStep1() {
+            const issueType = document.getElementById('issueType').value;
+            document.getElementById('btnContinueStep1').disabled = !issueType;
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('.intake-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('intakeStep' + step).classList.add('active');
+            if (step === 3) {
+                document.getElementById('authMatric').value = document.getElementById('intakeMatric').value || 'Student-Guest';
+            }
+        }
+
+        function finishFlow(mode) {
+            const name = document.getElementById('intakeName').value || 'Student';
+            const issue = document.getElementById('issueType').value;
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
+
+            setTimeout(() => {
+                const modalEl = document.getElementById('intakeModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                if (modal) modal.hide();
+                document.querySelectorAll('nav, section, footer, #loginModal').forEach(el => {
+                    if (el.id !== 'dashboardView') el.style.display = 'none';
+                });
+                document.getElementById('dashboardView').style.display = 'block';
+                document.getElementById('studentNameDisplay').innerText = name;
+                document.getElementById('selectedIssueDisplay').innerText = issue;
+                window.scrollTo(0, 0);
+                if (typeof UIStates !== 'undefined' && UIStates.showToast) {
+                    UIStates.showToast(`Welcome, ${name.split(' ')[0]}! Case submitted successfully.`, 'success');
+                }
+            }, 1800);
+        }
+
         document.getElementById('loginForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-
-            // Add loading state
             const btn = e.target.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing in...';
-
             setTimeout(() => {
                 const user = ASET.login(email, password);
                 if (user) {
-                    const dashboards = {
-                        'student': 'student.html',
-                        'admin': 'admin.html',
-                        'officer': 'officer.html',
-                        'mentor': 'mentor.html',
-                        'superadmin': 'superadmin.html'
-                    };
+                    const dashboards = { 'student': 'student.html', 'admin': 'admin.html', 'officer': 'officer.html', 'mentor': 'mentor.html', 'superadmin': 'superadmin.html' };
                     window.location.href = dashboards[user.role];
                 } else {
                     btn.disabled = false;
@@ -473,40 +798,29 @@
             }, 800);
         });
 
-        // Password Toggle Logic
-        document.querySelector('.input-group button[type="button"]').addEventListener('click', function () {
-            const input = document.getElementById('loginPassword');
-            const icon = this.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.replace('bi-eye', 'bi-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.replace('bi-eye-slash', 'bi-eye');
-            }
-        });
+        const passToggleBtn = document.querySelector('#loginForm .input-group button[type="button"]');
+        if (passToggleBtn) {
+            passToggleBtn.addEventListener('click', function () {
+                const input = document.getElementById('loginPassword');
+                const icon = this.querySelector('i');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.replace('bi-eye', 'bi-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.replace('bi-eye-slash', 'bi-eye');
+                }
+            });
+        }
 
-        // Scroll Reveal Animation - Enterprise Grade
         (function () {
-            // Respect reduced motion preference
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
             if (prefersReducedMotion) {
-                // Immediately reveal all elements for users who prefer reduced motion
-                document.querySelectorAll('.scroll-reveal').forEach(el => {
-                    el.classList.add('revealed');
-                });
+                document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('revealed'));
                 return;
             }
-
             const revealElements = document.querySelectorAll('.scroll-reveal');
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px 0px -80px 0px',
-                threshold: 0.1
-            };
-
+            const observerOptions = { root: null, rootMargin: '0px 0px -80px 0px', threshold: 0.1 };
             const revealOnScroll = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -515,10 +829,7 @@
                     }
                 });
             }, observerOptions);
-
-            revealElements.forEach(el => {
-                revealOnScroll.observe(el);
-            });
+            revealElements.forEach(el => revealOnScroll.observe(el));
         })();
     </script>
 </body>
