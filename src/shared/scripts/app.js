@@ -77,7 +77,7 @@ const ASET = {
 
     logout() {
         localStorage.removeItem('aset_currentUser');
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     },
 
     getCurrentUser() {
