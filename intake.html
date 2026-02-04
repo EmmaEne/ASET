@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Your Case | ASET</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="intake-flow.css" rel="stylesheet">
+</head>
+
+<body class="intake-body">
+
+    <!-- Navbar -->
+    <nav class="intake-navbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2">
+                <span class="bg-primary text-white rounded p-1 fs-5"><i class="bi bi-mortarboard-fill"></i></span>
+                <span style="font-family: 'Inter', sans-serif; font-weight: 800; color: #0284c7;">ASET</span>
+            </a>
+            <a href="index.html" class="btn btn-link text-decoration-none text-muted fw-medium">Cancel</a>
+        </div>
+    </nav>
+
+    <div class="intake-container">
+        <!-- Progress Bar -->
+        <div class="intake-progress-container">
+            <div class="intake-progress-bar">
+                <div class="intake-progress-dot active" id="dot-1"></div>
+                <div class="intake-progress-dot" id="dot-2"></div>
+                <div class="intake-progress-dot" id="dot-3"></div>
+            </div>
+        </div>
+
+        <div class="intake-card">
+
+            <!-- Step 1: Issue Type Selection -->
+            <div class="intake-step active" id="step-1">
+                <h1 class="intake-title">What issue are you facing?</h1>
+                <p class="intake-subtext">Select one option to continue.</p>
+
+                <div class="issue-grid">
+                    <div class="issue-card" onclick="selectIssue(this, 'Change Program & Departmental Issues')">
+                        <span class="issue-card-title">Change Program & Departmental Issues</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="issue-card" onclick="selectIssue(this, 'Probation / Withdrawal Issues')">
+                        <span class="issue-card-title">Probation / Withdrawal Issues</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="issue-card" onclick="selectIssue(this, 'Result & Examination Issues')">
+                        <span class="issue-card-title">Result & Examination Issues</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="issue-card" onclick="selectIssue(this, 'Course Registration Problems')">
+                        <span class="issue-card-title">Course Registration Problems</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="issue-card" onclick="selectIssue(this, 'Portal & Payment Issues')">
+                        <span class="issue-card-title">Portal & Payment Issues</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="issue-card"
+                        onclick="selectIssue(this, 'Transfer to Another Nigerian University (Interschool)')">
+                        <span class="issue-card-title">Transfer to Another University</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                    <div class="issue-card" onclick="selectIssue(this, 'Multiple / Complex Issues')">
+                        <span class="issue-card-title">Multiple / Complex Issues</span>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+
+                <button class="btn-intake-primary" id="btn-next-1" disabled onclick="nextStep(2)">Continue</button>
+            </div>
+
+            <!-- Step 2: Personal Details -->
+            <div class="intake-step" id="step-2">
+                <h1 class="intake-title">Tell us about yourself</h1>
+                <p class="intake-subtext">We need this to create your profile.</p>
+
+                <div class="intake-form-grid">
+                    <div class="intake-field-group">
+                        <label class="intake-label">Full Name</label>
+                        <input type="text" id="fullName" class="intake-input" placeholder="e.g. John Doe"
+                            oninput="validateStep2()">
+                    </div>
+                    <div class="intake-field-group">
+                        <label class="intake-label">Matriculation Number</label>
+                        <input type="text" id="matricNumber" class="intake-input" placeholder="e.g. 2024/12345"
+                            oninput="validateStep2()">
+                    </div>
+                    <div class="intake-field-group">
+                        <label class="intake-label">Current Institution</label>
+                        <input type="text" id="institution" class="intake-input" placeholder="Enter your university"
+                            oninput="validateStep2()">
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="intake-field-group">
+                                <label class="intake-label">Faculty</label>
+                                <input type="text" id="faculty" class="intake-input" placeholder="e.g. Science"
+                                    oninput="validateStep2()">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="intake-field-group">
+                                <label class="intake-label">Department</label>
+                                <input type="text" id="department" class="intake-input" placeholder="e.g. Comp Sci"
+                                    oninput="validateStep2()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="intake-field-group">
+                                <label class="intake-label">Level / Year</label>
+                                <select id="level" class="intake-select" onchange="validateStep2()">
+                                    <option value="">Select Level</option>
+                                    <option value="100">100 Level</option>
+                                    <option value="200">200 Level</option>
+                                    <option value="300">300 Level</option>
+                                    <option value="400">400 Level</option>
+                                    <option value="500">500 Level</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="intake-field-group">
+                                <label class="intake-label">Phone Number</label>
+                                <input type="tel" id="phone" class="intake-input" placeholder="080 000 0000"
+                                    oninput="validateStep2()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="intake-field-group">
+                        <label class="intake-label">Email Address</label>
+                        <input type="email" id="email" class="intake-input" placeholder="name@email.com"
+                            oninput="validateStep2()">
+                    </div>
+                </div>
+
+                <button class="btn-intake-primary" id="btn-next-2" disabled onclick="nextStep(3)">Continue</button>
+                <button class="btn btn-link w-100 mt-2 text-muted text-decoration-none"
+                    onclick="nextStep(1)">Back</button>
+            </div>
+
+            <!-- Step 3: Authentication -->
+            <div class="intake-step" id="step-3">
+                <h1 class="intake-title">Secure your account</h1>
+                <p class="intake-subtext">Choose how you want to access your dashboard.</p>
+
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="switchAuth('signup')">Sign Up</div>
+                    <div class="auth-tab" onclick="switchAuth('login')">Log In</div>
+                </div>
+
+                <div class="intake-form-grid">
+                    <div class="intake-field-group">
+                        <label class="intake-label">Matriculation Number</label>
+                        <input type="text" id="authMatric" class="intake-input" readonly>
+                    </div>
+                    <div class="intake-field-group">
+                        <label class="intake-label">Password</label>
+                        <div class="position-relative">
+                            <input type="password" id="password" class="intake-input w-100" placeholder="••••••••"
+                                oninput="validateStep3()">
+                            <button class="btn position-absolute end-0 top-50 translate-middle-y border-0"
+                                onclick="togglePass()">
+                                <i class="bi bi-eye" id="passToggle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-intake-primary" id="btn-finish" disabled onclick="finishFlow()">Access
+                    Dashboard</button>
+                <button class="btn btn-link w-100 mt-2 text-muted text-decoration-none"
+                    onclick="nextStep(2)">Back</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedIssue = '';
+        let authMode = 'signup';
+
+        function selectIssue(card, issue) {
+            document.querySelectorAll('.issue-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedIssue = issue;
+            document.getElementById('btn-next-1').disabled = false;
+        }
+
+        function nextStep(step) {
+            document.querySelectorAll('.intake-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-' + step).classList.add('active');
+
+            // Update dots
+            document.querySelectorAll('.intake-progress-dot').forEach((d, idx) => {
+                d.classList.toggle('active', idx < step);
+            });
+
+            if (step === 3) {
+                document.getElementById('authMatric').value = document.getElementById('matricNumber').value;
+            }
+        }
+
+        function validateStep2() {
+            const fields = ['fullName', 'matricNumber', 'institution', 'faculty', 'department', 'level', 'email', 'phone'];
+            const allFilled = fields.every(f => {
+                const val = document.getElementById(f).value.trim();
+                return val !== '';
+            });
+            document.getElementById('btn-next-2').disabled = !allFilled;
+        }
+
+        function validateStep3() {
+            const pass = document.getElementById('password').value.length >= 6;
+            document.getElementById('btn-finish').disabled = !pass;
+        }
+
+        function switchAuth(mode) {
+            authMode = mode;
+            document.querySelectorAll('.auth-tab').forEach(t => {
+                t.classList.toggle('active', t.innerText.toLowerCase().replace(' ', '') === mode);
+            });
+            document.getElementById('btn-finish').innerText = mode === 'signup' ? 'Create Account & Access Dashboard' : 'Log In & Access Dashboard';
+        }
+
+        function togglePass() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('passToggle');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+        }
+
+        function finishFlow() {
+            const data = {
+                fullName: document.getElementById('fullName').value,
+                matricNumber: document.getElementById('matricNumber').value,
+                institution: document.getElementById('institution').value,
+                faculty: document.getElementById('faculty').value,
+                department: document.getElementById('department').value,
+                level: document.getElementById('level').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                issueType: selectedIssue,
+                caseStatus: 'Pending Review',
+                caseId: 'ASET-' + new Date().getFullYear() + '-' + Math.floor(10000 + Math.random() * 90000)
+            };
+
+            localStorage.setItem('aset_student_data', JSON.stringify(data));
+            localStorage.setItem('aset_intake_completed', 'true');
+            localStorage.setItem('aset_user_role', 'student');
+
+            const btn = document.getElementById('btn-finish');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Preparing Dashboard...';
+
+            setTimeout(() => {
+                window.location.href = 'student.html';
+            }, 1500);
+        }
+    </script>
+</body>
+
+</html>

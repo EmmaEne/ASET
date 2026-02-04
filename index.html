@@ -29,7 +29,8 @@
                     <li class="nav-item"><a href="#process" class="nav-link text-secondary">Process</a></li>
                     <li class="nav-item"><a href="#faq" class="nav-link text-secondary">FAQ</a></li>
                     <li class="nav-item">
-                        <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#intakeModal"
+                            onclick="goToStep(3)">
                             Login Portal
                         </button>
                     </li>
@@ -481,14 +482,10 @@
                             <p class="text-muted">Fill in your information to proceed</p>
                         </div>
                         <div class="row g-3 mb-4">
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">Full Name</label>
-                                <input type="text" class="form-control" id="intakeName" placeholder="e.g. John Doe">
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="form-label small fw-bold">Matriculation Number</label>
-                                <input type="text" class="form-control" id="intakeMatric"
-                                    placeholder="e.g. 2024/123456">
+                                <input type="text" class="form-control form-control-lg" id="intakeMatric"
+                                    placeholder="e.g. 2024/123456" style="font-size: 1.25rem; font-weight: 600;">
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold">Current Institution</label>
@@ -753,28 +750,33 @@
         }
 
         function finishFlow(mode) {
-            const name = document.getElementById('intakeName').value || 'Student';
-            const issue = document.getElementById('issueType').value;
+            const matric = document.getElementById('intakeMatric').value || 'Student-Guest';
+            const issue = document.getElementById('issueType').value || 'New Case';
+            const inst = document.getElementById('intakeInstitution').value;
+            const faculty = document.getElementById('intakeFaculty').value;
+            const dept = document.getElementById('intakeDepartment').value;
+            const level = document.getElementById('intakeLevel').value;
+
             const btn = event.target;
             const originalText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
 
+            // Store data for student.html
+            const studentData = {
+                matric: matric,
+                issueType: issue,
+                institution: inst,
+                faculty: faculty,
+                department: dept,
+                level: level,
+                isNewUser: mode === 'signup'
+            };
+            localStorage.setItem('aset_intake_data', JSON.stringify(studentData));
+
             setTimeout(() => {
-                const modalEl = document.getElementById('intakeModal');
-                const modal = bootstrap.Modal.getInstance(modalEl);
-                if (modal) modal.hide();
-                document.querySelectorAll('nav, section, footer, #loginModal').forEach(el => {
-                    if (el.id !== 'dashboardView') el.style.display = 'none';
-                });
-                document.getElementById('dashboardView').style.display = 'block';
-                document.getElementById('studentNameDisplay').innerText = name;
-                document.getElementById('selectedIssueDisplay').innerText = issue;
-                window.scrollTo(0, 0);
-                if (typeof UIStates !== 'undefined' && UIStates.showToast) {
-                    UIStates.showToast(`Welcome, ${name.split(' ')[0]}! Case submitted successfully.`, 'success');
-                }
-            }, 1800);
+                window.location.href = 'student.html';
+            }, 1500);
         }
 
         document.getElementById('loginForm').addEventListener('submit', function (e) {
@@ -788,8 +790,7 @@
             setTimeout(() => {
                 const user = ASET.login(email, password);
                 if (user) {
-                    const dashboards = { 'student': 'student.html', 'admin': 'admin.html', 'officer': 'officer.html', 'mentor': 'mentor.html', 'superadmin': 'superadmin.html' };
-                    window.location.href = dashboards[user.role];
+                    window.location.href = 'student.html';
                 } else {
                     btn.disabled = false;
                     btn.innerHTML = originalText;

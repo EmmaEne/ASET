@@ -156,28 +156,65 @@
 
                     <!-- ACTUAL CONTENT (hidden initially, shown after load) -->
                     <div class="dashboard-content content-loaded" id="dashboardContent" style="display: none;">
-                        <!-- Welcome Panel (First-time users) -->
-                        <div class="welcome-panel" id="welcomePanel">
-                            <button class="welcome-panel-dismiss" onclick="UIStates.dismissWelcome()"
-                                aria-label="Dismiss">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
-                            <div class="welcome-panel-header">
-                                <span class="welcome-panel-emoji">👋</span>
-                                <h3 class="welcome-panel-title">Welcome to ASET Portal!</h3>
-                            </div>
-                            <p class="welcome-panel-text">Track your academic requests, upload documents, and
-                                communicate
-                                with your case officers — all in one place.</p>
-                            <div class="welcome-panel-actions">
-                                <button class="welcome-action"
-                                    onclick="openCaseSubmissionModal(); UIStates.dismissWelcome();">
-                                    <i class="bi bi-plus-lg"></i> Start a Request
-                                </button>
-                                <button class="welcome-action"
-                                    onclick="switchView('cases'); UIStates.dismissWelcome();">
-                                    <i class="bi bi-folder2-open"></i> View Cases
-                                </button>
+                        <!-- Enhanced Helpful Welcome Banner -->
+                        <div class="welcome-panel bg-white border shadow-sm p-4 rounded-4 mb-4" id="welcomePanel"
+                            style="border-left: 5px solid var(--aset-blue) !important;">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="fs-4">🚀</span>
+                                        <h3 class="fw-bold mb-0" id="welcomeTitle">Welcome to ASET Portal</h3>
+                                    </div>
+                                    <p class="text-muted mb-4" style="max-width: 600px;">Your case has been successfully
+                                        initialized. Below is a summary of the details we’ve captured to begin your
+                                        processing.</p>
+
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="p-3 bg-light rounded-3 h-100">
+                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
+                                                    style="font-size: 0.65rem;">Request Type</small>
+                                                <span class="fw-bold small text-primary"
+                                                    id="bannerIssueType">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="p-3 bg-light rounded-3 h-100">
+                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
+                                                    style="font-size: 0.65rem;">Institution</small>
+                                                <span class="fw-bold small" id="bannerInstitution">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="p-3 bg-light rounded-3 h-100">
+                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
+                                                    style="font-size: 0.65rem;">Matric Number</small>
+                                                <span class="fw-bold small" id="bannerMatric">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="p-3 bg-light rounded-3 h-100">
+                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
+                                                    style="font-size: 0.65rem;">Next Step</small>
+                                                <span
+                                                    class="badge bg-warning bg-opacity-10 text-warning px-2 py-1">Document
+                                                    Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-primary px-4 py-2 rounded-3 fw-bold small"
+                                            onclick="openUploadModal()">
+                                            <i class="bi bi-upload me-2"></i> Upload Requirements
+                                        </button>
+                                        <button class="btn btn-outline-secondary px-4 py-2 rounded-3 fw-bold small"
+                                            onclick="switchView('cases')">
+                                            View Full Details
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="btn-close ms-3" onclick="UIStates.dismissWelcome()"></button>
                             </div>
                         </div>
 
@@ -1266,6 +1303,41 @@
     <script src="app.js"></script>
     <script src="ui-states.js"></script>
     <script src="student-logic.js"></script>
+    <script>
+        // Persistence Logic for Intake Data
+        document.addEventListener('DOMContentLoaded', function () {
+            const rawData = localStorage.getItem('aset_intake_data');
+            if (rawData) {
+                const data = JSON.parse(rawData);
+
+                // Update Top Bar Greeting
+                const greeting = document.querySelector('.greeting');
+                if (greeting) greeting.innerText = `Hello, ${data.matric.split('/')[0]}`;
+
+                // Update Welcome Banner
+                const bannerTitle = document.getElementById('welcomeTitle');
+                if (bannerTitle) bannerTitle.innerText = `Welcome to ASET, ${data.matric}`;
+
+                document.getElementById('bannerIssueType').innerText = data.issueType;
+                document.getElementById('bannerInstitution').innerText = data.institution || 'N/A';
+                document.getElementById('bannerMatric').innerText = data.matric;
+
+                // Update Sidebar User Card
+                const sidebarName = document.querySelector('.sidebar-user-card .name');
+                if (sidebarName) sidebarName.innerText = data.matric;
+
+                // Update Active Case Card if it exists
+                const activeCaseTitle = document.querySelector('.status-card-big .case-details h2');
+                if (activeCaseTitle) activeCaseTitle.innerText = data.issueType;
+
+                // Update Profile View if it's currently loaded
+                const profileTitle = document.querySelector('.profile-hero h3');
+                if (profileTitle) profileTitle.innerText = `Student ${data.matric}`;
+                const profileSub = document.querySelector('.profile-hero p');
+                if (profileSub) profileSub.innerText = `${data.department || 'ASET'} • ${data.level || '100'} Lvl`;
+            }
+        });
+    </script>
 </body>
 
 </html>
