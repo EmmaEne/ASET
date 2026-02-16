@@ -9,6 +9,20 @@
     <link href="./shared/styles/ui-states.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .form-select:disabled {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+            opacity: 0.6;
+            border-style: dashed;
+        }
+
+        .select-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            color: #64748b;
+        }
+    </style>
 </head>
 
 <body style="zoom: 80%;">
@@ -16,7 +30,7 @@
     <!-- Header -->
     <nav class="navbar navbar-expand-lg fixed-top bg-white border-bottom py-3">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="#">
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="./index.html">
                 <span class="bg-primary text-white rounded p-1 fs-5"><i class="bi bi-mortarboard-fill"></i></span>
                 <span style="font-family: var(--font-display); color: var(--aset-blue);">ASET</span>
             </a>
@@ -25,7 +39,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navMain">
                 <ul class="navbar-nav ms-auto gap-4 fw-medium text-secondary">
-                    <li class="nav-item"><a href="#" class="nav-link text-dark">Home</a></li>
+                    <li class="nav-item"><a href="./index.html" class="nav-link text-dark">Home</a></li>
                     <li class="nav-item"><a href="#process" class="nav-link text-secondary">Process</a></li>
                     <li class="nav-item"><a href="#faq" class="nav-link text-secondary">FAQ</a></li>
                     <li class="nav-item">
@@ -44,8 +58,6 @@
         <div class="container position-relative z-1">
             <div class="row align-items-center">
                 <div class="col-lg-6 text-white">
-                    <div class="mb-3 text-uppercase badge bg-white text-primary tracking-wider fw-bold px-3 py-2 hero-animate hero-animate-delay-1"
-                        style="letter-spacing: 1px;">Transfer Assistance & Mentorship Platform</div>
                     <h1 class="display-3 fw-bold mb-4 text-white hero-animate hero-animate-delay-2"
                         style="line-height: 1.1;">
                         Never Lose <br> a Semester Again!
@@ -87,8 +99,7 @@
                     <!-- Abstract representation of the 'book/grad cap' image -->
                     <div class="bg-white bg-opacity-10 rounded-circle position-absolute top-50 start-50 translate-middle"
                         style="width: 500px; height: 500px;"></div>
-                    <div class="card p-4 border-0 shadow-lg position-relative"
-                        style="max-width: 400px; margin: auto;">
+                    <div class="card p-4 border-0 shadow-lg position-relative" style="max-width: 400px; margin: auto;">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <div class="avatar rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
                                 style="width: 48px; height: 48px;"><i class="bi bi-check-lg"></i></div>
@@ -210,26 +221,32 @@
             <div class="text-center mb-5">
                 <h2 class="fw-bold">Common Requests on ASET</h2>
             </div>
-            <div class="row g-4">
-                <div class="col-6 col-md-3">
+            <div class="row g-4 d-flex justify-content-center">
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
+                        <div class="mb-3 text-primary"><i class="bi bi-star-fill fs-3"></i></div>
+                        <h6 class="mb-0">Voluntary Change Program (CGPA 3.0 & above)</h6>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
                         <div class="mb-3 text-primary"><i class="bi bi-arrow-repeat fs-3"></i></div>
                         <h6 class="mb-0">Change of Programme</h6>
                     </div>
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
                         <div class="mb-3 text-primary"><i class="bi bi-signpost-split fs-3"></i></div>
                         <h6 class="mb-0">Transfer Request</h6>
                     </div>
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
                         <div class="mb-3 text-primary"><i class="bi bi-pause-circle fs-3"></i></div>
                         <h6 class="mb-0">Deferment / Suspension</h6>
                     </div>
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-4 col-lg-2">
                     <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
                         <div class="mb-3 text-primary"><i class="bi bi-hash fs-3"></i></div>
                         <h6 class="mb-0">Matric Number Generation</h6>
@@ -329,13 +346,15 @@
                 </div>
                 <div class="col-lg-3 col-6">
                     <h6 class="fw-bold mb-3">Platform</h6>
-                    <ul class="list-unstyled small d-flex flex-column gap-2">
-                        <li><a href="student.html" class="text-decoration-none text-muted">Student Dashboard</a>
-                        </li>
-                        <li><a href="admin.html" class="text-decoration-none text-muted">Admin Dashboard</a></li>
-                        <li><a href="officer.html" class="text-decoration-none text-muted">Officer Dashboard</a>
-                        </li>
-                        <li><a href="mentor.html" class="text-decoration-none text-muted">Mentor Dashboard</a></li>
+                    <ul class="list-unstyled small d-flex flex-column gap-2" id="footerPlatformLinks">
+                        <li><a href="#" data-route="STUDENT_DASHBOARD" class="text-decoration-none text-muted">Student
+                                Dashboard</a></li>
+                        <li><a href="#" data-route="ADMIN_DASHBOARD" class="text-decoration-none text-muted">Admin
+                                Dashboard</a></li>
+                        <li><a href="#" data-route="OFFICER_DASHBOARD" class="text-decoration-none text-muted">Officer
+                                Dashboard</a></li>
+                        <li><a href="#" data-route="MENTOR_DASHBOARD" class="text-decoration-none text-muted">Mentor
+                                Dashboard</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-6">
@@ -456,7 +475,11 @@
                                 <option value="" selected disabled>Choose your issue...</option>
                                 <option value="Change Program & Departmental Issues">Change Program & Departmental
                                     Issues</option>
+                                <option value="Voluntary Change Program (CGPA 3.0 & above)">Voluntary Change Program
+                                    (CGPA 3.0 & above)</option>
                                 <option value="Probation / Withdrawal Issues">Probation / Withdrawal Issues</option>
+                                <option value="Suspension of Studies">Suspension of Studies</option>
+                                <option value="Deferment of Studies">Deferment of Studies</option>
                                 <option value="Result & Examination Issues">Result & Examination Issues</option>
                                 <option value="Course Registration Problems">Course Registration Problems</option>
                                 <option value="Portal & Payment Issues">Portal & Payment Issues</option>
@@ -467,8 +490,10 @@
                                 <option value="Multiple / Complex Issues">Multiple / Complex Issues</option>
                             </select>
                         </div>
+
+
                         <button class="btn btn-primary w-100 btn-lg py-3" id="btnContinueStep1" disabled
-                            onclick="goToStep(2)">Continue</button>
+                            onclick="handleIntakeStart()">Continue</button>
                         <div class="text-center mt-3">
                             <button class="btn btn-link text-muted text-decoration-none small"
                                 data-bs-dismiss="modal">Cancel and exit</button>
@@ -486,59 +511,41 @@
                                 <label class="form-label small fw-bold">Matriculation Number</label>
                                 <input type="text" class="form-control form-control-lg" id="intakeMatric"
                                     placeholder="e.g. 2024/123456" style="font-size: 1.25rem; font-weight: 600;">
+                                <div class="select-feedback">Format: YYYY/123456</div>
                             </div>
-                            <div class="col-md-12">
-                                <label class="form-label small fw-bold">Current Institution</label>
-                                <input type="text" class="form-control" id="intakeInstitution" list="institutionsList"
-                                    placeholder="Search or select university">
-                                <datalist id="institutionsList">
-                                    <option value="University of Lagos (UNILAG)">
-                                    <option value="University of Ibadan (UI)">
-                                    <option value="Obafemi Awolowo University (OAU)">
-                                    <option value="University of Nigeria, Nsukka (UNN)">
-                                    <option value="Covenant University">
-                                    <option value="Lagos State University (LASU)">
-                                    <option value="Ahmadu Bello University (ABU)">
-                                    <option value="University of Benin (UNIBEN)">
-                                    <option value="Babcock University">
-                                    <option value="Pan-Atlantic University">
-                                </datalist>
+
+                            <!-- New State Selection -->
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">State / Region</label>
+                                <select class="form-select" id="intakeState" onchange="handleStateChange()">
+                                    <option value="" selected disabled>Select state</option>
+                                    <!-- Populated by JS -->
+                                </select>
                             </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Institution</label>
+                                <select class="form-select" id="intakeInstitution" disabled
+                                    onchange="handleInstitutionChange()">
+                                    <option value="" selected disabled>Select institution in your state</option>
+                                </select>
+                            </div>
+
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Faculty</label>
-                                <input type="text" class="form-control" id="intakeFaculty" list="facultiesList"
-                                    placeholder="Search or select faculty">
-                                <datalist id="facultiesList">
-                                    <option value="Faculty of Science">
-                                    <option value="Faculty of Engineering">
-                                    <option value="Faculty of Arts">
-                                    <option value="Faculty of Social Sciences">
-                                    <option value="Faculty of Clinical Sciences">
-                                    <option value="Faculty of Law">
-                                    <option value="Faculty of Environmental Sciences">
-                                    <option value="Faculty of Education">
-                                    <option value="Faculty of Management Sciences">
-                                </datalist>
+                                <select class="form-select" id="intakeFaculty" disabled
+                                    onchange="handleFacultyChange()">
+                                    <option value="" selected disabled>Select faculty</option>
+                                </select>
                             </div>
+
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Department</label>
-                                <input type="text" class="form-control" id="intakeDepartment" list="departmentsList"
-                                    placeholder="Search or select department">
-                                <datalist id="departmentsList">
-                                    <option value="Computer Science">
-                                    <option value="Mechanical Engineering">
-                                    <option value="Electrical/Electronics Engineering">
-                                    <option value="Economics">
-                                    <option value="Accounting">
-                                    <option value="Medicine and Surgery">
-                                    <option value="Political Science">
-                                    <option value="Mass Communication">
-                                    <option value="Civil Engineering">
-                                    <option value="Business Administration">
-                                    <option value="Microbiology">
-                                    <option value="Biochemistry">
-                                </datalist>
+                                <select class="form-select" id="intakeDepartment" disabled>
+                                    <option value="" selected disabled>Select department</option>
+                                </select>
                             </div>
+
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold">Level / Year</label>
                                 <select class="form-select" id="intakeLevel">
@@ -558,7 +565,7 @@
                                 <input type="tel" class="form-control" id="intakePhone" placeholder="080 000 0000">
                             </div>
                         </div>
-                        <button class="btn btn-primary w-100 btn-lg py-3" onclick="goToStep(3)">Continue</button>
+                        <button class="btn btn-primary w-100 btn-lg py-3" onclick="proceedFromStep2()">Continue</button>
                         <div class="text-center mt-3">
                             <button class="btn btn-link text-muted text-decoration-none small"
                                 onclick="goToStep(1)">Back</button>
@@ -593,6 +600,320 @@
                         <div class="text-center mt-3">
                             <button class="btn btn-link text-muted text-decoration-none small"
                                 onclick="goToStep(2)">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- SPECIALIZED FLOW: Suspension / Deferment -->
+
+                    <!-- Suspension Step 1: Basic Info & Duration -->
+                    <div id="suspensionStep1" class="intake-step p-5">
+                        <div class="text-center mb-4">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 rounded-circle"
+                                style="width: 64px; height: 64px;">
+                                <i class="bi bi-pause-circle text-danger fs-1"></i>
+                            </div>
+                            <h3 class="fw-bold">Suspension / Deferment Request</h3>
+                            <p class="text-muted">Please provide details for your academic pause</p>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Reason for Request</label>
+                                <select class="form-select" id="suspensionReason">
+                                    <option value="Health Issues">Health Issues</option>
+                                    <option value="Financial Constraints">Financial Constraints</option>
+                                    <option value="Personal / Family Reasons">Personal / Family Reasons</option>
+                                    <option value="Travel / International Opportunity">Travel / International
+                                        Opportunity</option>
+                                    <option value="Military / National Service">Military / National Service</option>
+                                    <option value="Other">Other (Please specify below)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" id="suspensionDetail" rows="2"
+                                    placeholder="Additional details (optional)"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">Desired Duration</label>
+                                <select class="form-select" id="suspensionDuration">
+                                    <option value="One Semester">One Semester</option>
+                                    <option value="One Academic Session">One Academic Session (2 Semesters)</option>
+                                    <option value="Two Academic Sessions">Two Academic Sessions</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-100 btn-lg py-3 mt-4"
+                            onclick="goToStep('suspensionStep2')">Next: Document Upload</button>
+                    </div>
+
+                    <!-- Suspension Step 2: Document Upload -->
+                    <div id="suspensionStep2" class="intake-step p-4">
+                        <div class="text-center mb-4">
+                            <h4 class="fw-bold">Mandatory Document Upload</h4>
+                            <p class="text-muted small">All documents must be verified before proceeding</p>
+                        </div>
+                        <div class="upload-scroll-area px-2" style="max-height: 350px; overflow-y: auto;">
+                            <!-- Doc Items -->
+                            <div
+                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small">School Fees Receipt</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Verified • PDF/JPG/PNG</div>
+                                    </div>
+                                </div>
+                                <input type="file" class="d-none" id="file_fees" accept=".pdf,.jpg,.jpeg,.png"
+                                    onchange="updateUploadStatus(this)">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="document.getElementById('file_fees').click()"><i
+                                        class="bi bi-upload"></i></button>
+                            </div>
+                            <div
+                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small">Acceptance Fee Receipt</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Pending • PDF/JPG/PNG</div>
+                                    </div>
+                                </div>
+                                <input type="file" class="d-none" id="file_acceptance" accept=".pdf,.jpg,.jpeg,.png"
+                                    onchange="updateUploadStatus(this)">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="document.getElementById('file_acceptance').click()"><i
+                                        class="bi bi-upload"></i></button>
+                            </div>
+                            <div
+                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small">Departmental Dues Receipt</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Pending • PDF/JPG/PNG</div>
+                                    </div>
+                                </div>
+                                <input type="file" class="d-none" id="file_dept" accept=".pdf,.jpg,.jpeg,.png"
+                                    onchange="updateUploadStatus(this)">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="document.getElementById('file_dept').click()"><i
+                                        class="bi bi-upload"></i></button>
+                            </div>
+                            <div
+                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small">Faculty Dues Receipt</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Pending • PDF/JPG/PNG</div>
+                                    </div>
+                                </div>
+                                <input type="file" class="d-none" id="file_faculty" accept=".pdf,.jpg,.jpeg,.png"
+                                    onchange="updateUploadStatus(this)">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="document.getElementById('file_faculty').click()"><i
+                                        class="bi bi-upload"></i></button>
+                            </div>
+                            <div
+                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-text fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small">Letter of Suspension</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Required • Formal Request
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="file" class="d-none" id="file_letter" accept=".pdf,.jpg,.jpeg,.png"
+                                    onchange="updateUploadStatus(this)">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="document.getElementById('file_letter').click()"><i
+                                        class="bi bi-upload"></i></button>
+                            </div>
+                            <div
+                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small">JAMB Admission Letter</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Required</div>
+                                    </div>
+                                </div>
+                                <input type="file" class="d-none" id="file_jamb" accept=".pdf,.jpg,.jpeg,.png"
+                                    onchange="updateUploadStatus(this)">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="document.getElementById('file_jamb').click()"><i
+                                        class="bi bi-upload"></i></button>
+                            </div>
+                            <div
+                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold small">School Admission Letter</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Required</div>
+                                    </div>
+                                </div>
+                                <input type="file" class="d-none" id="file_school" accept=".pdf,.jpg,.jpeg,.png"
+                                    onchange="updateUploadStatus(this)">
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="document.getElementById('file_school').click()"><i
+                                        class="bi bi-upload"></i></button>
+                            </div>
+                        </div>
+                        <div class="alert alert-info py-2 px-3 mt-3 mb-3 d-flex align-items-center gap-2"
+                            style="font-size: 0.75rem;">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <span>You can save progress and upload remaining docs later.</span>
+                        </div>
+                        <button class="btn btn-success w-100 btn-lg py-3" onclick="handleSuspensionSubmit()">Submit
+                            Request & Review</button>
+                        <div class="text-center mt-2 small text-muted">A secure login prompt will follow if session is
+                            expired.</div>
+                    </div>
+
+                    <!-- Suspension Step 3: Counselling Automation -->
+                    <div id="suspensionStep3" class="intake-step p-5">
+                        <div class="text-center mb-5">
+                            <div class="mb-4 d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 rounded-circle"
+                                style="width: 80px; height: 80px;">
+                                <i class="bi bi-calendar-check text-success" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h3 class="fw-bold">Application Received!</h3>
+                            <p class="text-muted">Counselling has been automatically scheduled as part of the process.
+                            </p>
+                        </div>
+
+                        <div class="card border-primary shadow-sm mb-5">
+                            <div class="card-header bg-primary text-white py-3 fw-bold">
+                                Booking Confirmation: #ASET-CN-9204
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <div class="bg-light p-3 rounded text-center" style="width: 70px;">
+                                            <div class="small text-uppercase fw-bold text-muted">Feb</div>
+                                            <div class="h4 fw-bold mb-0">18</div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="fw-bold mb-1">Mandatory Counselling Session</h6>
+                                        <div class="small text-muted mb-1"><i class="bi bi-clock me-1"></i> 10:30 AM -
+                                            11:15 AM</div>
+                                        <div class="small text-muted"><i class="bi bi-person-badge me-1"></i> Advisor:
+                                            Dr. (Mrs) Olufemi</div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center gap-2 text-primary small fw-bold">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    <span>Venue: Students Affairs Counselling Unit, Block B</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h6 class="fw-bold mb-3">Next Action: Progress Tracking</h6>
+                            <div class="progress" style="height: 12px; border-radius: 6px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                    role="progressbar" style="width: 20%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2 small text-muted">
+                                <span>Application Stage</span>
+                                <span>20% Complete</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-100 btn-lg shadow" onclick="goToStep('suspensionStep4')">Track
+                            Full Application Status</button>
+                    </div>
+
+                    <!-- Suspension Step 4: Progress Tracker -->
+                    <div id="suspensionStep4" class="intake-step p-5">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                            <h4 class="fw-bold mb-0">Request Tracking</h4>
+                            <span class="badge bg-warning text-dark px-3 py-2">IN PROGRESS</span>
+                        </div>
+
+                        <div class="tracking-timeline">
+                            <!-- Stage 1 -->
+                            <div class="d-flex gap-4 mb-4 position-relative">
+                                <div class="timeline-v-line"
+                                    style="position: absolute; left: 16px; top: 32px; bottom: -32px; width: 2px; background: #10b981;">
+                                </div>
+                                <div class="bg-success rounded-circle d-flex align-items-center justify-content-center text-white p-2 z-1"
+                                    style="width: 32px; height: 32px;">
+                                    <i class="bi bi-check-lg fw-bold"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="fw-bold mb-1">Application Submitted</h6>
+                                    <p class="text-muted small mb-0">Your request ID #SUS-2026-X01 has been recorded.
+                                    </p>
+                                    <div class="small text-muted mt-1">Just now</div>
+                                </div>
+                            </div>
+                            <!-- Stage 2 -->
+                            <div class="d-flex gap-4 mb-4 position-relative">
+                                <div class="timeline-v-line"
+                                    style="position: absolute; left: 16px; top: 32px; bottom: -32px; width: 2px; background: #e2e8f0;">
+                                </div>
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white p-2 z-1"
+                                    style="width: 32px; height: 32px;">
+                                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="fw-bold mb-1 text-primary">Documents Verified</h6>
+                                    <p class="text-muted small mb-0">Registrar's office is validating your 7 uploaded
+                                        documents.</p>
+                                    <div class="small text-muted mt-1">Processing...</div>
+                                </div>
+                            </div>
+                            <!-- Stage 3 -->
+                            <div class="d-flex gap-4 mb-4 position-relative">
+                                <div class="timeline-v-line"
+                                    style="position: absolute; left: 16px; top: 32px; bottom: -32px; width: 2px; background: #e2e8f0;">
+                                </div>
+                                <div class="bg-white border-2 border-primary rounded-circle d-flex align-items-center justify-content-center text-primary p-2 z-1"
+                                    style="width: 32px; height: 32px;">
+                                    <i class="bi bi-calendar-event fw-bold"></i>
+                                </div>
+                                <div class="flex-grow-1 opacity-75">
+                                    <h6 class="fw-bold mb-1">Counselling Completed</h6>
+                                    <p class="text-muted small mb-0">Scheduled for Feb 18, 2026. Auto-updates on
+                                        attendance.</p>
+                                </div>
+                            </div>
+                            <!-- Stage 4 -->
+                            <div class="d-flex gap-4 mb-4 position-relative">
+                                <div class="timeline-v-line"
+                                    style="position: absolute; left: 16px; top: 32px; bottom: -32px; width: 2px; background: #e2e8f0;">
+                                </div>
+                                <div class="bg-light border-2 border-info rounded-circle d-flex align-items-center justify-content-center text-info p-2 z-1"
+                                    style="width: 32px; height: 32px;">
+                                    <i class="bi bi-hourglass-split fw-bold"></i>
+                                </div>
+                                <div class="flex-grow-1 opacity-50">
+                                    <h6 class="fw-bold mb-1">Pending Approval</h6>
+                                    <p class="text-muted small mb-0">Final review by the Registrar.</p>
+                                </div>
+                            </div>
+                            <!-- Stage 5 -->
+                            <div class="d-flex gap-4 mb-4 position-relative">
+                                <div class="bg-light border-2 border-secondary rounded-circle d-flex align-items-center justify-content-center text-secondary p-2 z-1"
+                                    style="width: 32px; height: 32px;">
+                                    <i class="bi bi-check-circle fw-bold"></i>
+                                </div>
+                                <div class="flex-grow-1 opacity-50">
+                                    <h6 class="fw-bold mb-1">Approved / Rejected</h6>
+                                    <p class="text-muted small mb-0">Decision record issued in portal.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-outline-primary btn-sm px-4" onclick="location.reload()">Save and
+                                Exit to Portal</button>
+                            <p class="small text-muted mt-3">You will receive an SMS and email notification for every
+                                status change.</p>
                         </div>
                     </div>
                 </div>
@@ -730,53 +1051,263 @@
             border-color: var(--aset-blue);
             box-shadow: 0 0 0 4px rgba(0, 68, 204, 0.1);
         }
+
+        /* Specialized Flow Styles */
+        .doc-upload-item {
+            transition: all 0.3s ease;
+        }
+
+        .doc-upload-item:hover {
+            border-color: var(--aset-blue) !important;
+            transform: translateX(4px);
+        }
+
+        .upload-scroll-area::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .upload-scroll-area::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        /* Progress Tracking Timeline */
+        .tracking-timeline {
+            position: relative;
+        }
+
+        .z-1 {
+            z-index: 1;
+        }
+
+        .bg-success-subtle {
+            background-color: #f0fdf4;
+        }
+
+        .border-primary {
+            border-color: var(--aset-blue) !important;
+        }
+
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.15em;
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js"></script>
-    <script src="ui-states.js"></script>
+    <script src="./shared/scripts/institution-data.js"></script>
+    <script src="./shared/scripts/app.js"></script>
+    <script src="./shared/scripts/ui-states.js"></script>
     <script>
+        // Centralized Route Management
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize footer links
+            document.querySelectorAll('[data-route]').forEach(link => {
+                const routeKey = link.dataset.route;
+                if (window.ROUTES && window.ROUTES[routeKey]) {
+                    link.href = window.ROUTES[routeKey];
+                }
+            });
+
+            // Initialize State dropdown
+            const stateSelect = document.getElementById('intakeState');
+            if (stateSelect && window.INSTITUTION_DATA) {
+                Object.keys(window.INSTITUTION_DATA).sort().forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Cascading Dropdown Logic
+        function handleStateChange() {
+            const state = document.getElementById('intakeState').value;
+            const instSelect = document.getElementById('intakeInstitution');
+            const facultySelect = document.getElementById('intakeFaculty');
+            const deptSelect = document.getElementById('intakeDepartment');
+
+            // Reset children
+            instSelect.innerHTML = '<option value="" selected disabled>Select institution in ' + state + '</option>';
+            instSelect.disabled = false;
+
+            facultySelect.innerHTML = '<option value="" selected disabled>Select faculty</option>';
+            facultySelect.disabled = true;
+
+            deptSelect.innerHTML = '<option value="" selected disabled>Select department</option>';
+            deptSelect.disabled = true;
+
+            const institutions = Object.keys(window.INSTITUTION_DATA[state]);
+            institutions.sort().forEach(inst => {
+                const option = document.createElement('option');
+                option.value = inst;
+                option.textContent = inst;
+                instSelect.appendChild(option);
+            });
+        }
+
+        function handleInstitutionChange() {
+            const state = document.getElementById('intakeState').value;
+            const inst = document.getElementById('intakeInstitution').value;
+            const facultySelect = document.getElementById('intakeFaculty');
+            const deptSelect = document.getElementById('intakeDepartment');
+
+            facultySelect.innerHTML = '<option value="" selected disabled>Select faculty</option>';
+            facultySelect.disabled = false;
+
+            deptSelect.innerHTML = '<option value="" selected disabled>Select department</option>';
+            deptSelect.disabled = true;
+
+            const faculties = Object.keys(window.INSTITUTION_DATA[state][inst]);
+            faculties.sort().forEach(f => {
+                const option = document.createElement('option');
+                option.value = f;
+                option.textContent = f;
+                facultySelect.appendChild(option);
+            });
+        }
+
+        function handleFacultyChange() {
+            const state = document.getElementById('intakeState').value;
+            const inst = document.getElementById('intakeInstitution').value;
+            const faculty = document.getElementById('intakeFaculty').value;
+            const deptSelect = document.getElementById('intakeDepartment');
+
+            deptSelect.innerHTML = '<option value="" selected disabled>Select department</option>';
+            deptSelect.disabled = false;
+
+            const departments = window.INSTITUTION_DATA[state][inst][faculty];
+            departments.sort().forEach(d => {
+                const option = document.createElement('option');
+                option.value = d;
+                option.textContent = d;
+                deptSelect.appendChild(option);
+            });
+        }
+
         function validateStep1() {
             const issueType = document.getElementById('issueType').value;
+            // Immediate enable continue
             document.getElementById('btnContinueStep1').disabled = !issueType;
         }
 
         function goToStep(step) {
             document.querySelectorAll('.intake-step').forEach(s => s.classList.remove('active'));
-            document.getElementById('intakeStep' + step).classList.add('active');
+
+            // Handle element ID branching
+            const targetId = typeof step === 'string' ? step : 'intakeStep' + step;
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                targetElement.classList.add('active');
+            }
+
             if (step === 3) {
                 document.getElementById('authMatric').value = document.getElementById('intakeMatric').value || 'Student-Guest';
             }
         }
 
+        // Branching Logic for specialized flows
+        function handleIntakeStart() {
+            const issueType = document.getElementById('issueType').value;
+            if (issueType === 'Suspension of Studies' || issueType === 'Deferment of Studies') {
+                goToStep(2);
+            } else {
+                goToStep(2);
+            }
+        }
+
+        // Specialized redirect from Step 2
+        function proceedFromStep2() {
+            const issueType = document.getElementById('issueType').value;
+            if (issueType === 'Suspension of Studies' || issueType === 'Deferment of Studies') {
+                goToStep('suspensionStep1');
+            } else {
+                goToStep(3);
+            }
+        }
+
+        function updateUploadStatus(input) {
+            const item = input.closest('.doc-upload-item');
+            const fileName = input.files[0].name;
+            const textDiv = item.querySelector('.text-muted');
+            textDiv.innerHTML = '<span class="text-success fw-bold">Uploaded: ' + fileName + '</span>';
+            item.classList.replace('bg-light', 'bg-success-subtle');
+            UIStates.showToast('Document uploaded successfully', 'success');
+        }
+
+        function handleSuspensionSubmit() {
+            // Check if logged in (mock)
+            const currentUser = ASET.getCurrentUser();
+            if (!currentUser) {
+                // Mock non-interruptive login / auth
+                UIStates.showToast('Authentication required to finalize submission', 'info');
+                goToStep(3); // Route to auth, but data is preserved in DOM
+            } else {
+                finalizeSuspension();
+            }
+        }
+
+        function finalizeSuspension() {
+            // Deprecated: Now we redirect to dashboard directly
+            goToStep(3); // Go to auth
+        }
+
         function finishFlow(mode) {
             const matric = document.getElementById('intakeMatric').value || 'Student-Guest';
             const issue = document.getElementById('issueType').value || 'New Case';
+            const state = document.getElementById('intakeState').value;
             const inst = document.getElementById('intakeInstitution').value;
             const faculty = document.getElementById('intakeFaculty').value;
             const dept = document.getElementById('intakeDepartment').value;
             const level = document.getElementById('intakeLevel').value;
+            const email = document.getElementById('intakeEmail').value;
+            const phone = document.getElementById('intakePhone').value;
+
+            // Specialized Data
+            let specializedData = {};
+            if (issue === 'Suspension of Studies' || issue === 'Deferment of Studies') {
+                specializedData = {
+                    reason: document.getElementById('suspensionReason').value,
+                    duration: document.getElementById('suspensionDuration').value,
+                    documentsUploaded: true, // Mock valid
+                    status: 'Pending Approval',
+                    progressStage: 3 // Counselling
+                };
+            }
+
+            // Simple Validation
+            if (!state || !inst || !faculty || !dept) {
+                UIStates.showToast('Please complete all institutional selections', 'warning');
+                return;
+            }
 
             const btn = event.target;
             const originalText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
 
-            // Store data for student.html
             const studentData = {
                 matric: matric,
+                email: email,
+                phone: phone,
                 issueType: issue,
+                state: state,
                 institution: inst,
                 faculty: faculty,
                 department: dept,
                 level: level,
-                isNewUser: mode === 'signup'
+                isNewUser: mode === 'signup',
+                ...specializedData
             };
             localStorage.setItem('aset_intake_data', JSON.stringify(studentData));
 
+            // ALWAYS Redirect to Dashboard
             setTimeout(() => {
-                window.location.href = 'student.html';
-            }, 1500);
+                window.location.href = 'student/student-dashboard.html';
+            }, 1000);
         }
 
         document.getElementById('loginForm').addEventListener('submit', function (e) {
@@ -784,21 +1315,21 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing in...';
             setTimeout(() => {
                 const user = ASET.login(email, password);
                 if (user) {
-                    window.location.href = 'student.html';
+                    window.location.href = ROUTES.STUDENT_DASHBOARD;
                 } else {
                     btn.disabled = false;
-                    btn.innerHTML = originalText;
-                    UIStates.showToast('Invalid email or password. Please try again.', 'error');
+                    btn.innerHTML = 'Sign In <i class="bi bi-arrow-right ms-2 small"></i>';
+                    UIStates.showToast('Invalid credentials. Try student@aset.edu.ng', 'error');
                 }
-            }, 800);
+            }, 1000);
         });
 
+        // Toggle Password Visibility
         const passToggleBtn = document.querySelector('#loginForm .input-group button[type="button"]');
         if (passToggleBtn) {
             passToggleBtn.addEventListener('click', function () {
@@ -814,6 +1345,7 @@
             });
         }
 
+        // Scroll Reveal Animation
         (function () {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (prefersReducedMotion) {

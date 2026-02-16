@@ -227,33 +227,139 @@ body {
     font-family: monospace;
 }
 
-.progress-section {
+/* Progress Steps Indicator - Single Line Flow */
+.progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 1.5rem 0 2rem;
+    padding: 0;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    /* For scrollbar if needed */
+    scrollbar-width: none;
+    /* Hide scrollbar Firefox */
+}
+
+.progress-steps::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Chrome/Safari */
+}
+
+.progress-steps .step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.progress-steps .step:not(:last-child) {
+    flex-grow: 1;
+}
+
+.progress-steps .step-icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-light);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 0 2px white;
+}
+
+.progress-steps .step-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.progress-steps .step-label span {
+    font-size: 0.6rem;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-left: 2px;
+}
+
+.progress-steps .step-line {
+    flex-grow: 1;
+    height: 2px;
+    background: #e2e8f0;
+    margin: 0 10px;
+    min-width: 15px;
+    transition: all 0.4s ease;
+}
+
+.progress-steps .step:last-child .step-line {
+    display: none;
+}
+
+/* Completed State */
+.progress-steps .step.completed .step-icon {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.progress-steps .step.completed .step-label {
+    color: #10b981;
+}
+
+.progress-steps .step.completed .step-line {
+    background: #10b981;
+}
+
+/* Ongoing State */
+.progress-steps .step.ongoing .step-icon {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 0 0 4px var(--primary-soft), 0 0 0 2px white;
+}
+
+.progress-steps .step.ongoing .step-label {
+    color: var(--primary);
+}
+
+.progress-steps .step.ongoing .step-line {
+    background: linear-gradient(90deg, var(--primary), #e2e8f0);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 480px) {
+    .progress-steps .step-label {
+        font-size: 0.65rem;
+    }
+
+    .progress-steps .step-label span {
+        display: none;
+        /* Hide (Ongoing) text on very small screens to save space */
+    }
+}
+
+/* Skeleton Progress Steps */
+.skeleton-progress-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.skeleton-step {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.step-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.dot {
-    height: 6px;
-    flex: 1;
-    border-radius: 4px;
-    background: #f1f5f9;
-}
-
-.dot.active {
-    background: var(--primary);
-}
-
-.step-text {
-    font-size: 0.85rem;
-    color: var(--primary);
-    font-weight: 500;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-card-action {

@@ -104,7 +104,34 @@
                                         <div class="skeleton skeleton-title"></div>
                                         <div class="skeleton skeleton-text"></div>
                                     </div>
-                                    <div class="skeleton skeleton-progress"></div>
+                                    <div class="skeleton-progress-steps mb-4">
+                                        <div class="skeleton-step">
+                                            <div class="skeleton skeleton-avatar" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <div class="skeleton skeleton-text" style="width: 40px; height: 8px;"></div>
+                                        </div>
+                                        <div class="skeleton skeleton-text"
+                                            style="flex: 1; height: 2px; margin-bottom: 20px;"></div>
+                                        <div class="skeleton-step">
+                                            <div class="skeleton skeleton-avatar" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <div class="skeleton skeleton-text" style="width: 40px; height: 8px;"></div>
+                                        </div>
+                                        <div class="skeleton skeleton-text"
+                                            style="flex: 1; height: 2px; margin-bottom: 20px;"></div>
+                                        <div class="skeleton-step">
+                                            <div class="skeleton skeleton-avatar" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <div class="skeleton skeleton-text" style="width: 40px; height: 8px;"></div>
+                                        </div>
+                                        <div class="skeleton skeleton-text"
+                                            style="flex: 1; height: 2px; margin-bottom: 20px;"></div>
+                                        <div class="skeleton-step">
+                                            <div class="skeleton skeleton-avatar" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <div class="skeleton skeleton-text" style="width: 40px; height: 8px;"></div>
+                                        </div>
+                                    </div>
                                     <div class="skeleton skeleton-button"></div>
                                 </div>
 
@@ -156,67 +183,7 @@
 
                     <!-- ACTUAL CONTENT (hidden initially, shown after load) -->
                     <div class="dashboard-content content-loaded" id="dashboardContent" style="display: none;">
-                        <!-- Enhanced Helpful Welcome Banner -->
-                        <div class="welcome-panel bg-white border shadow-sm p-4 rounded-4 mb-4" id="welcomePanel"
-                            style="border-left: 5px solid var(--aset-blue) !important;">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                        <span class="fs-4">🚀</span>
-                                        <h3 class="fw-bold mb-0" id="welcomeTitle">Welcome to ASET Portal</h3>
-                                    </div>
-                                    <p class="text-muted mb-4" style="max-width: 600px;">Your case has been successfully
-                                        initialized. Below is a summary of the details we’ve captured to begin your
-                                        processing.</p>
 
-                                    <div class="row g-3 mb-4">
-                                        <div class="col-md-6 col-lg-3">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
-                                                    style="font-size: 0.65rem;">Request Type</small>
-                                                <span class="fw-bold small text-primary"
-                                                    id="bannerIssueType">Loading...</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-3">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
-                                                    style="font-size: 0.65rem;">Institution</small>
-                                                <span class="fw-bold small" id="bannerInstitution">Loading...</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-3">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
-                                                    style="font-size: 0.65rem;">Matric Number</small>
-                                                <span class="fw-bold small" id="bannerMatric">Loading...</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-3">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <small class="text-muted d-block fw-bold text-uppercase mb-1"
-                                                    style="font-size: 0.65rem;">Next Step</small>
-                                                <span
-                                                    class="badge bg-warning bg-opacity-10 text-warning px-2 py-1">Document
-                                                    Upload</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex gap-2">
-                                        <button class="btn btn-primary px-4 py-2 rounded-3 fw-bold small"
-                                            onclick="openUploadModal()">
-                                            <i class="bi bi-upload me-2"></i> Upload Requirements
-                                        </button>
-                                        <button class="btn btn-outline-secondary px-4 py-2 rounded-3 fw-bold small"
-                                            onclick="switchView('cases')">
-                                            View Full Details
-                                        </button>
-                                    </div>
-                                </div>
-                                <button class="btn-close ms-3" onclick="UIStates.dismissWelcome()"></button>
-                            </div>
-                        </div>
 
                         <div class="row g-4">
                             <!-- Dashboard Main Column -->
@@ -231,14 +198,27 @@
                                         <h2>Change of Programme</h2>
                                         <p>ID: ASET-2024-00847</p>
                                     </div>
-                                    <div class="progress-section">
-                                        <div class="step-dots">
-                                            <span class="dot active"></span>
-                                            <span class="dot active"></span>
-                                            <span class="dot"></span>
-                                            <span class="dot"></span>
+                                    <div class="progress-steps">
+                                        <div class="step completed">
+                                            <div class="step-icon"><i class="bi bi-check-lg"></i></div>
+                                            <div class="step-label">Submitted</div>
+                                            <div class="step-line"></div>
                                         </div>
-                                        <span class="step-text">Faculty Stage</span>
+                                        <div class="step completed">
+                                            <div class="step-icon"><i class="bi bi-check-lg"></i></div>
+                                            <div class="step-label">Received</div>
+                                            <div class="step-line"></div>
+                                        </div>
+                                        <div class="step ongoing">
+                                            <div class="step-icon">3</div>
+                                            <div class="step-label">Dept Stage <span>(Ongoing)</span></div>
+                                            <div class="step-line"></div>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon">4</div>
+                                            <div class="step-label">Faculty Stage <span>(Outgoing)</span></div>
+                                            <div class="step-line"></div>
+                                        </div>
                                     </div>
                                     <button class="btn-card-action" onclick="openTrackProgress('ASET-2024-00847')">
                                         Track Progress
@@ -705,6 +685,34 @@
                                     </div>
                                 </div>
 
+                                <!-- Stage: Accepting Department -->
+                                <div class="d-flex gap-3 position-relative">
+                                    <div class="timeline-line bg-light shadow-none"
+                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                                    </div>
+                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
+                                        style="width:24px;height:24px; min-width:24px;"></div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-muted">Accepting Department</h6>
+                                        <p class="small text-muted mb-1">Review by target department.</p>
+                                        <small class="text-muted opacity-50">Pending Stage</small>
+                                    </div>
+                                </div>
+
+                                <!-- Stage: HOD (New Department) -->
+                                <div class="d-flex gap-3 position-relative">
+                                    <div class="timeline-line bg-light shadow-none"
+                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                                    </div>
+                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
+                                        style="width:24px;height:24px; min-width:24px;"></div>
+                                    <div>
+                                        <h6 class="m-0 fw-bold text-muted">HOD (New Department)</h6>
+                                        <p class="small text-muted mb-1">Final departmental approval for switch.</p>
+                                        <small class="text-muted opacity-50">Pending Stage</small>
+                                    </div>
+                                </div>
+
                                 <!-- Stage: Registry -->
                                 <div class="d-flex gap-3 position-relative">
                                     <div class="timeline-line bg-light shadow-none"
@@ -785,6 +793,16 @@
                                                 <div class="fw-bold small">Change of Programme</div>
                                                 <div class="text-muted" style="font-size: 0.65rem;">Switch
                                                     department or faculty</div>
+                                            </div>
+                                        </button>
+                                        <button type="button"
+                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
+                                            onclick="goToStep(2, 'Voluntary Change Program (CGPA 3.0 & above)')">
+                                            <i class="bi bi-star text-primary fs-5"></i>
+                                            <div>
+                                                <div class="fw-bold small">Voluntary Change Program</div>
+                                                <div class="text-muted" style="font-size: 0.65rem;">For CGPA 3.0 & above
+                                                </div>
                                             </div>
                                         </button>
                                         <button type="button"
@@ -1258,6 +1276,8 @@
                                 <select class="form-select form-select-lg" id="issueType" name="issueType" required>
                                     <option value="" disabled selected>Select your issue type...</option>
                                     <option value="change-of-department">Change of Department</option>
+                                    <option value="voluntary-change-program">Voluntary Change Program (CGPA 3.0 & above)
+                                    </option>
                                     <option value="transfer">Transfer (Inter-faculty / Inter-school)</option>
                                     <option value="probation">Probation Assistance</option>
                                     <option value="deferment">Deferment / Suspension</option>
@@ -1318,17 +1338,48 @@
                 const bannerTitle = document.getElementById('welcomeTitle');
                 if (bannerTitle) bannerTitle.innerText = `Welcome to ASET, ${data.matric}`;
 
-                document.getElementById('bannerIssueType').innerText = data.issueType;
-                document.getElementById('bannerInstitution').innerText = data.institution || 'N/A';
-                document.getElementById('bannerMatric').innerText = data.matric;
-
                 // Update Sidebar User Card
                 const sidebarName = document.querySelector('.sidebar-user-card .name');
                 if (sidebarName) sidebarName.innerText = data.matric;
 
-                // Update Active Case Card if it exists
+                // Update Active Case Card
                 const activeCaseTitle = document.querySelector('.status-card-big .case-details h2');
+                const activeCaseID = document.querySelector('.status-card-big .case-details p');
+                const statusPill = document.querySelector('.status-card-big .status-pill');
+
                 if (activeCaseTitle) activeCaseTitle.innerText = data.issueType;
+                if (activeCaseID) activeCaseID.innerText = `ID: ASET-CN-${Math.floor(Math.random() * 10000)}`;
+
+                // Specialized Status Logic
+                if (data.issueType === 'Suspension of Studies' || data.issueType === 'Deferment of Studies') {
+                    if (statusPill) {
+                        statusPill.className = 'status-pill success';
+                        statusPill.innerText = 'Counselling Scheduled';
+                    }
+
+                    // Update Recent Activity
+                    const activityFeed = document.querySelector('.activity-feed');
+                    if (activityFeed) {
+                        activityFeed.innerHTML = `
+                            <div class="feed-item border">
+                                <div class="feed-icon"><i class="bi bi-calendar-check text-success"></i></div>
+                                <div class="feed-content">
+                                    <h4>Counselling Booked</h4>
+                                    <p>Appointment confirmed with Dr. Olufemi.</p>
+                                    <span class="time">Just now</span>
+                                </div>
+                            </div>
+                            <div class="feed-item border">
+                                <div class="feed-icon"><i class="bi bi-file-earmark-check text-primary"></i></div>
+                                <div class="feed-content">
+                                    <h4>Documents Uploaded</h4>
+                                    <p>7 mandatory documents received.</p>
+                                    <span class="time">2 mins ago</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
 
                 // Update Profile View if it's currently loaded
                 const profileTitle = document.querySelector('.profile-hero h3');
