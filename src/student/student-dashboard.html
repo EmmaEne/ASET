@@ -7,9 +7,10 @@
     <title>Student Portal | ASET</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="styles/student-dashboard.css" rel="stylesheet">
+    <link href="styles/dashboard-premium.css" rel="stylesheet">
     <link href="../shared/styles/ui-states.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -17,15 +18,15 @@
     <!-- App Layout Wrapper -->
     <div class="app-layout">
 
-        <!-- Desktop Sidebar (Visible only on desktop >= 1024px) -->
+        <!-- Desktop Sidebar -->
         <aside class="desktop-sidebar d-none d-lg-flex">
             <div class="sidebar-brand">
                 <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
-                <span class="brand-name">ASET Portal</span>
+                <span class="brand-name">ASET</span>
             </div>
             <nav class="sidebar-nav">
                 <a href="javascript:void(0)" class="nav-item active" onclick="switchView('dashboard', this)">
-                    <i class="bi bi-grid-1x2"></i> <span>Dashboard</span>
+                    <i class="bi bi-grid-1x2-fill"></i> <span>Dashboard</span>
                 </a>
                 <a href="javascript:void(0)" class="nav-item" onclick="switchView('cases', this)">
                     <i class="bi bi-folder2-open"></i> <span>My Cases</span>
@@ -33,17 +34,24 @@
                 <a href="javascript:void(0)" class="nav-item" onclick="switchView('messages', this)">
                     <i class="bi bi-chat-dots"></i> <span>Messages</span>
                 </a>
+                <a href="javascript:void(0)" class="nav-item" onclick="switchView('academic-plan', this)">
+                    <i class="bi bi-journal-check"></i> <span>Academic Plan</span>
+                </a>
                 <a href="javascript:void(0)" class="nav-item" onclick="switchView('profile', this)">
                     <i class="bi bi-person"></i> <span>Profile</span>
                 </a>
+                <div style="flex:1;"></div>
+                <a href="../index.html" class="nav-item" style="margin-top:auto;">
+                    <i class="bi bi-box-arrow-left"></i> <span>Back to Home</span>
+                </a>
             </nav>
             <div class="sidebar-footer">
-                <div class="sidebar-user-card" onclick="switchView('profile')">
-                    <img src="https://ui-avatars.com/api/?name=Adebayo+O&background=f0f9ff&color=0284c7&bold=true"
-                        class="avatar-sm">
+                <div class="sidebar-user-card" onclick="switchView('profile', null)">
+                    <img src="https://ui-avatars.com/api/?name=Adebayo+O&background=1e3a8a&color=ffffff&bold=true"
+                        class="avatar-sm" id="sidebarAvatar">
                     <div class="user-details ms-2">
-                        <div class="name fw-bold small">Adebayo O.</div>
-                        <div class="role text-muted" style="font-size: 0.7rem;">Student</div>
+                        <div class="name fw-bold small" id="sidebarName">Adebayo O.</div>
+                        <div class="role" style="font-size: 0.7rem;">Student</div>
                     </div>
                 </div>
             </div>
@@ -57,17 +65,18 @@
             <header class="top-bar">
                 <div class="user-welcome">
                     <div class="avatar-circle d-lg-none">
-                        <img src="https://ui-avatars.com/api/?name=Adebayo+O&background=f0f9ff&color=0284c7&bold=true"
-                            alt="User">
+                        <img src="https://ui-avatars.com/api/?name=Adebayo+O&background=1e3a8a&color=ffffff&bold=true"
+                            alt="User" id="topbarAvatar">
                     </div>
                     <div class="welcome-text">
-                        <span class="greeting">Hello, Adebayo </span>
-
+                        <span class="greeting" id="topGreeting">Good morning, Adebayo 👋</span>
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-3">
-
-                    <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#notificationModal">
+                    <button class="btn-icon" onclick="switchView('messages', null)" title="Messages">
+                        <i class="bi bi-chat-dots"></i>
+                    </button>
+                    <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#notificationModal" title="Notifications">
                         <i class="bi bi-bell"></i>
                         <span class="notify-badge"></span>
                     </button>
@@ -184,12 +193,88 @@
                     <!-- ACTUAL CONTENT (hidden initially, shown after load) -->
                     <div class="dashboard-content content-loaded" id="dashboardContent" style="display: none;">
 
+                        <!-- Welcome Hero (both mobile + desktop) -->
+                        <div class="welcome-hero-card mb-3">
+                            <div class="welcome-hero-inner">
+                                <div class="wh-overline">Student Portal</div>
+                                <div class="wh-name" id="heroName">Welcome back, Adebayo 👋</div>
+                                <div class="wh-sub" id="heroSub">Computer Science &bull; 200 Level &bull; UNILAG</div>
+                                <div class="welcome-hero-actions">
+                                    <button class="wh-btn wh-btn-primary" onclick="openCaseSubmissionModal()">
+                                        <i class="bi bi-file-earmark-plus"></i> New Case
+                                    </button>
+                                    <button class="wh-btn wh-btn-outline" onclick="openMatricModal()">
+                                        <i class="bi bi-person-badge"></i> Get Matric No
+                                    </button>
+                                    <button class="wh-btn wh-btn-outline" onclick="openUploadModal()">
+                                        <i class="bi bi-upload"></i> Upload Doc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stat strip -->
+                        <div class="stat-strip d-none d-lg-grid mb-3">
+                            <div class="stat-chip">
+                                <div class="stat-chip-icon" style="background:#eff6ff;color:#2563eb;"><i class="bi bi-folder2-open"></i></div>
+                                <div>
+                                    <div class="stat-chip-val">3</div>
+                                    <div class="stat-chip-lbl">Total Cases</div>
+                                </div>
+                            </div>
+                            <div class="stat-chip">
+                                <div class="stat-chip-icon" style="background:#ecfdf5;color:#059669;"><i class="bi bi-check-circle"></i></div>
+                                <div>
+                                    <div class="stat-chip-val">2</div>
+                                    <div class="stat-chip-lbl">Resolved</div>
+                                </div>
+                            </div>
+                            <div class="stat-chip">
+                                <div class="stat-chip-icon" style="background:#fffbeb;color:#d97706;"><i class="bi bi-clock-history"></i></div>
+                                <div>
+                                    <div class="stat-chip-val">1</div>
+                                    <div class="stat-chip-lbl">In Progress</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Quick Actions -->
+                        <div class="d-lg-none">
+                            <div class="section-title mt-3">Quick Actions</div>
+                            <div class="quick-grid">
+                                <button class="quick-btn" id="newRequestBtn" onclick="openCaseSubmissionModal()">
+                                    <div class="icon-sq blue"><i class="bi bi-file-earmark-plus"></i></div>
+                                    <span>New Case</span>
+                                </button>
+                                <button class="quick-btn" onclick="openUploadModal()">
+                                    <div class="icon-sq purple"><i class="bi bi-upload"></i></div>
+                                    <span>Upload</span>
+                                </button>
+                                <button class="quick-btn" onclick="openPaymentModal()">
+                                    <div class="icon-sq green"><i class="bi bi-credit-card"></i></div>
+                                    <span>Pay Fee</span>
+                                </button>
+                                <button class="quick-btn" onclick="switchView('messages', null)">
+                                    <div class="icon-sq orange"><i class="bi bi-chat-dots"></i></div>
+                                    <span>Messages</span>
+                                </button>
+                                <button class="quick-btn" onclick="openMatricModal()">
+                                    <div class="icon-sq" style="background:#eef2ff;color:#4f46e5;"><i class="bi bi-person-badge"></i></div>
+                                    <span>Matric No</span>
+                                </button>
+                                <button class="quick-btn" onclick="switchView('academic-plan', null)">
+                                    <div class="icon-sq" style="background:#fdf4ff;color:#9333ea;"><i class="bi bi-journal-check"></i></div>
+                                    <span>Acad. Plan</span>
+                                </button>
+                            </div>
+                        </div>
 
                         <div class="row g-4">
                             <!-- Dashboard Main Column -->
                             <div class="col-lg-8">
+
                                 <!-- Status Card -->
-                                <div class="status-card-big shadow-sm">
+                                <div class="status-card-big">
                                     <div class="status-header">
                                         <span class="label">Active Case</span>
                                         <span class="status-pill warning">Under Review</span>
@@ -225,27 +310,30 @@
                                     </button>
                                 </div>
 
-                                <!-- Recent Activity Feed (Desktop Header) -->
+                                <!-- Recent Activity -->
                                 <div class="section-title">Recent Activity</div>
                                 <div class="activity-feed">
-                                    <div class="feed-item border">
-                                        <div class="feed-icon"><i class="bi bi-envelope"></i></div>
+                                    <div class="feed-item">
+                                        <div class="feed-icon" style="background:#eff6ff;color:#2563eb;"><i
+                                                class="bi bi-envelope"></i></div>
                                         <div class="feed-content">
                                             <h4>Message from Admin</h4>
                                             <p>Your case officer has been assigned.</p>
                                             <span class="time">2h ago</span>
                                         </div>
                                     </div>
-                                    <div class="feed-item border">
-                                        <div class="feed-icon"><i class="bi bi-file-earmark-check"></i></div>
+                                    <div class="feed-item">
+                                        <div class="feed-icon" style="background:#ecfdf5;color:#059669;"><i
+                                                class="bi bi-file-earmark-check"></i></div>
                                         <div class="feed-content">
                                             <h4>Document Verified</h4>
                                             <p>Result Slip 2024 was approved.</p>
                                             <span class="time">1d ago</span>
                                         </div>
                                     </div>
-                                    <div class="feed-item border">
-                                        <div class="feed-icon"><i class="bi bi-currency-dollar"></i></div>
+                                    <div class="feed-item">
+                                        <div class="feed-icon" style="background:#fffbeb;color:#d97706;"><i
+                                                class="bi bi-credit-card"></i></div>
                                         <div class="feed-content">
                                             <h4>Payment Pending</h4>
                                             <p>Change of Programme fee is due.</p>
@@ -255,79 +343,63 @@
                                 </div>
                             </div>
 
-                            <!-- Dashboard Side Column (Desktop Only Sidebar Widget) -->
+                            <!-- Dashboard Side Column (Desktop Only) — De-emphasized -->
                             <div class="col-lg-4 d-none d-lg-block">
 
-                                <div class="desktop-side-card p-3 mb-4">
-                                    <h5 class="mt-0 fw-bold mt-2 mb-3">Quick Actions</h5>
+                                <!-- Secondary Actions -->
+                                <div class="desktop-side-card p-3 mb-3">
+                                    <h5 class="mt-0 mt-1 mb-3"
+                                        style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-sub);">
+                                        Tools</h5>
                                     <div class="d-grid gap-2">
-                                        <button
-                                            class="btn btn-primary d-flex align-items-center gap-3 p-3 rounded-4 border-0"
-                                            onclick="openNewRequestModal()">
-                                            <div class="bg-white text-primary rounded-3 px-2 py-1"><i
-                                                    class="bi bi-plus-lg"></i></div>
-                                            <span class="fw-bold">New Request</span>
-                                        </button>
-                                        <button
-                                            class="btn bg-light d-flex align-items-center gap-3 p-3 rounded-4 border-0 text-start"
+                                        <button class="btn d-flex align-items-center gap-3 p-3 border-0 text-start"
+                                            style="background:var(--surface-50);border-radius:var(--radius-s);"
                                             onclick="openUploadModal()">
-                                            <i class="bi bi-upload text-primary fs-5"></i>
+                                            <div
+                                                style="width:36px;height:36px;border-radius:10px;background:#dbeafe;color:#2563eb;display:flex;align-items:center;justify-content:center;">
+                                                <i class="bi bi-upload"></i>
+                                            </div>
                                             <div>
-                                                <div class="fw-bold small">Upload Docs</div>
-                                                <div class="text-muted" style="font-size: 0.7rem;">Submit results or IDs
-                                                </div>
+                                                <div class="fw-bold" style="font-size:0.85rem;color:var(--text-main);">
+                                                    Upload Documents</div>
+                                                <div style="font-size: 0.7rem;color:var(--text-light);">Submit results
+                                                    or IDs</div>
                                             </div>
                                         </button>
-                                        <button
-                                            class="btn bg-light d-flex align-items-center gap-3 p-3 rounded-4 border-0 text-start"
+                                        <button class="btn d-flex align-items-center gap-3 p-3 border-0 text-start"
+                                            style="background:var(--surface-50);border-radius:var(--radius-s);"
                                             onclick="openPaymentModal()">
-                                            <i class="bi bi-credit-card text-primary fs-5"></i>
+                                            <div
+                                                style="width:36px;height:36px;border-radius:10px;background:#dcfce7;color:#16a34a;display:flex;align-items:center;justify-content:center;">
+                                                <i class="bi bi-credit-card"></i>
+                                            </div>
                                             <div>
-                                                <div class="fw-bold small">Pay Processing Fee</div>
-                                                <div class="text-muted" style="font-size: 0.7rem;">Clear pending
-                                                    requests
-                                                </div>
+                                                <div class="fw-bold" style="font-size:0.85rem;color:var(--text-main);">
+                                                    Pay Processing Fee</div>
+                                                <div style="font-size: 0.7rem;color:var(--text-light);">Clear pending
+                                                    requests</div>
                                             </div>
                                         </button>
                                     </div>
                                 </div>
 
-                                <h5 class="section-title">Case Mentor</h5>
+                                <!-- Case Mentor -->
+                                <div class="section-title" style="margin-top:1.5rem;">Case Mentor</div>
                                 <div class="desktop-side-card p-3 d-flex align-items-center gap-3">
-                                    <img src="https://ui-avatars.com/api/?name=Dr+Okonkwo&background=f0f9ff&color=0284c7&bold=true"
-                                        class="rounded-pill" style="width: 48px; height: 48px;">
+                                    <img src="https://ui-avatars.com/api/?name=Dr+Okonkwo&background=eff6ff&color=2563eb&bold=true"
+                                        class="rounded-3" style="width: 44px; height: 44px;">
                                     <div>
-                                        <h6 class="fw-bold mb-0">Dr. Okonkwo</h6>
-                                        <span class="text-muted small">Assigned Mentor</span>
-                                        <button class="btn btn-link p-0 d-block mt-1 small fw-bold"
+                                        <h6 class="fw-bold mb-0" style="font-size:0.9rem;">Dr. Okonkwo</h6>
+                                        <span
+                                            style="font-size:0.72rem;color:var(--text-light);font-weight:500;">Assigned
+                                            Mentor</span>
+                                        <button class="btn btn-link p-0 d-block mt-1 fw-bold" style="font-size:0.78rem;"
                                             onclick="switchView('messages')">Chat Now</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Quick Actions Grid (Mobile ONLY) -->
-                        <div class="d-lg-none">
-                            <div class="section-title">Quick Actions</div>
-                            <div class="quick-grid">
-                                <button class="quick-btn" id="newRequestBtn" onclick="openNewRequestModal()">
-                                    <div class="icon-sq blue"><i class="bi bi-folder-plus"></i></div>
-                                    <span>New Request</span>
-                                </button>
-                                <button class="quick-btn" onclick="openUploadModal()">
-                                    <div class="icon-sq purple"><i class="bi bi-upload"></i></div>
-                                    <span>Upload Doc</span>
-                                </button>
-                                <button class="quick-btn" onclick="openPaymentModal()">
-                                    <div class="icon-sq green"><i class="bi bi-credit-card"></i></div>
-                                    <span>Pay Fee</span>
-                                </button>
-                                <button class="quick-btn" onclick="switchView('messages')">
-                                    <div class="icon-sq orange"><i class="bi bi-chat-dots"></i></div>
-                                    <span>Message</span>
-                                </button>
-                            </div>
-                        </div>
                     </div><!-- End dashboard-content -->
                 </div><!-- End view-dashboard -->
                 <div id="view-cases" class="app-view container-fluid">
@@ -388,7 +460,7 @@
                             <div class="col-lg-8">
                                 <div class="view-header">
                                     <h2>My Cases</h2>
-                                    <button class="btn-clean" onclick="openNewRequestModal()"><i
+                                    <button class="btn-clean" onclick="openCaseSubmissionModal()"><i
                                             class="bi bi-plus-lg"></i></button>
                                 </div>
                                 <!-- Case List -->
@@ -516,6 +588,18 @@
                                     <p class="preview">Your application is progressing well.</p>
                                 </div>
                             </div>
+                            <div class="thread-item"
+                                onclick="openChat('Dr. Okonkwo', 'https://ui-avatars.com/api/?name=Dr+Okonkwo&background=dbeafe&color=1d4ed8')">
+                                <img src="https://ui-avatars.com/api/?name=Dr+Okonkwo&background=dbeafe&color=1d4ed8"
+                                    class="avatar-sm">
+                                <div class="thread-info">
+                                    <div class="thread-top">
+                                        <span class="sender">Dr. Okonkwo</span>
+                                        <span class="time">Mon</span>
+                                    </div>
+                                    <p class="preview">Please check your academic plan for the pending year 1 courses.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -551,11 +635,54 @@
                             <h2>Profile</h2>
                             <button class="btn-clean"><i class="bi bi-gear"></i></button>
                         </div>
-                        <div class="profile-hero">
-                            <div class="ph-avatar">AO</div>
-                            <h3>Adebayo Oluwaseun</h3>
-                            <p>Computer Science • 200 Lvl</p>
+
+                        <!-- Gradient hero -->
+                        <div class="profile-hero text-center mb-4">
+                            <div class="ph-avatar-wrapper position-relative d-inline-block mb-3">
+                                <img id="profilePassport"
+                                    src="https://ui-avatars.com/api/?name=Adebayo+O&background=1e3a8a&color=ffffff&size=128&bold=true"
+                                    class="rounded-circle shadow border-0"
+                                    style="width:100px;height:100px;object-fit:cover;">
+                                <button
+                                    class="btn btn-sm rounded-circle position-absolute bottom-0 end-0 shadow"
+                                    style="width:30px;height:30px;background:white;color:var(--brand-700);border:none;display:flex;align-items:center;justify-content:center;"
+                                    onclick="document.getElementById('passportUpload').click()">
+                                    <i class="bi bi-camera" style="font-size:0.75rem;"></i>
+                                </button>
+                                <input type="file" id="passportUpload" class="d-none" accept="image/*"
+                                    onchange="previewPassport(this)">
+                            </div>
+                            <h3 id="profileName" class="fw-bold mb-1">Adebayo Oluwaseun</h3>
+                            <p class="text-muted" id="profileAcademic">Computer Science • 200 Lvl</p>
                         </div>
+
+                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                            <div class="card-body p-0">
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item p-3 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <small class="text-muted d-block text-uppercase fw-bold ls-1"
+                                                style="font-size: 0.65rem;">Matriculation Number</small>
+                                            <span class="fw-bold text-dark" id="profileMatric">-</span>
+                                        </div>
+                                        <button class="btn btn-sm btn-light border" id="btnGenProfileMatric"
+                                            onclick="openMatricModal()">Generate</button>
+                                    </div>
+                                    <div class="list-group-item p-3">
+                                        <small class="text-muted d-block text-uppercase fw-bold ls-1"
+                                            style="font-size: 0.65rem;">JAMB Registration No</small>
+                                        <span class="fw-bold text-dark" id="profileJamb">24901827BA</span>
+                                    </div>
+                                    <div class="list-group-item p-3">
+                                        <small class="text-muted d-block text-uppercase fw-bold ls-1"
+                                            style="font-size: 0.65rem;">Current Email</small>
+                                        <span class="fw-bold text-dark"
+                                            id="profileEmail">adebayo.o@university.edu.ng</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="settings-list">
                             <div class="set-item" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                                 <div class="set-icon"><i class="bi bi-person"></i></div>
@@ -580,161 +707,266 @@
                     </div>
                 </div>
 
-                <!-- Track Progress View -->
-                <div id="view-track-progress" class="app-view">
-                    <div class="view-header">
-                        <button class="btn-clean me-2" onclick="switchView('dashboard')"><i
-                                class="bi bi-arrow-left"></i></button>
-                        <h2>Case Progress</h2>
+                <!-- Academic Plan View -->
+                <div id="view-academic-plan" class="app-view container-fluid">
+                    <div class="view-header mb-4">
+                        <div>
+                            <h2 class="fw-bold mb-1">Academic Registration Plan</h2>
+                            <p class="text-muted small">Required courses for your new department (Year 2 Transition)</p>
+                        </div>
+                        <button class="wh-btn wh-btn-primary" style="color:var(--brand-950);background:var(--brand-50);border:1.5px solid var(--brand-200);box-shadow:none;">
+                            <i class="bi bi-download"></i> Export PDF
+                        </button>
                     </div>
 
-                    <div class="card-list">
-                        <!-- Case Overview Card -->
-                        <div class="minimal-card mb-4 border-primary" style="background: var(--primary-soft);">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <h4 class="fw-bold mb-1" id="trackCaseType">Change of Programme</h4>
-                                    <span class="text-muted small" id="trackCaseID">ID: ASET-2024-00847</span>
-                                </div>
-                                <span class="mc-status warning">Under Review</span>
-                            </div>
-                            <div class="row g-3">
-                                <div class="col-6">
-                                    <label class="text-muted small d-block">Assigned Officer</label>
-                                    <span class="fw-bold small">Mrs. Adekoya F.</span>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <label class="text-muted small d-block">Registry Queue</label>
-                                    <span class="fw-bold small text-primary">#14 of 42</span>
+                    <div class="academic-table-wrap">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="ps-4 py-3 text-uppercase small fw-bold text-muted"
+                                            style="width: 15%">Course Code</th>
+                                        <th class="py-3 text-uppercase small fw-bold text-muted">Course Title</th>
+                                        <th class="py-3 text-uppercase small fw-bold text-muted" style="width: 15%">
+                                            Credit Unit</th>
+                                        <th class="pe-4 py-3 text-uppercase small fw-bold text-muted"
+                                            style="width: 15%">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-group-divider">
+                                        <td colspan="4" class="bg-light ps-4 py-2 small fw-bold text-primary">YEAR 1 -
+                                            SEMESTER 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold">CSC101</td>
+                                        <td>Introduction to Computer Science</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-warning-subtle text-warning px-3">Pending</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold">MTH101</td>
+                                        <td>Algebra and Trigonometry</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold">PHY101</td>
+                                        <td>General Physics I</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold">CHM101</td>
+                                        <td>General Chemistry I</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-muted small">GST101</td>
+                                        <td class="text-muted small">Use of English I</td>
+                                        <td class="text-muted small">2 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="table-group-divider">
+                                        <td colspan="4" class="bg-light ps-4 py-2 small fw-bold text-primary">YEAR 1 -
+                                            SEMESTER 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold">CSC102</td>
+                                        <td>Introduction to Programming</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-warning-subtle text-warning px-3">Pending</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-muted small">MTH102</td>
+                                        <td class="text-muted small">Calculus</td>
+                                        <td class="text-muted small">3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-muted small">PHY102</td>
+                                        <td class="text-muted small">General Physics II</td>
+                                        <td class="text-muted small">3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-muted small">GST102</td>
+                                        <td class="text-muted small">Philosophy and Logic</td>
+                                        <td class="text-muted small">2 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="table-group-divider">
+                                        <td colspan="4" class="bg-light ps-4 py-2 small fw-bold text-primary">YEAR 2 -
+                                            SEMESTER 1 (CURRENT)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-primary">CSC201</td>
+                                        <td>Data Structures and Algorithms</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-primary">CSC205</td>
+                                        <td>Operating Systems I</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-primary">MTH201</td>
+                                        <td>Linear Algebra</td>
+                                        <td>3 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-primary">GST201</td>
+                                        <td>Nigerian Peoples and Culture</td>
+                                        <td>2 Units</td>
+                                        <td><span
+                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-4 bg-light border-top">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-sq blue"><i class="bi bi-info-circle"></i></div>
+                                <div class="small">
+                                    <span class="fw-bold d-block">Academic Note:</span>
+                                    <span class="text-muted">You are required to register for the pending Year 1 courses
+                                        (CSC101, CSC102) alongside your Year 2 curriculum to complete your department
+                                        switch requirements.</span>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Internal Notes -->
-                        <div class="section-title">Case Notes</div>
-                        <div class="bg-white p-3 rounded-4 shadow-sm border mb-4">
-                            <div class="d-flex gap-3 mb-2">
-                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center"
-                                    style="width: 32px; height:32px;">
-                                    <i class="bi bi-sticky text-primary"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between">
-                                        <span class="fw-bold small">Administrative Note</span>
-                                        <span class="text-muted" style="font-size: 0.65rem;">Yesterday</span>
-                                    </div>
-                                    <p class="small text-muted mb-0">Documents verified at department level. Moving
-                                        to
-                                        faculty review for final clearance.</p>
-                                </div>
-                            </div>
-                        </div>
+                <div id="view-track-progress" class="app-view">
+                    <div class="view-header">
+                        <button class="btn-clean me-3" onclick="switchView('dashboard')"><i
+                                class="bi bi-arrow-left"></i></button>
+                        <h2>Track Progress</h2>
+                    </div>
 
-                        <!-- Detailed Timeline -->
-                        <div class="section-title">Full Timeline</div>
-                        <div class="bg-white p-4 rounded-4 shadow-sm border mb-5">
-                            <div class="d-flex flex-column gap-4">
-                                <!-- Stage: Submitted -->
-                                <div class="d-flex gap-3 position-relative">
-                                    <div class="timeline-line bg-success"
-                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
-                                    </div>
-                                    <div class="bg-success rounded-circle z-1 d-flex align-items-center justify-content-center"
-                                        style="width:24px;height:24px; min-width:24px;">
-                                        <i class="bi bi-check text-white small"></i>
-                                    </div>
+                    <div class="main-content p-0">
+                        <!-- Case Hero Tracker -->
+                        <div class="track-hero-card">
+                            <div class="track-hero-content">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
-                                        <h6 class="m-0 fw-bold">Submitted</h6>
-                                        <p class="small text-muted mb-1">Application successfully received.</p>
-                                        <small class="text-muted opacity-75">Jan 15, 10:30 AM</small>
-                                    </div>
-                                </div>
-
-                                <!-- Stage: Dept -->
-                                <div class="d-flex gap-3 position-relative">
-                                    <div class="timeline-line bg-success"
-                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
-                                    </div>
-                                    <div class="bg-success rounded-circle z-1 d-flex align-items-center justify-content-center"
-                                        style="width:24px;height:24px; min-width:24px;">
-                                        <i class="bi bi-check text-white small"></i>
-                                    </div>
-                                    <div>
-                                        <h6 class="m-0 fw-bold">Department Stage</h6>
-                                        <p class="small text-muted mb-1">Cleared by HOD Computer Science.</p>
-                                        <small class="text-muted opacity-75">Jan 18, 02:15 PM</small>
-                                    </div>
-                                </div>
-
-                                <!-- Stage: Faculty -->
-                                <div class="d-flex gap-3 position-relative">
-                                    <div class="timeline-line bg-primary-subtle"
-                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
-                                    </div>
-                                    <div class="bg-primary rounded-circle z-1 d-flex align-items-center justify-content-center shadow"
-                                        style="width:24px;height:24px; min-width:24px; border: 4px solid var(--primary-soft);">
-                                    </div>
-                                    <div>
-                                        <h6 class="m-0 fw-bold text-primary">Faculty Stage</h6>
-                                        <p class="small text-muted mb-1">Under review by the Sub-Dean.</p>
-                                        <span class="badge bg-primary-subtle text-primary fw-bold"
-                                            style="font-size: 0.6rem;">IN PROGRESS</span>
-                                        <div class="mt-2"><small class="text-muted opacity-75">Jan 20, 09:10
-                                                AM</small>
+                                        <h3 class="fw-bold mb-1" id="trackCaseType" style="font-size: 1.4rem;">Change of
+                                            Programme</h3>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="text-muted" style="font-size: 0.8rem; font-weight: 500;"
+                                                id="trackCaseID">ASET-2024-00847</span>
+                                            <span class="bg-light px-2 py-0 rounded text-muted"
+                                                style="font-size: 0.65rem; font-weight: 700;">REGISTRY</span>
                                         </div>
                                     </div>
+                                    <span class="status-pill warning">UNDER REVIEW</span>
                                 </div>
 
-                                <!-- Stage: Accepting Department -->
-                                <div class="d-flex gap-3 position-relative">
-                                    <div class="timeline-line bg-light shadow-none"
-                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
-                                    </div>
-                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
-                                        style="width:24px;height:24px; min-width:24px;"></div>
+                                <div class="track-label-group">
                                     <div>
-                                        <h6 class="m-0 fw-bold text-muted">Accepting Department</h6>
-                                        <p class="small text-muted mb-1">Review by target department.</p>
-                                        <small class="text-muted opacity-50">Pending Stage</small>
+                                        <span class="lab">Assigned Officer</span>
+                                        <div class="val" id="trackOfficer">Dr. Oladele Adenuga</div>
+                                    </div>
+                                    <div>
+                                        <span class="lab">Expected Completion</span>
+                                        <div class="val" id="trackETA">Mar 15, 2024</div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Stage: HOD (New Department) -->
-                                <div class="d-flex gap-3 position-relative">
-                                    <div class="timeline-line bg-light shadow-none"
-                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                        <!-- Case Note -->
+                        <div class="note-card">
+                            <div class="note-icon"><i class="bi bi-chat-quote"></i></div>
+                            <div class="note-content">
+                                <h5>Latest Update</h5>
+                                <p id="trackLatestUpdate">"We've received your O'Level verification. The department is
+                                    now reviewing the core course compatibility for the transfer."</p>
+                            </div>
+                        </div>
+
+                        <!-- Full Interactive Timeline -->
+                        <div class="section-title">Case Lifecycle</div>
+                        <div class="timeline-track" id="trackTimeline">
+                            <!-- Stage 1 -->
+                            <div class="timeline-node completed">
+                                <div class="timeline-dot"><i class="bi bi-check-lg"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Case Submitted</span>
+                                        <span class="timeline-time">Mar 01, 10:24 AM</span>
                                     </div>
-                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
-                                        style="width:24px;height:24px; min-width:24px;"></div>
-                                    <div>
-                                        <h6 class="m-0 fw-bold text-muted">HOD (New Department)</h6>
-                                        <p class="small text-muted mb-1">Final departmental approval for switch.</p>
-                                        <small class="text-muted opacity-50">Pending Stage</small>
-                                    </div>
+                                    <p class="timeline-desc">Initial application received and ID generated.</p>
                                 </div>
+                            </div>
 
-                                <!-- Stage: Registry -->
-                                <div class="d-flex gap-3 position-relative">
-                                    <div class="timeline-line bg-light shadow-none"
-                                        style="position: absolute; left: 11px; top: 24px; bottom: -24px; width: 2px;">
+                            <!-- Stage 2 -->
+                            <div class="timeline-node completed">
+                                <div class="timeline-dot"><i class="bi bi-check-lg"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Registry Verification</span>
+                                        <span class="timeline-time">Mar 02, 02:15 PM</span>
                                     </div>
-                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
-                                        style="width:24px;height:24px; min-width:24px;"></div>
-                                    <div>
-                                        <h6 class="m-0 fw-bold text-muted">Registry Review</h6>
-                                        <p class="small text-muted mb-1">Final validation of credentials.</p>
-                                        <small class="text-muted opacity-50">Pending Stage</small>
-                                    </div>
+                                    <p class="timeline-desc">Mandatory documents were cross-checked and validated.</p>
                                 </div>
+                            </div>
 
-                                <!-- Stage: Decision -->
-                                <div class="d-flex gap-3">
-                                    <div class="bg-secondary opacity-25 rounded-circle z-1"
-                                        style="width:24px;height:24px; min-width:24px;"></div>
-                                    <div>
-                                        <h6 class="m-0 fw-bold text-muted">Final Decision</h6>
-                                        <p class="small text-muted mb-0">Approval or Rejection notification.</p>
+                            <!-- Stage 3 -->
+                            <div class="timeline-node active">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Departmental Review</span>
+                                        <span class="timeline-time">Mar 04, 09:00 AM</span>
                                     </div>
+                                    <p class="timeline-desc">Academic board is reviewing student records for
+                                        eligibility.</p>
+                                    <span class="timeline-badge current">Working on this</span>
+                                </div>
+                            </div>
+
+                            <!-- Stage 4 -->
+                            <div class="timeline-node">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Final Approval</span>
+                                        <span class="timeline-time">Pending</span>
+                                    </div>
+                                    <p class="timeline-desc">Dean's office will issue the final letter of transfer.</p>
                                 </div>
                             </div>
                         </div>
@@ -744,9 +976,9 @@
             </main>
 
             <!-- Mobile Bottom Nav -->
-            <nav class="bottom-nav">
+            <nav class="bottom-nav d-lg-none">
                 <a href="javascript:void(0)" class="nav-btn active" onclick="switchView('dashboard', this)">
-                    <i class="bi bi-house-door"></i>
+                    <i class="bi bi-house-door-fill"></i>
                     <span>Home</span>
                 </a>
                 <a href="javascript:void(0)" class="nav-btn" onclick="switchView('cases', this)">
@@ -754,7 +986,7 @@
                     <span>Cases</span>
                 </a>
                 <div class="nav-fab-wrapper">
-                    <button class="nav-fab" onclick="openNewRequestModal()"><i class="bi bi-plus-lg"></i></button>
+                    <button class="nav-fab" onclick="openCaseSubmissionModal()"><i class="bi bi-plus-lg"></i></button>
                 </div>
                 <a href="javascript:void(0)" class="nav-btn" onclick="switchView('messages', this)">
                     <i class="bi bi-chat-dots"></i>
@@ -762,151 +994,163 @@
                 </a>
                 <a href="javascript:void(0)" class="nav-btn" onclick="switchView('profile', this)">
                     <i class="bi bi-person"></i>
-                    <span>Profile</span>
+                    <span>You</span>
                 </a>
             </nav>
 
         </div> <!-- End .app-container -->
     </div> <!-- End .app-layout -->
-    <!-- Functional Modals -->
-    <!-- New Request Modal -->
-    <div class="modal fade" id="newRequestModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold px-2 pt-2">New Request</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <!-- ============================
+         FUNCTIONAL MODALS — Premium
+         ============================ -->
+
+    <!-- Case Submission Modal -->
+    <div class="modal fade" id="caseSubmissionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header modal-header-hero">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="notify-icon-sq" style="background:rgba(255,255,255,0.15);color:white;">
+                            <i class="bi bi-file-earmark-plus"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Create New Case</h5>
+                            <p class="mb-0" style="font-size:0.78rem;color:rgba(255,255,255,0.55);">Submit your academic request for review</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white opacity-50" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4">
-                    <div id="requestMain">
-                        <form id="newRequestForm" onsubmit="handleRequestSubmit(event)">
-                            <div id="requestWizard">
-                                <!-- Step 1: Type Selection -->
-                                <div class="wizard-step" id="step1">
-                                    <label class="form-label small text-muted fw-bold">Select Request Type</label>
-                                    <div class="list-group list-group-flush rounded-3 overflow-hidden border">
-                                        <button type="button"
-                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
-                                            onclick="goToStep(2, 'Change of Programme')">
-                                            <i class="bi bi-arrow-left-right text-primary fs-5"></i>
-                                            <div>
-                                                <div class="fw-bold small">Change of Programme</div>
-                                                <div class="text-muted" style="font-size: 0.65rem;">Switch
-                                                    department or faculty</div>
-                                            </div>
-                                        </button>
-                                        <button type="button"
-                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
-                                            onclick="goToStep(2, 'Voluntary Change Program (CGPA 3.0 & above)')">
-                                            <i class="bi bi-star text-primary fs-5"></i>
-                                            <div>
-                                                <div class="fw-bold small">Voluntary Change Program</div>
-                                                <div class="text-muted" style="font-size: 0.65rem;">For CGPA 3.0 & above
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <button type="button"
-                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
-                                            onclick="goToStep(2, 'Transcript Request')">
-                                            <i class="bi bi-file-earmark-text text-primary fs-5"></i>
-                                            <div>
-                                                <div class="fw-bold small">Transcript Request</div>
-                                                <div class="text-muted" style="font-size: 0.65rem;">Request academic
-                                                    records</div>
-                                            </div>
-                                        </button>
-                                        <button type="button"
-                                            class="list-group-item list-group-item-action py-3 d-flex align-items-center gap-3"
-                                            onclick="goToStep(2, 'Deferment of Admission')">
-                                            <i class="bi bi-pause-circle text-primary fs-5"></i>
-                                            <div>
-                                                <div class="fw-bold small">Deferment</div>
-                                                <div class="text-muted" style="font-size: 0.65rem;">Pause studies
-                                                    for a session</div>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
 
-                                <!-- Step 2: Details & Upload -->
-                                <div class="wizard-step d-none" id="step2">
-                                    <h6 class="fw-bold mb-3" id="selectedRequestType">Details</h6>
-                                    <div class="mb-3">
-                                        <label class="form-label small text-muted fw-bold">Reason for
-                                            Request</label>
-                                        <textarea class="form-control border-0 bg-light rounded-3 py-2" rows="3"
-                                            id="requestDesc" placeholder="Explain your request..."></textarea>
-                                    </div>
-                                    <label class="form-label small text-muted fw-bold">Required Documents</label>
-                                    <div class="upload-zone text-center p-3 rounded-4 border-2 border-dashed bg-light text-muted mb-3"
-                                        onclick="document.getElementById('wizFileInput').click()"
-                                        style="border-style: dashed !important; cursor: pointer;">
-                                        <i class="bi bi-cloud-arrow-up fs-2 mb-1 d-block"></i>
-                                        <span class="small fw-bold">Click to upload doc</span>
-                                        <input type="file" id="wizFileInput" class="d-none"
-                                            onchange="handleWizardUpload(this)">
-                                    </div>
-                                    <div id="wizUploadBadge" class="d-none mb-3">
-                                        <div
-                                            class="p-2 bg-success-subtle text-success rounded-3 small d-flex align-items-center gap-2">
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <span id="fileName">document.pdf</span>
+                <div class="modal-body p-4 pt-4">
+                    <form id="caseSubmissionForm" onsubmit="handleCaseSubmission(event)" novalidate>
+                        <div id="formWizard">
+                            <!-- Step 1: Request Selection -->
+                            <div class="wizard-step" id="step1">
+                                <h6 class="fw-bold mb-3">Step 1: Select Request Type</h6>
+                                <div class="list-group list-group-flush gap-2 mb-4">
+                                    <button type="button"
+                                        class="form-control text-start d-flex align-items-center gap-3 py-3"
+                                        onclick="goToStep(2, 'Change of Programme')">
+                                        <div class="notify-icon-sq bg-blue-50 text-blue-600 rounded-3"
+                                            style="width:36px; height:36px; font-size: 1rem;"><i
+                                                class="bi bi-arrow-left-right"></i></div>
+                                        <div>
+                                            <div class="fw-bold small text-main">Change of Programme</div>
+                                            <div class="text-muted" style="font-size: 0.65rem;">Switch to a different
+                                                academic field</div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex gap-2 mt-4">
-                                        <button type="button" class="btn btn-light flex-grow-1 py-2 rounded-3 fw-bold"
-                                            onclick="goToStep(1)">Back</button>
-                                        <button type="button" class="btn btn-primary flex-grow-1 py-2 rounded-3 fw-bold"
-                                            onclick="goToStep(3)">Continue</button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 3: Payment -->
-                                <div class="wizard-step d-none" id="step3">
-                                    <div class="bg-light p-3 rounded-4 mb-4">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span class="text-muted small">Processing Fee</span>
-                                            <span class="fw-bold small">₦5,000.00</span>
+                                    </button>
+                                    <button type="button"
+                                        class="form-control text-start d-flex align-items-center gap-3 py-3"
+                                        onclick="goToStep(2, 'Transcript Request')">
+                                        <div class="notify-icon-sq bg-green-50 text-green-600 rounded-3"
+                                            style="width:36px; height:36px; font-size: 1rem;"><i
+                                                class="bi bi-file-text"></i></div>
+                                        <div>
+                                            <div class="fw-bold small text-main">Transcript Request</div>
+                                            <div class="text-muted" style="font-size: 0.65rem;">Official academic record
+                                                of courses</div>
                                         </div>
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <span class="text-muted small">Service Charge</span>
-                                            <span class="fw-bold small">₦250.00</span>
+                                    </button>
+                                    <button type="button"
+                                        class="form-control text-start d-flex align-items-center gap-3 py-3"
+                                        onclick="goToStep(2, 'Deferment of Admission')">
+                                        <div class="notify-icon-sq bg-amber-50 text-amber-600 rounded-3"
+                                            style="width:36px; height:36px; font-size: 1rem;"><i
+                                                class="bi bi-pause-circle"></i></div>
+                                        <div>
+                                            <div class="fw-bold small text-main">Deferment</div>
+                                            <div class="text-muted" style="font-size: 0.65rem;">Temporary suspension of
+                                                studies</div>
                                         </div>
-                                        <hr class="my-2 opacity-10">
-                                        <div class="d-flex justify-content-between">
-                                            <span class="fw-bold small">Total Amount</span>
-                                            <span class="fw-bold text-primary">₦5,250.00</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label small text-muted fw-bold">Payment Method</label>
-                                        <div class="form-check p-3 border rounded-3 mb-2 active"
-                                            style="border-color: #0284c7 !important;">
-                                            <input class="form-check-input ms-0 me-3" type="radio" checked>
-                                            <label class="form-check-label small fw-bold">Debit / Credit Card
-                                                (Paystack)</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex gap-2 mt-4">
-                                        <button type="button" class="btn btn-light flex-grow-1 py-2 rounded-3 fw-bold"
-                                            onclick="goToStep(2)">Back</button>
-                                        <button type="button" class="btn btn-primary flex-grow-1 py-2 rounded-3 fw-bold"
-                                            id="wizPayBtn" onclick="processWizardPayment()">Pay Now</button>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
 
-                    </div>
-                    <div id="requestSuccess" class="text-center d-none py-4">
-                        <div class="bg-success-subtle text-success p-3 rounded-circle d-inline-block mb-3">
-                            <i class="bi bi-check-lg fs-2"></i>
+                            <!-- Step 2: Details & Attachments -->
+                            <div class="wizard-step d-none" id="step2">
+                                <h6 class="fw-bold" id="selectedRequestType">Step 2: Case Details</h6>
+                                <div class="form-group">
+                                    <label class="form-label">Reason for Request</label>
+                                    <textarea class="form-control" rows="3"
+                                        placeholder="Please provide specific details..." id="requestDesc"></textarea>
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <label class="form-label">Supporting Documents</label>
+                                    <div class="upload-zone text-center"
+                                        onclick="document.getElementById('wizFileInput').click()"
+                                        style="cursor: pointer;">
+                                        <i class="bi bi-cloud-arrow-up fs-2 mb-2 d-block"></i>
+                                        <h6 class="fw-bold mb-1">Upload Doc</h5>
+                                            <span class="small opacity-75">PDF or Image (Max 5MB)</span>
+                                            <input type="file" id="wizFileInput" class="d-none"
+                                                onchange="handleWizardUpload(this)">
+                                    </div>
+                                    <div id="wizUploadBadge" class="d-none mt-3">
+                                        <div
+                                            class="upload-badge-premium bg-success-subtle border-success border-opacity-25">
+                                            <i class="bi bi-check-circle-fill text-success"></i>
+                                            <span id="fileName" class="small fw-bold text-success">document.pdf</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-3">
+                                    <button type="button" class="btn btn-light flex-grow-1"
+                                        onclick="goToStep(1)">Back</button>
+                                    <button type="button" class="btn btn-primary flex-grow-1"
+                                        onclick="goToStep(3)">Continue</button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Confirmation & Payment -->
+                            <div class="wizard-step d-none" id="step3">
+                                <h6 class="fw-bold">Step 3: Review & Payment</h6>
+                                <div class="bg-light rounded-4 p-4 mb-4 border">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span class="text-muted small fw-medium">Processing Fee</span>
+                                        <span class="fw-bold small">₦5,000.00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3 pt-3 border-top border-dashed">
+                                        <span class="fw-bold small">Total Payable</span>
+                                        <span class="fw-bold text-primary fs-5">₦5,250.00</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <label class="form-label">Payment Method</label>
+                                    <div
+                                        class="form-control d-flex align-items-center gap-3 py-3 border-primary bg-primary-soft">
+                                        <i class="bi bi-credit-card text-primary fs-5"></i>
+                                        <div>
+                                            <div class="fw-bold small text-primary">Debit / Credit Card</div>
+                                            <div class="text-muted" style="font-size: 0.65rem;">Processed securely via
+                                                Paystack</div>
+                                        </div>
+                                        <i class="bi bi-check-circle-fill text-primary ms-auto"></i>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-3">
+                                    <button type="button" class="btn btn-light flex-grow-1"
+                                        onclick="goToStep(2)">Back</button>
+                                    <button type="button" class="btn btn-primary flex-grow-1" id="wizPayBtn"
+                                        onclick="processWizardPayment()">Pay Now</button>
+                                </div>
+                            </div>
                         </div>
-                        <h5 class="fw-bold">Request Submitted!</h5>
-                        <p class="text-muted small">Your case has been created successfully. A case officer will be
-                            assigned shortly.</p>
-                        <button class="btn btn-light w-100 rounded-3 py-2 mt-2" data-bs-dismiss="modal">Close</button>
+                    </form>
+
+                    <div id="requestSuccess" class="text-center d-none py-4">
+                        <div class="bg-success text-white rounded-circle shadow d-inline-flex align-items-center justify-content-center mb-4"
+                            style="width: 72px; height: 72px;">
+                            <i class="bi bi-check-lg fs-1"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Request Submitted!</h4>
+                        <p class="text-muted small px-3 mb-4">Your application has been received. You can track progress
+                            in the 'Cases' tab.</p>
+                        <button class="btn btn-primary w-100" data-bs-dismiss="modal">Go to Dashboard</button>
                     </div>
                 </div>
             </div>
@@ -916,36 +1160,39 @@
     <!-- Upload Document Modal -->
     <div class="modal fade" id="uploadDocModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold px-2 pt-2">Upload Document</h5>
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="fw-bold mb-0">Upload Document</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <div id="uploadMain">
-                        <div class="upload-zone text-center p-4 rounded-4 border-2 border-dashed bg-light text-muted mb-3 cursor-pointer"
-                            onclick="document.getElementById('fileInput').click()"
-                            style="border-style: dashed !important;">
+                        <div class="upload-zone text-center mb-0 cursor-pointer"
+                            onclick="document.getElementById('fileInput').click()">
                             <i class="bi bi-cloud-arrow-up fs-1 mb-2 d-block"></i>
-                            <span class="small fw-bold">Click or drag & drop to upload</span>
-                            <input type="file" id="fileInput" class="d-none" onchange="startSimulatedUpload(this)">
+                            <h6 class="fw-bold mb-1">Select File</h5>
+                                <span class="small opacity-75">PDF, PNG or JPG (Max 5MB)</span>
+                                <input type="file" id="fileInput" class="d-none" onchange="startSimulatedUpload(this)">
                         </div>
-                        <div id="uploadProgress" class="d-none">
-                            <div class="progress rounded-pill mb-2" style="height: 6px;">
-                                <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated"
+                        <div id="uploadProgress" class="d-none mt-4">
+                            <div class="progress rounded-pill mb-2" style="height: 8px;">
+                                <div id="progressBar"
+                                    class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                     style="width: 0%"></div>
                             </div>
-                            <div class="d-flex justify-content-between small text-muted">
-                                <span id="uploadStatusText">Uploading...</span>
-                                <span id="progressText">0%</span>
+                            <div class="d-flex justify-content-between small fw-bold">
+                                <span id="uploadStatusText" class="text-muted">Encrypting...</span>
+                                <span id="progressText" class="text-primary">0%</span>
                             </div>
                         </div>
                     </div>
-                    <div id="uploadSuccess" class="text-center d-none py-3">
-                        <i class="bi bi-check-circle-fill text-success fs-1 mb-2 d-block"></i>
-                        <h6 class="fw-bold">Upload Complete!</h6>
-                        <button class="btn btn-primary btn-sm rounded-pill px-4 mt-2" data-bs-dismiss="modal">Got
-                            it</button>
+                    <div id="uploadSuccess" class="text-center d-none py-4">
+                        <div class="bg-success text-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 56px; height: 56px;">
+                            <i class="bi bi-check-lg fs-2"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Verification Successful!</h5>
+                        <button class="btn btn-primary w-100" data-bs-dismiss="modal">Continue</button>
                     </div>
                 </div>
             </div>
@@ -955,30 +1202,33 @@
     <!-- Payment Modal -->
     <div class="modal fade" id="paymentModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold px-2 pt-2">Make Payment</h5>
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="fw-bold mb-0">Secure Payment</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <div id="paymentMain">
-                        <div class="bg-light p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-muted small">Amount Due</span>
-                                <h4 class="fw-bold mb-0">₦5,000.00</h4>
-                            </div>
-                            <span class="badge bg-danger rounded-pill">Pending</span>
+                        <div class="bg-light rounded-4 p-4 text-center mb-4 border">
+                            <span class="text-muted small fw-bold text-uppercase ls-1">Outstanding Balance</span>
+                            <h2 class="fw-bold text-main mt-1 mb-0">₦5,000.00</h2>
+                            <span class="badge bg-amber-100 text-amber-700 mt-2 px-3">PENDING APPROVAL</span>
                         </div>
-                        <button class="btn btn-primary w-100 py-3 rounded-4 fw-bold" id="payBtn"
-                            onclick="handlePayment(this)">
-                            Secure Pay with Paystack
+                        <button class="btn btn-primary w-100 py-3" id="payBtn" onclick="handlePayment(this)">
+                            Pay Now <i class="bi bi-shield-check ms-2"></i>
                         </button>
+                        <div class="mt-4 text-center">
+                            <img src="https://paystack.com/assets/img/charge/lock.svg" height="12" class="opacity-50">
+                        </div>
                     </div>
                     <div id="paymentSuccess" class="text-center d-none py-4">
-                        <i class="bi bi-patch-check-fill text-success fs-1 mb-2 d-block"></i>
-                        <h5 class="fw-bold">Payment Successful!</h5>
-                        <p class="text-muted small">Your receipt has been sent to your email.</p>
-                        <button class="btn btn-light w-100 rounded-3 py-2 mt-2" data-bs-dismiss="modal">Done</button>
+                        <div class="bg-primary text-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3"
+                            style="width: 64px; height: 64px;">
+                            <i class="bi bi-star-fill fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">Payment Verified!</h4>
+                        <p class="text-muted small px-4 mb-4">Your receipt has been generated.</p>
+                        <button class="btn btn-primary w-100" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -988,64 +1238,46 @@
     <!-- Notifications Modal -->
     <div class="modal fade" id="notificationModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-bottom py-3">
-                    <h5 class="fw-bold m-0">Notifications</h5>
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header border-0 p-4">
+                    <h5 class="fw-bold mb-0">Notifications</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-0">
                     <div class="list-group list-group-flush">
-                        <div class="list-group-item p-3 border-0 bg-light-subtle">
+                        <div class="list-group-item bg-blue-50">
                             <div class="d-flex gap-3">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                                    style="width: 40px; height: 40px;">
-                                    <i class="bi bi-chat-dots"></i>
+                                <div class="notify-icon-sq bg-primary text-white shadow-sm">
+                                    <i class="bi bi-megaphone"></i>
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between mb-1">
                                         <span class="fw-bold small text-primary">New Message</span>
-                                        <span class="text-muted" style="font-size: 0.65rem;">2h ago</span>
+                                        <span class="text-muted" style="font-size: 0.6rem;">2h ago</span>
                                     </div>
-                                    <p class="small text-muted mb-0">Admin: "Your application ASET-00847 is under
-                                        faculty review..."</p>
+                                    <p class="small text-main fw-medium mb-0">Admin: "Your application ASET-00847 is
+                                        under faculty review..."</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group-item p-3 border-0">
+                        <div class="list-group-item">
                             <div class="d-flex gap-3">
-                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                                    style="width: 40px; height: 40px;">
-                                    <i class="bi bi-check-circle"></i>
+                                <div class="notify-icon-sq bg-green-100 text-green-700">
+                                    <i class="bi bi-check2-circle"></i>
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between mb-1">
-                                        <span class="fw-bold small text-success">Document Verified</span>
-                                        <span class="text-muted" style="font-size: 0.65rem;">1d ago</span>
+                                        <span class="fw-bold small">Document Verified</span>
+                                        <span class="text-muted" style="font-size: 0.6rem;">1d ago</span>
                                     </div>
-                                    <p class="small text-muted mb-0">The Registry has verified your Result Slip
-                                        upload.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item p-3 border-0">
-                            <div class="d-flex gap-3">
-                                <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                                    style="width: 40px; height: 40px;">
-                                    <i class="bi bi-credit-card"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between mb-1">
-                                        <span class="fw-bold small">Payment Due</span>
-                                        <span class="text-muted" style="font-size: 0.65rem;">3d ago</span>
-                                    </div>
-                                    <p class="small text-muted mb-0">Academic processing fee for 'Change of
-                                        Programme' is pending.</p>
+                                    <p class="small text-muted mb-0">The Registry has verified your Result Slip upload.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer border-top p-2">
+                <div class="modal-footer border-0">
                     <button class="btn btn-light w-100 py-2 small fw-bold" onclick="markAllAsRead()">Mark all as
                         read</button>
                 </div>
@@ -1053,267 +1285,153 @@
         </div>
     </div>
 
-    <!-- Edit Profile Modal -->
+    <!-- Profile Editing Modals -->
     <div class="modal fade" id="editProfileModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold px-2 pt-2">Personal Information</h5>
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="fw-bold mb-0">Personal Info</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form onsubmit="handleProfileUpdate(event)">
-                        <div class="mb-3">
-                            <label class="form-label small text-muted fw-bold">Full Name</label>
-                            <input type="text" class="form-control border-0 bg-light rounded-3 py-2"
-                                value="Adebayo Oluwaseun">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" value="Adebayo Oluwaseun">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted fw-bold">Email Address</label>
-                            <input type="email" class="form-control border-0 bg-light rounded-3 py-2"
-                                value="adebayo.o@student.edu.ng">
+                        <div class="form-group mb-4">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" value="adebayo.o@student.edu.ng">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted fw-bold">Phone Number</label>
-                            <input type="tel" class="form-control border-0 bg-light rounded-3 py-2"
-                                value="+234 803 456 7890">
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold mt-4">Save
-                            Changes</button>
+                        <button type="submit" class="btn btn-primary w-100 py-3">Save Changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Academic Info Modal -->
     <div class="modal fade" id="academicInfoModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold px-2 pt-2">Academic Details</h5>
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="fw-bold mb-0">Academic Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between py-2 border-bottom">
-                            <span class="text-muted small">Student ID</span>
-                            <span class="fw-bold small">STU/2024/001234</span>
+                    <div class="bg-light rounded-4 p-4 border mb-4">
+                        <div class="d-flex justify-content-between py-2 border-bottom border-dashed">
+                            <span class="text-muted small fw-bold">ID NO</span>
+                            <span class="fw-bold small text-main">STU/2024/001234</span>
                         </div>
-                        <div class="d-flex justify-content-between py-2 border-bottom">
-                            <span class="text-muted small">Faculty</span>
-                            <span class="fw-bold small">Science</span>
-                        </div>
-                        <div class="d-flex justify-content-between py-2 border-bottom">
-                            <span class="text-muted small">Department</span>
-                            <span class="fw-bold small">Computer Science</span>
-                        </div>
-                        <div class="d-flex justify-content-between py-2 border-bottom">
-                            <span class="text-muted small">Level</span>
-                            <span class="fw-bold small">200 Level</span>
-                        </div>
-                        <div class="d-flex justify-content-between py-2 border-bottom">
-                            <span class="text-muted small">Cumulative GPA</span>
-                            <span class="fw-bold small text-success">3.85 / 5.0</span>
+                        <div class="d-flex justify-content-between py-2 mt-2">
+                            <span class="text-muted small fw-bold">FACULTY</span>
+                            <span class="fw-bold small text-main">Science</span>
                         </div>
                     </div>
-                    <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3">
-                        <i class="bi bi-info-circle text-primary"></i>
-                        <span class="small text-muted">Academic records are verified by the registry and can only be
-                            updated via the portal admin.</span>
+                    <div class="p-3 bg-blue-50 text-blue-700 rounded-3 d-flex align-items-center gap-3">
+                        <i class="bi bi-info-circle-fill"></i>
+                        <span style="font-size: 0.75rem;">Officially verified by the University Registry.</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Change Password Modal -->
     <div class="modal fade" id="passwordModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold px-2 pt-2">Security Settings</h5>
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header border-0 p-4 pb-0">
+                    <h5 class="fw-bold mb-0">Security</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form onsubmit="handlePasswordUpdate(event)">
-                        <div class="mb-3">
-                            <label class="form-label small text-muted fw-bold">Current Password</label>
-                            <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
-                                placeholder="••••••••">
+                        <div class="form-group mb-4">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" placeholder="••••••••">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted fw-bold">New Password</label>
-                            <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
-                                placeholder="••••••••">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted fw-bold">Confirm New Password</label>
-                            <input type="password" class="form-control border-0 bg-light rounded-3 py-2"
-                                placeholder="••••••••">
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold mt-4">Update
-                            Password</button>
+                        <button type="submit" class="btn btn-primary w-100 py-3">Update Security</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Confirmation Modal (Logout replacement) -->
     <div class="modal fade" id="confirmModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
+            <div class="modal-content overflow-hidden">
                 <div class="modal-body p-4 text-center">
-                    <div class="bg-danger-subtle text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                        style="width: 50px; height: 50px;">
-                        <i class="bi bi-box-arrow-right fs-4"></i>
+                    <div class="notify-icon-sq bg-red-50 text-red-600 mx-auto mb-3"
+                        style="width: 64px; height: 64px; font-size: 1.5rem;">
+                        <i class="bi bi-box-arrow-right"></i>
                     </div>
-                    <h6 class="fw-bold">Sign Out</h6>
-                    <p class="text-muted small mb-4">Are you sure you want to log out of your student account?</p>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-light flex-grow-1 py-2 rounded-pill small fw-bold"
-                            data-bs-dismiss="modal">Cancel</button>
-                        <button class="btn btn-danger flex-grow-1 py-2 rounded-pill small fw-bold"
-                            onclick="ASET.logout()">Sign Out</button>
+                    <h5 class="fw-bold mb-1">Sign Out</h5>
+                    <p class="text-muted small mb-4">End your session?</p>
+                    <div class="d-flex gap-3">
+                        <button class="btn btn-light flex-grow-1" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-danger flex-grow-1 fw-bold" onclick="ASET.logout()">Yes, Log Out</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Case Submission Modal -->
-    <div class="modal fade" id="caseSubmissionModal" tabindex="-1" aria-labelledby="caseSubmissionModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0 pe-4 pt-4">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="icon-box bg-primary text-white rounded-3 d-flex align-items-center justify-content-center"
-                            style="width: 48px; height: 48px;">
-                            <i class="bi bi-file-earmark-plus fs-5"></i>
+    <!-- Matric Generation Modal -->
+    <div class="modal fade" id="matricModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content overflow-hidden">
+                <div class="modal-header modal-header-hero">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-shield-lock me-2" style="color:var(--brand-300);"></i>Secure Generation</h5>
+                    <button type="button" class="btn-close btn-close-white opacity-50" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="matricModalBody">
+                    <div id="matricInitial">
+                        <div class="text-center mb-4">
+                            <p class="text-muted px-2">Verify your academic identity.</p>
                         </div>
-                        <div>
-                            <h5 class="fw-bold mb-0" id="caseSubmissionModalLabel">Submit a New Case</h5>
-                            <p class="text-muted small mb-0">Tell us about your academic issue and we'll help resolve
-                                it.</p>
+                        <div class="bg-light rounded-4 p-4 border mb-4">
+                            <div class="mb-3">
+                                <label class="text-muted d-block text-uppercase fw-bold ls-1"
+                                    style="font-size: 0.65rem;">Registry Record</label>
+                                <span class="fw-bold fs-5 text-dark" id="matricDisplayName">Adebayo Oluwaseun</span>
+                            </div>
+                            <div class="mb-0 pt-3 border-top border-dashed">
+                                <label class="text-muted d-block text-uppercase fw-bold ls-1"
+                                    style="font-size: 0.65rem;">Temporary ID</label>
+                                <span class="fw-bold fs-5 text-primary" id="matricRegNo">2024/004821</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-100 py-3 fw-bold" onclick="startMatricGeneration()">
+                            Begin Generation <i class="bi bi-chevron-right ms-1"></i>
+                        </button>
+                    </div>
+
+                    <div id="matricLoading" class="d-none text-center py-5">
+                        <div class="spinner-border text-primary mb-4"
+                            style="width: 3.5rem; height: 3.5rem; border-width: 0.25em;" role="status text-primary">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h5 class="fw-bold mb-1">Registry Sync...</h5>
+                        <p class="text-muted small">Generating unique academic identity</p>
+                        <div class="progress mt-4 rounded-pill" style="height: 6px; background: var(--surface-100);">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                id="matricProgressBar" style="width: 0%"></div>
                         </div>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form id="caseSubmissionForm" onsubmit="handleCaseSubmission(event)" novalidate>
-                        <div class="row g-3">
-                            <!-- Current Institution -->
-                            <div class="col-md-6">
-                                <label for="currentInstitution" class="form-label fw-semibold small">Current Institution
-                                    <span class="text-danger">*</span></label>
-                                <div class="searchable-dropdown">
-                                    <input type="text" class="form-control form-control-lg" id="institutionSearch"
-                                        placeholder="Search university..." autocomplete="off"
-                                        onfocus="toggleDropdown('institutionDropdown', true)"
-                                        oninput="filterDropdown('institutionDropdown', this.value)">
-                                    <input type="hidden" id="currentInstitution" name="currentInstitution" required>
-                                    <div class="dropdown-menu w-100 shadow-sm" id="institutionDropdown">
-                                        <div class="dropdown-item" data-value="unilag">University of Lagos</div>
-                                        <div class="dropdown-item" data-value="ui">University of Ibadan</div>
-                                        <div class="dropdown-item" data-value="oau">Obafemi Awolowo University</div>
-                                        <div class="dropdown-item" data-value="unn">University of Nigeria, Nsukka</div>
-                                        <div class="dropdown-item" data-value="abu">Ahmadu Bello University</div>
-                                        <div class="dropdown-item" data-value="lasu">Lagos State University</div>
-                                        <div class="dropdown-item" data-value="uniben">University of Benin</div>
-                                        <div class="dropdown-item" data-value="futa">Federal University of Technology,
-                                            Akure</div>
-                                        <div class="dropdown-item" data-value="unilorin">University of Ilorin</div>
-                                        <div class="dropdown-item" data-value="covenant">Covenant University</div>
-                                        <div class="dropdown-item" data-value="babcock">Babcock University</div>
-                                        <div class="dropdown-item" data-value="bowen">Bowen University</div>
-                                        <div class="dropdown-item" data-value="aau">Ambrose Alli University</div>
-                                        <div class="dropdown-item" data-value="uniosun">Osun State University</div>
-                                        <div class="dropdown-item" data-value="other">Other Institution</div>
-                                    </div>
-                                </div>
-                                <div class="invalid-feedback">Please select your institution.</div>
-                            </div>
 
-                            <!-- Current Department -->
-                            <div class="col-md-6">
-                                <label for="currentDepartment" class="form-label fw-semibold small">Current Department
-                                    <span class="text-danger">*</span></label>
-                                <div class="searchable-dropdown">
-                                    <input type="text" class="form-control form-control-lg" id="departmentSearch"
-                                        placeholder="Search department..." autocomplete="off"
-                                        onfocus="toggleDropdown('departmentDropdown', true)"
-                                        oninput="filterDropdown('departmentDropdown', this.value)">
-                                    <input type="hidden" id="currentDepartment" name="currentDepartment" required>
-                                    <div class="dropdown-menu w-100 shadow-sm" id="departmentDropdown">
-                                        <div class="dropdown-item" data-value="compsci">Computer Science</div>
-                                        <div class="dropdown-item" data-value="medicine">Medicine & Surgery</div>
-                                        <div class="dropdown-item" data-value="law">Law</div>
-                                        <div class="dropdown-item" data-value="accounting">Accounting</div>
-                                        <div class="dropdown-item" data-value="economics">Economics</div>
-                                        <div class="dropdown-item" data-value="engr-civil">Civil Engineering</div>
-                                        <div class="dropdown-item" data-value="engr-mech">Mechanical Engineering</div>
-                                        <div class="dropdown-item" data-value="engr-elec">Electrical Engineering</div>
-                                        <div class="dropdown-item" data-value="pharmacy">Pharmacy</div>
-                                        <div class="dropdown-item" data-value="nursing">Nursing Science</div>
-                                        <div class="dropdown-item" data-value="masscomm">Mass Communication</div>
-                                        <div class="dropdown-item" data-value="polsci">Political Science</div>
-                                        <div class="dropdown-item" data-value="biology">Biology</div>
-                                        <div class="dropdown-item" data-value="chemistry">Chemistry</div>
-                                        <div class="dropdown-item" data-value="physics">Physics</div>
-                                        <div class="dropdown-item" data-value="maths">Mathematics</div>
-                                        <div class="dropdown-item" data-value="other">Other Department</div>
-                                    </div>
-                                </div>
-                                <div class="invalid-feedback">Please select your department.</div>
-                            </div>
-
-                            <!-- Issue Type -->
-                            <div class="col-12">
-                                <label for="issueType" class="form-label fw-semibold small">Issue Type <span
-                                        class="text-danger">*</span></label>
-                                <select class="form-select form-select-lg" id="issueType" name="issueType" required>
-                                    <option value="" disabled selected>Select your issue type...</option>
-                                    <option value="change-of-department">Change of Department</option>
-                                    <option value="voluntary-change-program">Voluntary Change Program (CGPA 3.0 & above)
-                                    </option>
-                                    <option value="transfer">Transfer (Inter-faculty / Inter-school)</option>
-                                    <option value="probation">Probation Assistance</option>
-                                    <option value="deferment">Deferment / Suspension</option>
-                                    <option value="withdrawal">Withdrawal</option>
-                                    <option value="other">Other Academic Issue</option>
-                                </select>
-                                <div class="invalid-feedback">Please select an issue type.</div>
-                            </div>
-
-                            <!-- Problem Description -->
-                            <div class="col-12">
-                                <label for="problemDescription" class="form-label fw-semibold small">Short Description
-                                    of Problem <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="problemDescription" name="problemDescription"
-                                    rows="4" placeholder="Briefly describe your academic issue or challenge..." required
-                                    minlength="20" maxlength="500"></textarea>
-                                <div class="d-flex justify-content-between mt-1">
-                                    <div class="invalid-feedback d-block" id="descriptionError"
-                                        style="display: none !important;">Please provide a description (min 20
-                                        characters).</div>
-                                    <small class="text-muted ms-auto"><span id="charCount">0</span>/500</small>
-                                </div>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="col-12 mt-4 text-center">
-                                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-3 rounded-3"
-                                    id="submitCaseBtn">
-                                    <i class="bi bi-send me-2"></i> Submit Case
-                                </button>
-                                <p class="text-muted small mt-3 mb-0">
-                                    <i class="bi bi-shield-check me-1"></i> Your information is secure and confidential.
-                                </p>
-                            </div>
+                    <div id="matricSuccess" class="d-none text-center py-4">
+                        <div class="bg-green-100 text-green-700 d-inline-flex p-3 rounded-circle shadow-sm mb-4">
+                            <i class="bi bi-patch-check-fill fs-1"></i>
                         </div>
-                    </form>
+                        <h4 class="fw-bold mb-2">Issued!</h4>
+                        <div class="bg-primary-soft border border-primary border-opacity-10 rounded-4 p-4 mb-4">
+                            <label class="text-primary text-uppercase fw-bold d-block mb-1 ls-1"
+                                style="font-size: 0.65rem;">OFFICIAL MATRIC NO</label>
+                            <h2 class="fw-bold text-primary mb-0" id="officialMatricNo" style="letter-spacing: 3px;">
+                                2024/MT/00941</h2>
+                        </div>
+                        <button class="btn btn-primary w-100 py-3" data-bs-dismiss="modal">Continue</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1326,21 +1444,35 @@
     <script>
         // Persistence Logic for Intake Data
         document.addEventListener('DOMContentLoaded', function () {
-            const rawData = localStorage.getItem('aset_intake_data');
+            // Time-based greeting
+            const hour = new Date().getHours();
+            const greetWord = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+
+            const rawData = localStorage.getItem('aset_intake_data') || localStorage.getItem('aset_student_data');
             if (rawData) {
                 const data = JSON.parse(rawData);
+                const firstName = (data.fullName || data.matric || 'Student').split(' ')[0];
 
                 // Update Top Bar Greeting
                 const greeting = document.querySelector('.greeting');
-                if (greeting) greeting.innerText = `Hello, ${data.matric.split('/')[0]}`;
+                if (greeting) greeting.innerText = `${greetWord}, ${firstName} \u{1F44B}`;
 
-                // Update Welcome Banner
-                const bannerTitle = document.getElementById('welcomeTitle');
-                if (bannerTitle) bannerTitle.innerText = `Welcome to ASET, ${data.matric}`;
+                // Hero card
+                const heroName = document.getElementById('heroName');
+                if (heroName) heroName.innerText = `Welcome back, ${firstName} \u{1F44B}`;
+                const heroSub = document.getElementById('heroSub');
+                if (heroSub) heroSub.innerText = `${data.department || 'ASET'} \u2022 ${data.level || '100'} Level \u2022 ${data.institution || 'University'}`;
 
-                // Update Sidebar User Card
-                const sidebarName = document.querySelector('.sidebar-user-card .name');
-                if (sidebarName) sidebarName.innerText = data.matric;
+                // Sidebar name
+                const sidebarName = document.getElementById('sidebarName');
+                if (sidebarName) sidebarName.innerText = firstName + ' O.';
+
+                // Avatar URLs
+                const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName||firstName)}&background=1e3a8a&color=ffffff&bold=true`;
+                ['sidebarAvatar','topbarAvatar','profilePassport'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = avatarUrl;
+                });
 
                 // Update Active Case Card
                 const activeCaseTitle = document.querySelector('.status-card-big .case-details h2');
@@ -1382,13 +1514,21 @@
                 }
 
                 // Update Profile View if it's currently loaded
-                const profileTitle = document.querySelector('.profile-hero h3');
-                if (profileTitle) profileTitle.innerText = `Student ${data.matric}`;
-                const profileSub = document.querySelector('.profile-hero p');
+                const profileTitle = document.getElementById('profileName');
+                if (profileTitle) profileTitle.innerText = data.matric || 'Student';
+                const profileSub = document.getElementById('profileAcademic');
                 if (profileSub) profileSub.innerText = `${data.department || 'ASET'} • ${data.level || '100'} Lvl`;
+
+                const profileMatric = document.getElementById('profileMatric');
+                if (profileMatric) {
+                    profileMatric.innerText = data.matricNumber || 'Not Generated';
+                    if (data.matricNumber) {
+                        const btnGen = document.getElementById('btnGenProfileMatric');
+                        if (btnGen) btnGen.style.display = 'none';
+                    }
+                }
             }
         });
     </script>
 </body>
-
 </html>

@@ -122,6 +122,7 @@ const ROUTES = {
     HOME: './index.html',
     STUDENT_DASHBOARD: './student/student-dashboard.html',
     STUDENT_INTAKE: './student/student-intake.html',
+    DEPT_TRANSFER: './student/dept-transfer.html',
     ADMIN_DASHBOARD: './admin/admin-dashboard.html',
     COORDINATOR_DASHBOARD: './coordinator/coordinator-dashboard.html',
     OFFICER_DASHBOARD: './officer/officer-dashboard.html',

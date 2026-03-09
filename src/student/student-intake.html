@@ -4,251 +4,1316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Your Case | ASET</title>
+    <title>Start Your Case | ASET Portal</title>
+    <meta name="description"
+        content="Submit your academic case through the ASET student intake portal — issue selection, personal details, and secure account setup in minutes.">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
+        rel="stylesheet">
+    <!-- Icons + Framework -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="intake-flow.css" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           DESIGN TOKENS (matching index.html)
+        ============================================ */
+        :root {
+            --brand-50: #eef4ff;
+            --brand-100: #d9e6ff;
+            --brand-200: #bbcfff;
+            --brand-300: #8db1ff;
+            --brand-500: #2f5fff;
+            --brand-600: #1a3ff5;
+            --brand-700: #132fe1;
+            --brand-800: #1628b6;
+            --brand-950: #0f1957;
+
+            --surface-0: #ffffff;
+            --surface-50: #f8f9fc;
+            --surface-100: #f1f3f8;
+            --surface-200: #e4e8f0;
+            --surface-300: #cdd3df;
+            --surface-400: #9ba3b5;
+            --surface-500: #6b7280;
+            --surface-600: #4b5563;
+            --surface-700: #374151;
+            --surface-800: #1f2937;
+            --surface-900: #111827;
+
+            --accent-emerald: #059669;
+            --accent-amber: #d97706;
+
+            --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+
+            --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-pill: 9999px;
+        }
+
+        /* ============================================
+           BASE RESET
+        ============================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--surface-50);
+            color: var(--surface-900);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-heading);
+            letter-spacing: -0.025em;
+            line-height: 1.15;
+        }
+
+        /* ============================================
+           NAVBAR
+        ============================================ */
+        .si-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 68px;
+            background: var(--brand-950);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .si-nav-inner {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .si-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: white;
+            letter-spacing: -0.04em;
+        }
+
+        .si-logo-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-950);
+            font-size: 1rem;
+        }
+
+        .si-nav-badge {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 14px 5px 10px;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .si-nav-badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #34d399;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        .si-nav-close {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: var(--radius-md);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 7px 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-expo);
+        }
+
+        .si-nav-close:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* ============================================
+           PAGE SHELL
+        ============================================ */
+        .si-page {
+            min-height: 100vh;
+            padding-top: 68px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle blue grid */
+        .si-page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(19, 47, 225, 0.022) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(19, 47, 225, 0.022) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .si-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+            animation: blobFloat 28s infinite alternate ease-in-out;
+        }
+
+        .si-blob-1 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(47, 95, 255, 0.05) 0%, transparent 70%);
+            top: -200px;
+            left: -150px;
+        }
+
+        .si-blob-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 70%);
+            bottom: -200px;
+            right: -100px;
+            animation-delay: -12s;
+        }
+
+        @keyframes blobFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(50px, 80px) scale(1.08);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        .si-inner {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ============================================
+           PAGE HEADER
+        ============================================ */
+        .si-header {
+            text-align: center;
+            margin-bottom: 2.75rem;
+            animation: fadeUp 0.65s var(--ease-expo) backwards;
+        }
+
+        .si-overline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--brand-600);
+            margin-bottom: 1rem;
+        }
+
+        .si-overline::before,
+        .si-overline::after {
+            content: '';
+            width: 22px;
+            height: 1.5px;
+            background: var(--brand-600);
+            opacity: 0.35;
+            border-radius: 1px;
+        }
+
+        .si-title {
+            font-size: clamp(2rem, 4.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--surface-900);
+            margin-bottom: 0.75rem;
+        }
+
+        .si-desc {
+            font-size: 1rem;
+            color: var(--surface-500);
+            line-height: 1.7;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           STEPPER
+        ============================================ */
+        .si-stepper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: var(--radius-xl);
+            padding: 1.1rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.05);
+            animation: fadeUp 0.65s var(--ease-expo) 0.1s backwards;
+        }
+
+        .si-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            position: relative;
+        }
+
+        .si-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            left: calc(34px + 10px);
+            top: 50%;
+            transform: translateY(-50%);
+            height: 2px;
+            background: var(--surface-200);
+            border-radius: 2px;
+            transition: background 0.4s ease;
+        }
+
+        .si-step.completed::after {
+            background: var(--brand-700);
+        }
+
+        .si-step-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.82rem;
+            flex-shrink: 0;
+            border: 2px solid var(--surface-200);
+            background: var(--surface-100);
+            color: var(--surface-400);
+            transition: all 0.35s var(--ease-spring);
+        }
+
+        .si-step.active .si-step-circle {
+            background: var(--brand-700);
+            border-color: var(--brand-700);
+            color: white;
+            box-shadow: 0 0 0 5px var(--brand-50);
+            transform: scale(1.08);
+        }
+
+        .si-step.completed .si-step-circle {
+            background: var(--accent-emerald);
+            border-color: var(--accent-emerald);
+            color: white;
+        }
+
+        .si-step-text {}
+
+        .si-step-label {
+            font-family: var(--font-heading);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--surface-400);
+            transition: color 0.3s ease;
+        }
+
+        .si-step.active .si-step-label {
+            color: var(--surface-900);
+        }
+
+        .si-step.completed .si-step-label {
+            color: var(--accent-emerald);
+        }
+
+        .si-step-sub {
+            font-size: 0.67rem;
+            font-weight: 500;
+            color: var(--surface-300);
+        }
+
+        .si-step.active .si-step-sub {
+            color: var(--surface-400);
+        }
+
+        /* ============================================
+           CARD
+        ============================================ */
+        .si-card {
+            background: white;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: var(--radius-2xl);
+            box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.07), 0 4px 16px -4px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            animation: fadeUp 0.65s var(--ease-expo) 0.18s backwards;
+        }
+
+        .si-card-body {
+            padding: 2.75rem;
+        }
+
+        @media (max-width:600px) {
+            .si-card-body {
+                padding: 1.75rem 1.25rem;
+            }
+        }
+
+        /* ============================================
+           STEP VISIBILITY
+        ============================================ */
+        .si-step-view {
+            display: none;
+            animation: fadeUp 0.45s var(--ease-expo);
+        }
+
+        .si-step-view.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================
+           STEP HEADINGS
+        ============================================ */
+        .si-step-hd {
+            margin-bottom: 2rem;
+        }
+
+        .si-step-hd h3 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--surface-900);
+            margin-bottom: 0.4rem;
+        }
+
+        .si-step-hd p {
+            font-size: 0.92rem;
+            color: var(--surface-500);
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        /* ============================================
+           ISSUE SELECTION GRID (Step 1)
+        ============================================ */
+        .si-issue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width:540px) {
+            .si-issue-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .si-issue-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 1.1rem 1.25rem;
+            border: 1.5px solid var(--surface-200);
+            border-radius: var(--radius-lg);
+            background: white;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-expo);
+        }
+
+        .si-issue-card:hover {
+            border-color: var(--brand-300);
+            background: var(--brand-50);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(19, 47, 225, 0.07);
+        }
+
+        .si-issue-card.selected {
+            border-color: var(--brand-700);
+            background: var(--brand-50);
+            box-shadow: 0 0 0 3px rgba(19, 47, 225, 0.1);
+        }
+
+        .si-issue-left {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .si-issue-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--surface-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--surface-500);
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+
+        .si-issue-card:hover .si-issue-icon-box,
+        .si-issue-card.selected .si-issue-icon-box {
+            background: var(--brand-700);
+            color: white;
+        }
+
+        .si-issue-title {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--surface-800);
+            line-height: 1.3;
+        }
+
+        .si-issue-card:hover .si-issue-title,
+        .si-issue-card.selected .si-issue-title {
+            color: var(--brand-700);
+        }
+
+        .si-issue-arrow {
+            font-size: 0.75rem;
+            color: var(--surface-300);
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+
+        .si-issue-card:hover .si-issue-arrow {
+            color: var(--brand-500);
+            transform: translateX(3px);
+        }
+
+        .si-issue-card.selected .si-issue-arrow {
+            color: var(--brand-700);
+            transform: translateX(3px);
+        }
+
+        /* ============================================
+           FORM SYSTEM (Step 2)
+        ============================================ */
+        .si-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .si-label {
+            font-family: var(--font-heading);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--surface-600);
+            letter-spacing: 0.01em;
+            margin-left: 2px;
+        }
+
+        .si-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .si-input-icon {
+            position: absolute;
+            left: 1.1rem;
+            font-size: 1rem;
+            color: var(--brand-500);
+            pointer-events: none;
+            z-index: 5;
+            transition: all 0.3s var(--ease-expo);
+        }
+
+        .si-input,
+        .si-select {
+            width: 100%;
+            padding: 1rem 1.15rem 1rem 2.9rem;
+            border-radius: var(--radius-lg);
+            border: 1.5px solid rgba(226, 232, 240, 0.9);
+            background: rgba(248, 250, 252, 0.8);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--surface-800);
+            transition: all 0.3s var(--ease-expo);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .si-input:focus,
+        .si-select:focus {
+            border-color: var(--brand-500);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(47, 95, 255, 0.1), 0 4px 12px -2px rgba(47, 95, 255, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .si-input::placeholder {
+            color: var(--surface-300);
+            font-weight: 400;
+        }
+
+        .si-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232f5fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 0.85em;
+            cursor: pointer;
+        }
+
+        .si-select:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            border-style: dashed;
+            background-color: var(--surface-50) !important;
+        }
+
+        .si-hint {
+            font-size: 0.71rem;
+            color: var(--surface-400);
+            font-weight: 500;
+            margin-left: 2px;
+        }
+
+        /* Password toggle button */
+        .si-pass-toggle {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--surface-400);
+            font-size: 1rem;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+            z-index: 6;
+        }
+
+        .si-pass-toggle:hover {
+            color: var(--brand-600);
+        }
+
+        /* ============================================
+           AUTH TABS (Step 3)
+        ============================================ */
+        .si-auth-tabs {
+            display: flex;
+            background: var(--surface-100);
+            border-radius: var(--radius-lg);
+            padding: 5px;
+            margin-bottom: 2rem;
+            gap: 4px;
+        }
+
+        .si-auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            color: var(--surface-500);
+            transition: all 0.25s var(--ease-expo);
+            border: none;
+            background: none;
+        }
+
+        .si-auth-tab.active {
+            background: white;
+            color: var(--brand-700);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        /* ============================================
+           DIVIDER LABEL
+        ============================================ */
+        .si-divider-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--brand-600);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1.75rem 0 1.25rem;
+        }
+
+        .si-divider-label::before,
+        .si-divider-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--brand-100);
+        }
+
+        /* ============================================
+           BUTTONS
+        ============================================ */
+        .si-btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 15px 24px;
+            border-radius: var(--radius-lg);
+            background: var(--brand-700);
+            color: white;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-spring);
+            box-shadow: 0 4px 12px rgba(19, 47, 225, 0.22);
+            width: 100%;
+        }
+
+        .si-btn-primary:hover:not(:disabled) {
+            background: var(--brand-800);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(19, 47, 225, 0.3);
+        }
+
+        .si-btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .si-btn-primary:disabled {
+            background: var(--surface-200);
+            color: var(--surface-400);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .si-btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 20px;
+            border-radius: var(--radius-md);
+            background: white;
+            border: 1.5px solid var(--surface-200);
+            color: var(--surface-500);
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-expo);
+        }
+
+        .si-btn-ghost:hover {
+            border-color: var(--surface-300);
+            color: var(--surface-700);
+            background: var(--surface-50);
+        }
+
+        .si-nav-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 2rem;
+            padding-top: 1.75rem;
+            border-top: 1px solid var(--surface-100);
+        }
+
+        /* ============================================
+           FIELD GRID LAYOUT (Step 2 - row helpers)
+        ============================================ */
+        .si-form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .si-row {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .si-row-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .si-row-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        @media (max-width: 600px) {
+
+            .si-row-2,
+            .si-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
-<body class="intake-body">
+<body>
 
-    <!-- Navbar -->
-    <nav class="intake-navbar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a href="../index.html" class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2">
-                <span class="bg-primary text-white rounded p-1 fs-5"><i class="bi bi-mortarboard-fill"></i></span>
-                <span style="font-family: 'Inter', sans-serif; font-weight: 800; color: #0284c7;">ASET</span>
+    <!-- ============================================================
+         NAVBAR
+    ============================================================ -->
+    <nav class="si-nav">
+        <div class="si-nav-inner">
+            <a class="si-logo" href="../index.html">
+                <div class="si-logo-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                ASET
             </a>
-            <a href="../index.html" class="btn btn-link text-decoration-none text-muted fw-medium">Cancel</a>
+            <div class="si-nav-badge">
+                <span class="si-nav-badge-dot"></span>
+                New Case Intake
+            </div>
+            <a class="si-nav-close" href="../index.html">
+                <i class="bi bi-x-lg"></i> Close
+            </a>
         </div>
     </nav>
 
-    <div class="intake-container">
-        <!-- Progress Bar -->
-        <div class="intake-progress-container">
-            <div class="intake-progress-bar">
-                <div class="intake-progress-dot active" id="dot-1"></div>
-                <div class="intake-progress-dot" id="dot-2"></div>
-                <div class="intake-progress-dot" id="dot-3"></div>
-            </div>
-        </div>
+    <!-- Background blobs -->
+    <div class="si-blob si-blob-1"></div>
+    <div class="si-blob si-blob-2"></div>
 
-        <div class="intake-card">
+    <div class="si-page">
+        <div class="si-inner">
 
-            <!-- Step 1: Issue Type Selection -->
-            <div class="intake-step active" id="step-1">
-                <h1 class="intake-title">What issue are you facing?</h1>
-                <p class="intake-subtext">Select one option to continue.</p>
-
-                <div class="issue-grid">
-                    <div class="issue-card" onclick="selectIssue(this, 'Change Program & Departmental Issues')">
-                        <span class="issue-card-title">Change Program & Departmental Issues</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="issue-card" onclick="selectIssue(this, 'Voluntary Change Program (CGPA 3.0 & above)')">
-                        <span class="issue-card-title">Voluntary Change Program (CGPA 3.0 & above)</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="issue-card" onclick="selectIssue(this, 'Probation / Withdrawal Issues')">
-                        <span class="issue-card-title">Probation / Withdrawal Issues</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="issue-card" onclick="selectIssue(this, 'Result & Examination Issues')">
-                        <span class="issue-card-title">Result & Examination Issues</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="issue-card" onclick="selectIssue(this, 'Course Registration Problems')">
-                        <span class="issue-card-title">Course Registration Problems</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="issue-card" onclick="selectIssue(this, 'Portal & Payment Issues')">
-                        <span class="issue-card-title">Portal & Payment Issues</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="issue-card"
-                        onclick="selectIssue(this, 'Transfer to Another Nigerian University (Interschool)')">
-                        <span class="issue-card-title">Transfer to Another University</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                    <div class="issue-card" onclick="selectIssue(this, 'Multiple / Complex Issues')">
-                        <span class="issue-card-title">Multiple / Complex Issues</span>
-                        <i class="bi bi-chevron-right"></i>
-                    </div>
-                </div>
-
-                <button class="btn-intake-primary" id="btn-next-1" disabled onclick="nextStep(2)">Continue</button>
+            <!-- Page Header -->
+            <div class="si-header">
+                <div class="si-overline"><span>Student Portal</span></div>
+                <h1 class="si-title">Submit Your Case</h1>
+                <p class="si-desc">Select your issue category, tell us about yourself, and create a secure account — it
+                    only takes 3 minutes.</p>
             </div>
 
-            <!-- Step 2: Personal Details -->
-            <div class="intake-step" id="step-2">
-                <h1 class="intake-title">Tell us about yourself</h1>
-                <p class="intake-subtext">We need this to create your profile.</p>
-
-                <div class="intake-form-grid">
-                    <div class="intake-field-group">
-                        <label class="intake-label">Full Name</label>
-                        <input type="text" id="fullName" class="intake-input" placeholder="e.g. John Doe"
-                            oninput="validateStep2()">
-                    </div>
-                    <div class="intake-field-group">
-                        <label class="intake-label">Matriculation Number</label>
-                        <input type="text" id="matricNumber" class="intake-input" placeholder="e.g. 2024/12345"
-                            oninput="validateStep2()">
-                    </div>
-                    <div class="intake-field-group">
-                        <label class="intake-label">Current Institution</label>
-                        <input type="text" id="institution" class="intake-input" placeholder="Enter your university"
-                            oninput="validateStep2()">
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="intake-field-group">
-                                <label class="intake-label">Faculty</label>
-                                <input type="text" id="faculty" class="intake-input" placeholder="e.g. Science"
-                                    oninput="validateStep2()">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="intake-field-group">
-                                <label class="intake-label">Department</label>
-                                <input type="text" id="department" class="intake-input" placeholder="e.g. Comp Sci"
-                                    oninput="validateStep2()">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="intake-field-group">
-                                <label class="intake-label">Level / Year</label>
-                                <select id="level" class="intake-select" onchange="validateStep2()">
-                                    <option value="">Select Level</option>
-                                    <option value="100">100 Level</option>
-                                    <option value="200">200 Level</option>
-                                    <option value="300">300 Level</option>
-                                    <option value="400">400 Level</option>
-                                    <option value="500">500 Level</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="intake-field-group">
-                                <label class="intake-label">Phone Number</label>
-                                <input type="tel" id="phone" class="intake-input" placeholder="080 000 0000"
-                                    oninput="validateStep2()">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="intake-field-group">
-                        <label class="intake-label">Email Address</label>
-                        <input type="email" id="email" class="intake-input" placeholder="name@email.com"
-                            oninput="validateStep2()">
+            <!-- Stepper -->
+            <div class="si-stepper">
+                <div class="si-step active" id="stepper-1">
+                    <div class="si-step-circle" id="sc-1">1</div>
+                    <div class="si-step-text">
+                        <div class="si-step-label">Issue</div>
+                        <div class="si-step-sub">Select category</div>
                     </div>
                 </div>
-
-                <button class="btn-intake-primary" id="btn-next-2" disabled onclick="nextStep(3)">Continue</button>
-                <button class="btn btn-link w-100 mt-2 text-muted text-decoration-none"
-                    onclick="nextStep(1)">Back</button>
+                <div class="si-step" id="stepper-2">
+                    <div class="si-step-circle" id="sc-2">2</div>
+                    <div class="si-step-text">
+                        <div class="si-step-label">Details</div>
+                        <div class="si-step-sub">About you</div>
+                    </div>
+                </div>
+                <div class="si-step" id="stepper-3">
+                    <div class="si-step-circle" id="sc-3">3</div>
+                    <div class="si-step-text">
+                        <div class="si-step-label">Account</div>
+                        <div class="si-step-sub">Secure access</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Step 3: Authentication -->
-            <div class="intake-step" id="step-3">
-                <h1 class="intake-title">Secure your account</h1>
-                <p class="intake-subtext">Choose how you want to access your dashboard.</p>
+            <!-- Main Card -->
+            <div class="si-card">
+                <div class="si-card-body">
 
-                <div class="auth-tabs">
-                    <div class="auth-tab active" onclick="switchAuth('signup')">Sign Up</div>
-                    <div class="auth-tab" onclick="switchAuth('login')">Log In</div>
-                </div>
+                    <!-- ========================
+                         STEP 1: ISSUE SELECTION
+                    ======================== -->
+                    <div class="si-step-view active" id="view-1">
+                        <div class="si-step-hd">
+                            <h3>What issue are you facing?</h3>
+                            <p>Select the category that best describes your academic situation — this helps us route
+                                your case accurately.</p>
+                        </div>
 
-                <div class="intake-form-grid">
-                    <div class="intake-field-group">
-                        <label class="intake-label">Matriculation Number</label>
-                        <input type="text" id="authMatric" class="intake-input" readonly>
-                    </div>
-                    <div class="intake-field-group">
-                        <label class="intake-label">Password</label>
-                        <div class="position-relative">
-                            <input type="password" id="password" class="intake-input w-100" placeholder="••••••••"
-                                oninput="validateStep3()">
-                            <button class="btn position-absolute end-0 top-50 translate-middle-y border-0"
-                                onclick="togglePass()">
-                                <i class="bi bi-eye" id="passToggle"></i>
+                        <div class="si-issue-grid">
+
+                            <div class="si-issue-card"
+                                onclick="selectIssue(this, 'Change Program & Departmental Issues')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-arrow-left-right"></i></div>
+                                    <span class="si-issue-title">Change Program / Department</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                            <div class="si-issue-card"
+                                onclick="selectIssue(this, 'Voluntary Change Program (CGPA 3.0 & above)')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-star-fill"></i></div>
+                                    <span class="si-issue-title">Voluntary Change (CGPA 3.0+)</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                            <div class="si-issue-card" onclick="selectIssue(this, 'Probation / Withdrawal Issues')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-shield-exclamation"></i></div>
+                                    <span class="si-issue-title">Probation / Withdrawal</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                            <div class="si-issue-card" onclick="selectIssue(this, 'Result & Examination Issues')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-file-earmark-bar-graph"></i></div>
+                                    <span class="si-issue-title">Result / Examination</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                            <div class="si-issue-card" onclick="selectIssue(this, 'Course Registration Problems')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-journal-plus"></i></div>
+                                    <span class="si-issue-title">Course Registration</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                            <div class="si-issue-card" onclick="selectIssue(this, 'Portal & Payment Issues')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-credit-card"></i></div>
+                                    <span class="si-issue-title">Portal / Payment</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                            <div class="si-issue-card"
+                                onclick="selectIssue(this, 'Transfer to Another Nigerian University (Interschool)')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-signpost-split"></i></div>
+                                    <span class="si-issue-title">Inter-school Transfer</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                            <div class="si-issue-card" onclick="selectIssue(this, 'Multiple / Complex Issues')">
+                                <div class="si-issue-left">
+                                    <div class="si-issue-icon-box"><i class="bi bi-layers"></i></div>
+                                    <span class="si-issue-title">Multiple Issues</span>
+                                </div>
+                                <i class="bi bi-chevron-right si-issue-arrow"></i>
+                            </div>
+
+                        </div>
+
+                        <div style="display:flex; justify-content:flex-end;">
+                            <button class="si-btn-primary" id="btn-next-1" style="width:auto; padding: 14px 36px;"
+                                disabled onclick="goToStep(2)">
+                                Continue to Details <i class="bi bi-arrow-right"></i>
                             </button>
                         </div>
                     </div>
+
+                    <!-- ========================
+                         STEP 2: PERSONAL DETAILS
+                    ======================== -->
+                    <div class="si-step-view" id="view-2">
+                        <div class="si-step-hd">
+                            <h3>Tell us about yourself</h3>
+                            <p>Fill in your academic details so we can match your case with the right officers and
+                                resources.</p>
+                        </div>
+
+                        <div class="si-form-grid">
+
+                            <div class="si-field-group">
+                                <label class="si-label">Full Name</label>
+                                <div class="si-input-wrap">
+                                    <i class="bi bi-person si-input-icon"></i>
+                                    <input type="text" id="fullName" class="si-input" placeholder="e.g. John Doe"
+                                        oninput="validateStep2()">
+                                </div>
+                            </div>
+
+                            <div class="si-row si-row-2">
+                                <div class="si-field-group">
+                                    <label class="si-label">Matriculation Number</label>
+                                    <div class="si-input-wrap">
+                                        <i class="bi bi-person-badge si-input-icon"></i>
+                                        <input type="text" id="matricNumber" class="si-input"
+                                            placeholder="e.g. 2024/12345" oninput="validateStep2()">
+                                    </div>
+                                    <span class="si-hint">Format: YYYY/123456</span>
+                                </div>
+                                <div class="si-field-group">
+                                    <label class="si-label">Phone Number</label>
+                                    <div class="si-input-wrap">
+                                        <i class="bi bi-telephone si-input-icon"></i>
+                                        <input type="tel" id="phone" class="si-input" placeholder="080 000 0000"
+                                            oninput="validateStep2()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="si-field-group">
+                                <label class="si-label">Current Institution</label>
+                                <div class="si-input-wrap">
+                                    <i class="bi bi-building si-input-icon"></i>
+                                    <input type="text" id="institution" class="si-input"
+                                        placeholder="Enter your university name" oninput="validateStep2()">
+                                </div>
+                            </div>
+
+                            <div class="si-row si-row-3">
+                                <div class="si-field-group">
+                                    <label class="si-label">Faculty</label>
+                                    <div class="si-input-wrap">
+                                        <i class="bi bi-mortarboard si-input-icon"></i>
+                                        <input type="text" id="faculty" class="si-input" placeholder="e.g. Science"
+                                            oninput="validateStep2()">
+                                    </div>
+                                </div>
+                                <div class="si-field-group">
+                                    <label class="si-label">Department</label>
+                                    <div class="si-input-wrap">
+                                        <i class="bi bi-book si-input-icon"></i>
+                                        <input type="text" id="department" class="si-input" placeholder="e.g. Comp Sci"
+                                            oninput="validateStep2()">
+                                    </div>
+                                </div>
+                                <div class="si-field-group">
+                                    <label class="si-label">Level / Year</label>
+                                    <div class="si-input-wrap">
+                                        <i class="bi bi-layers si-input-icon"></i>
+                                        <select id="level" class="si-select" onchange="validateStep2()">
+                                            <option value="">Select Level</option>
+                                            <option value="100">100 Level</option>
+                                            <option value="200">200 Level</option>
+                                            <option value="300">300 Level</option>
+                                            <option value="400">400 Level</option>
+                                            <option value="500">500 Level</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="si-field-group">
+                                <label class="si-label">Email Address</label>
+                                <div class="si-input-wrap">
+                                    <i class="bi bi-envelope si-input-icon"></i>
+                                    <input type="email" id="email" class="si-input" placeholder="name@email.com"
+                                        oninput="validateStep2()">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="si-nav-actions">
+                            <button class="si-btn-ghost" onclick="goToStep(1)">
+                                <i class="bi bi-arrow-left"></i> Back
+                            </button>
+                            <button class="si-btn-primary" id="btn-next-2" style="width:auto; padding:14px 36px;"
+                                disabled onclick="goToStep(3)">
+                                Continue to Security <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ========================
+                         STEP 3: AUTHENTICATION
+                    ======================== -->
+                    <div class="si-step-view" id="view-3">
+                        <div class="si-step-hd">
+                            <h3>Secure your account</h3>
+                            <p>Create a password to access your secure student dashboard and track your case in
+                                real-time.</p>
+                        </div>
+
+                        <!-- Auth Mode Toggle -->
+                        <div class="si-auth-tabs">
+                            <button class="si-auth-tab active" onclick="switchAuth('signup')">Sign Up</button>
+                            <button class="si-auth-tab" onclick="switchAuth('login')">Log In</button>
+                        </div>
+
+                        <div class="si-form-grid">
+
+                            <div class="si-field-group">
+                                <label class="si-label">Username (Matric Number)</label>
+                                <div class="si-input-wrap">
+                                    <i class="bi bi-person-badge si-input-icon"></i>
+                                    <input type="text" id="authMatric" class="si-input" readonly
+                                        style="background: var(--surface-50); color: var(--brand-700); font-weight: 700;">
+                                </div>
+                            </div>
+
+                            <div class="si-field-group">
+                                <label class="si-label">Password</label>
+                                <div class="si-input-wrap">
+                                    <i class="bi bi-lock si-input-icon"></i>
+                                    <input type="password" id="password" class="si-input"
+                                        placeholder="Minimum 6 characters" oninput="validateStep3()"
+                                        style="padding-right: 3rem;">
+                                    <button class="si-pass-toggle" type="button" onclick="togglePass()" tabindex="-1">
+                                        <i class="bi bi-eye" id="passToggleIcon"></i>
+                                    </button>
+                                </div>
+                                <span class="si-hint">At least 6 characters required</span>
+                            </div>
+
+                        </div>
+
+                        <button class="si-btn-primary" id="btn-finish" disabled onclick="finishFlow()">
+                            <span id="finishBtnText">Access Dashboard</span>
+                            <i class="bi bi-rocket-takeoff"></i>
+                        </button>
+
+                        <div class="si-nav-actions"
+                            style="border-top:none; padding-top: 1.25rem; justify-content: space-between;">
+                            <button class="si-btn-ghost" onclick="goToStep(2)">
+                                <i class="bi bi-arrow-left"></i> Back
+                            </button>
+                            <a id="authToggleLink" href="javascript:void(0)" onclick="switchAuth('login')"
+                                style="font-size:0.82rem; font-weight:700; color:var(--brand-600); text-decoration:none; font-family:var(--font-heading);">
+                                Already have an account? Log In
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
-
-                <button class="btn-intake-primary" id="btn-finish" disabled onclick="finishFlow()">Access
-                    Dashboard</button>
-                <button class="btn btn-link w-100 mt-2 text-muted text-decoration-none"
-                    onclick="nextStep(2)">Back</button>
             </div>
-
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        /* ===================================================
+           STATE
+        =================================================== */
+        let currentStep = 1;
         let selectedIssue = '';
         let authMode = 'signup';
 
+        const STEP_COUNT = 3;
+
+        /* ===================================================
+           NAVIGATION
+        =================================================== */
+        function goToStep(step) {
+            // Fade out current
+            const cur = document.getElementById('view-' + currentStep);
+            cur.style.opacity = '0';
+            cur.style.transform = 'translateY(-12px)';
+            cur.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+
+            setTimeout(() => {
+                cur.classList.remove('active');
+                cur.style.opacity = '';
+                cur.style.transform = '';
+                cur.style.transition = '';
+
+                if (step === 3) {
+                    // Prefill matric number
+                    const mat = document.getElementById('matricNumber').value;
+                    document.getElementById('authMatric').value = mat;
+                }
+
+                const next = document.getElementById('view-' + step);
+                next.classList.add('active');
+
+                // Update stepper
+                updateStepper(step);
+                currentStep = step;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 220);
+        }
+
+        function updateStepper(activeStep) {
+            for (let i = 1; i <= STEP_COUNT; i++) {
+                const el = document.getElementById('stepper-' + i);
+                const circle = document.getElementById('sc-' + i);
+                el.classList.remove('active', 'completed');
+                if (i < activeStep) {
+                    el.classList.add('completed');
+                    circle.innerHTML = '<i class="bi bi-check-lg" style="font-size:0.85rem;"></i>';
+                } else if (i === activeStep) {
+                    el.classList.add('active');
+                    circle.textContent = i;
+                } else {
+                    circle.textContent = i;
+                }
+            }
+        }
+
+        /* ===================================================
+           ISSUE SELECTION
+        =================================================== */
         function selectIssue(card, issue) {
-            document.querySelectorAll('.issue-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.si-issue-card').forEach(c => c.classList.remove('selected'));
             card.classList.add('selected');
             selectedIssue = issue;
             document.getElementById('btn-next-1').disabled = false;
         }
 
-        function nextStep(step) {
-            document.querySelectorAll('.intake-step').forEach(s => s.classList.remove('active'));
-            document.getElementById('step-' + step).classList.add('active');
-
-            // Update dots
-            document.querySelectorAll('.intake-progress-dot').forEach((d, idx) => {
-                d.classList.toggle('active', idx < step);
-            });
-
-            if (step === 3) {
-                document.getElementById('authMatric').value = document.getElementById('matricNumber').value;
-            }
-        }
-
+        /* ===================================================
+           STEP 2 VALIDATION
+        =================================================== */
         function validateStep2() {
             const fields = ['fullName', 'matricNumber', 'institution', 'faculty', 'department', 'level', 'email', 'phone'];
-            const allFilled = fields.every(f => {
-                const val = document.getElementById(f).value.trim();
-                return val !== '';
-            });
+            const allFilled = fields.every(f => document.getElementById(f).value.trim() !== '');
             document.getElementById('btn-next-2').disabled = !allFilled;
         }
 
+        /* ===================================================
+           STEP 3 VALIDATION
+        =================================================== */
         function validateStep3() {
-            const pass = document.getElementById('password').value.length >= 6;
-            document.getElementById('btn-finish').disabled = !pass;
+            const ok = document.getElementById('password').value.length >= 6;
+            document.getElementById('btn-finish').disabled = !ok;
         }
 
+        /* ===================================================
+           AUTH MODE TOGGLE
+        =================================================== */
         function switchAuth(mode) {
             authMode = mode;
-            document.querySelectorAll('.auth-tab').forEach(t => {
-                t.classList.toggle('active', t.innerText.toLowerCase().replace(' ', '') === mode);
+
+            document.querySelectorAll('.si-auth-tab').forEach((tab, idx) => {
+                const modes = ['signup', 'login'];
+                tab.classList.toggle('active', modes[idx] === mode);
             });
-            document.getElementById('btn-finish').innerText = mode === 'signup' ? 'Create Account & Access Dashboard' : 'Log In & Access Dashboard';
+
+            const link = document.getElementById('authToggleLink');
+            const btn = document.getElementById('finishBtnText');
+
+            if (mode === 'signup') {
+                btn.textContent = 'Access Dashboard';
+                link.textContent = 'Already have an account? Log In';
+                link.setAttribute('onclick', 'switchAuth(\'login\')');
+            } else {
+                btn.textContent = 'Log In & Continue';
+                link.textContent = 'New here? Create an account';
+                link.setAttribute('onclick', 'switchAuth(\'signup\')');
+            }
         }
 
+        /* ===================================================
+           PASSWORD VISIBILITY
+        =================================================== */
         function togglePass() {
-            const input = document.getElementById('password');
-            const icon = document.getElementById('passToggle');
-            if (input.type === 'password') {
-                input.type = 'text';
+            const inp = document.getElementById('password');
+            const icon = document.getElementById('passToggleIcon');
+            if (inp.type === 'password') {
+                inp.type = 'text';
                 icon.classList.replace('bi-eye', 'bi-eye-slash');
             } else {
-                input.type = 'password';
+                inp.type = 'password';
                 icon.classList.replace('bi-eye-slash', 'bi-eye');
             }
         }
 
+        /* ===================================================
+           FINISH FLOW
+        =================================================== */
         function finishFlow() {
+            const btn = document.getElementById('btn-finish');
+            const text = document.getElementById('finishBtnText');
+            btn.disabled = true;
+            text.textContent = 'Preparing Dashboard...';
+            btn.querySelector('i').className = 'bi bi-hourglass-split';
+
+            // Persist data
             const data = {
                 fullName: document.getElementById('fullName').value,
                 matricNumber: document.getElementById('matricNumber').value,
@@ -266,14 +1331,11 @@
             localStorage.setItem('aset_student_data', JSON.stringify(data));
             localStorage.setItem('aset_intake_completed', 'true');
             localStorage.setItem('aset_user_role', 'student');
-
-            const btn = document.getElementById('btn-finish');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Preparing Dashboard...';
+            localStorage.setItem('aset_intake_data', JSON.stringify(data));
 
             setTimeout(() => {
                 window.location.href = 'student-dashboard.html';
-            }, 1500);
+            }, 900);
         }
     </script>
 </body>

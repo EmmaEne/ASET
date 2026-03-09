@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Transfer | ASET Portal</title>
+    <meta name="description"
+        content="Initiate your department transfer request through the ASET student portal — fast, secure, and fully tracked.">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Icons + Framework -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Shared Styles -->
+    <link href="../shared/styles/main.css" rel="stylesheet">
+    <link href="../shared/styles/landing.css" rel="stylesheet">
+
+    <style>
+        /* ============================
+           PAGE-LEVEL DESIGN TOKENS
+        ============================ */
+        :root {
+            --dt-brand: #132fe1;
+            --dt-brand-dark: #1628b6;
+            --dt-brand-50: #eef4ff;
+            --dt-brand-100: #d9e6ff;
+            --dt-surface: #f8f9fc;
+            --dt-white: #ffffff;
+            --dt-text: #111827;
+            --dt-sub: #6b7280;
+            --dt-border: rgba(226, 232, 240, 0.8);
+            --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ============================
+           GLOBAL RESETS
+        ============================ */
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background: var(--dt-surface);
+            color: var(--dt-text);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.025em;
+            color: var(--dt-text);
+        }
+
+        /* ============================
+           NAVBAR (matches index.html)
+        ============================ */
+        .dt-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 72px;
+            background: #0f1957;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            transition: all 0.4s var(--ease-expo);
+        }
+
+        .dt-nav-inner {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dt-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.35rem;
+            color: white;
+            letter-spacing: -0.04em;
+        }
+
+        .dt-logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f1957;
+            font-size: 1.1rem;
+        }
+
+        .dt-nav-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 14px 6px 9px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .dt-nav-badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #34d399;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        .dt-nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s var(--ease-expo);
+            cursor: pointer;
+        }
+
+        .dt-nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* ============================
+           PAGE LAYOUT
+        ============================ */
+        .dt-page {
+            min-height: 100vh;
+            padding-top: 72px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle background grid (matches index.html hero) */
+        .dt-page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(19, 47, 225, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(19, 47, 225, 0.025) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .dt-page-blob {
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(47, 95, 255, 0.05) 0%, transparent 70%);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: 0;
+            animation: blob-float 25s infinite alternate ease-in-out;
+        }
+
+        .dt-page-blob-1 {
+            top: -200px;
+            left: -150px;
+        }
+
+        .dt-page-blob-2 {
+            bottom: -200px;
+            right: -150px;
+            animation-delay: -10s;
+        }
+
+        @keyframes blob-float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(60px, 80px) scale(1.08);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        .dt-inner {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ============================
+           PAGE HEADER
+        ============================ */
+        .dt-page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.6s var(--ease-expo) backwards;
+        }
+
+        .dt-overline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dt-brand);
+            margin-bottom: 1rem;
+        }
+
+        .dt-overline::before,
+        .dt-overline::after {
+            content: '';
+            width: 24px;
+            height: 1.5px;
+            background: var(--dt-brand);
+            opacity: 0.4;
+            border-radius: 1px;
+        }
+
+        .dt-page-title {
+            font-size: clamp(1.9rem, 4vw, 2.6rem);
+            font-weight: 800;
+            color: var(--dt-text);
+            margin-bottom: 0.75rem;
+            line-height: 1.1;
+        }
+
+        .dt-page-desc {
+            font-size: 1rem;
+            color: var(--dt-sub);
+            line-height: 1.7;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        /* ============================
+           STEPPER
+        ============================ */
+        .dt-stepper {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 2.5rem;
+            background: white;
+            border: 1px solid var(--dt-border);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
+            animation: fadeInUp 0.6s var(--ease-expo) 0.1s backwards;
+        }
+
+        .dt-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            position: relative;
+        }
+
+        .dt-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            left: calc(52px + 10px);
+            top: 50%;
+            transform: translateY(-50%);
+            height: 2px;
+            background: #e4e8f0;
+            border-radius: 2px;
+            transition: background 0.4s ease;
+        }
+
+        .dt-step.completed::after {
+            background: var(--dt-brand);
+        }
+
+        .dt-step.active::after {
+            background: #e4e8f0;
+        }
+
+        .dt-step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: all 0.35s var(--ease-spring);
+            background: #f1f3f8;
+            color: #9ba3b5;
+            border: 2px solid #e4e8f0;
+        }
+
+        .dt-step.active .dt-step-circle {
+            background: var(--dt-brand);
+            color: white;
+            border-color: var(--dt-brand);
+            box-shadow: 0 4px 12px rgba(19, 47, 225, 0.25);
+            transform: scale(1.08);
+        }
+
+        .dt-step.completed .dt-step-circle {
+            background: #059669;
+            color: white;
+            border-color: #059669;
+        }
+
+        .dt-step-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dt-step-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #9ba3b5;
+            transition: color 0.3s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .dt-step.active .dt-step-label {
+            color: var(--dt-text);
+        }
+
+        .dt-step.completed .dt-step-label {
+            color: #059669;
+        }
+
+        .dt-step-sub {
+            font-size: 0.68rem;
+            color: #c5cad4;
+            font-weight: 500;
+        }
+
+        .dt-step.active .dt-step-sub {
+            color: var(--dt-sub);
+        }
+
+        /* ============================
+           CARD SHELL
+        ============================ */
+        .dt-card {
+            background: white;
+            border: 1px solid var(--dt-border);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.07), 0 4px 16px -4px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            animation: fadeInUp 0.6s var(--ease-expo) 0.2s backwards;
+        }
+
+        .dt-card-body {
+            padding: 2.5rem;
+        }
+
+        /* ============================
+           STEP TRANSITIONS
+        ============================ */
+        .dt-step-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.4s var(--ease-expo), transform 0.4s var(--ease-expo);
+        }
+
+        .dt-step-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================
+           STEP HEADERS
+        ============================ */
+        .dt-step-heading {
+            margin-bottom: 2rem;
+        }
+
+        .dt-step-heading h3 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .dt-step-heading p {
+            font-size: 0.92rem;
+            color: var(--dt-sub);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ============================
+           SECTION LABEL
+        ============================ */
+        .dt-section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dt-brand);
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dt-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--dt-brand-100);
+        }
+
+        /* ============================
+           FILE UPLOAD ZONE
+        ============================ */
+        .dt-upload-zone {
+            border: 2px dashed #d9e6ff;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: var(--dt-brand-50);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-expo);
+            position: relative;
+        }
+
+        .dt-upload-zone:hover {
+            border-color: var(--dt-brand);
+            background: #dde9ff;
+            transform: translateY(-2px);
+        }
+
+        .dt-upload-zone-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--dt-brand);
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 12px rgba(19, 47, 225, 0.12);
+        }
+
+        .dt-upload-zone h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dt-text);
+            margin-bottom: 0.3rem;
+        }
+
+        .dt-upload-zone p {
+            font-size: 0.82rem;
+            color: var(--dt-sub);
+            margin: 0;
+        }
+
+        /* Verification method toggle */
+        .dt-method-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.75rem;
+        }
+
+        .dt-method-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1.5px solid var(--dt-border);
+            background: white;
+            color: var(--dt-sub);
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s var(--ease-expo);
+        }
+
+        .dt-method-btn:hover {
+            border-color: var(--dt-brand);
+            color: var(--dt-brand);
+            background: var(--dt-brand-50);
+        }
+
+        .dt-method-btn.active {
+            border-color: var(--dt-brand);
+            background: var(--dt-brand-50);
+            color: var(--dt-brand);
+        }
+
+        /* File ready state */
+        .dt-file-ready {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 14px;
+            margin-top: 1rem;
+        }
+
+        .dt-file-ready.show {
+            display: flex;
+        }
+
+        /* ============================
+           FACULTY GRID (Step 2)
+        ============================ */
+        .dt-faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 520px) {
+            .dt-faculty-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .dt-faculty-card {
+            cursor: pointer;
+            border: 1.5px solid var(--dt-border);
+            border-radius: 16px;
+            padding: 1.25rem 1rem;
+            background: white;
+            text-align: center;
+            transition: all 0.25s var(--ease-spring);
+        }
+
+        .dt-faculty-card:hover {
+            border-color: var(--dt-brand);
+            background: var(--dt-brand-50);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(19, 47, 225, 0.1);
+        }
+
+        .dt-faculty-card.selected {
+            border-color: var(--dt-brand);
+            background: var(--dt-brand-50);
+            box-shadow: 0 0 0 3px rgba(19, 47, 225, 0.12), 0 8px 20px rgba(19, 47, 225, 0.1);
+        }
+
+        .dt-faculty-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--dt-brand);
+            margin: 0 auto 0.75rem;
+            transition: all 0.25s ease;
+        }
+
+        .dt-faculty-card.selected .dt-faculty-icon,
+        .dt-faculty-card:hover .dt-faculty-icon {
+            background: var(--dt-brand);
+            color: white;
+        }
+
+        .dt-faculty-card h6 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--dt-text);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        /* Department list (Step 2) */
+        .dt-dept-panel {
+            display: none;
+            animation: fadeInUp 0.35s var(--ease-expo);
+        }
+
+        .dt-dept-panel.show {
+            display: block;
+        }
+
+        .dt-dept-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            border: 1.5px solid var(--dt-border);
+            border-radius: 14px;
+            margin-bottom: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dt-text);
+            transition: all 0.22s var(--ease-expo);
+        }
+
+        .dt-dept-item:hover {
+            border-color: var(--dt-brand);
+            background: var(--dt-brand-50);
+            transform: translateX(4px);
+        }
+
+        .dt-dept-item.selected {
+            border-color: var(--dt-brand);
+            background: var(--dt-brand-50);
+            color: var(--dt-brand);
+        }
+
+        /* ============================
+           REVIEW CARD (Step 3)
+        ============================ */
+        .dt-review-hero {
+            background: linear-gradient(135deg, #0f1957 0%, #1628b6 100%);
+            border-radius: 18px;
+            padding: 2.25rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dt-review-hero::after {
+            content: '';
+            position: absolute;
+            right: -60px;
+            bottom: -60px;
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+        }
+
+        .dt-review-hero::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: -40px;
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+        }
+
+        .dt-review-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            color: white;
+            margin-bottom: 1.25rem;
+        }
+
+        .dt-review-hero h4 {
+            color: white !important;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dt-review-hero p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        /* Review info grid */
+        .dt-review-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dt-review-item {
+            padding: 1rem 1.2rem;
+            background: white;
+            border: 1px solid var(--dt-border);
+            border-radius: 14px;
+        }
+
+        .dt-review-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--dt-sub);
+            margin-bottom: 0.35rem;
+        }
+
+        .dt-review-val {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--dt-text);
+        }
+
+        .dt-review-val.highlight {
+            color: var(--dt-brand);
+        }
+
+        /* Info alert */
+        .dt-info-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #eff6ff;
+            border: 1px solid #bbcfff;
+            border-radius: 14px;
+            padding: 1.1rem 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .dt-info-alert-icon {
+            color: var(--dt-brand);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .dt-info-alert-text {
+            font-size: 0.84rem;
+            color: #1e3a8a;
+            line-height: 1.5;
+        }
+
+        .dt-info-alert-text strong {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        /* ============================
+           BUTTONS
+        ============================ */
+        .dt-btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 14px;
+            background: var(--dt-brand);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-spring);
+            box-shadow: 0 4px 12px rgba(19, 47, 225, 0.25);
+        }
+
+        .dt-btn-primary:hover:not(:disabled) {
+            background: var(--dt-brand-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(19, 47, 225, 0.3);
+        }
+
+        .dt-btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .dt-btn-primary:disabled {
+            background: #e4e8f0;
+            color: #9ba3b5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .dt-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 22px;
+            border-radius: 12px;
+            background: white;
+            color: var(--dt-sub);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.88rem;
+            border: 1.5px solid var(--dt-border);
+            cursor: pointer;
+            transition: all 0.25s var(--ease-expo);
+        }
+
+        .dt-btn-secondary:hover {
+            border-color: #adb5bd;
+            color: var(--dt-text);
+            background: #f8f9fa;
+        }
+
+        .dt-nav-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 2rem;
+            padding-top: 1.75rem;
+            border-top: 1px solid #f1f3f8;
+        }
+
+        /* ============================
+           FADE IN ANIMATION
+        ============================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================
+           MOBILE RESPONSIVE
+        ============================ */
+        @media (max-width: 600px) {
+            .dt-card-body {
+                padding: 1.75rem 1.25rem;
+            }
+
+            .dt-review-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dt-stepper {
+                padding: 1rem;
+                gap: 0;
+            }
+
+            .dt-step-info {
+                display: none;
+            }
+
+            .dt-step {
+                justify-content: center;
+            }
+
+            .dt-step:not(:last-child)::after {
+                left: calc(36px + 6px);
+                right: 0;
+            }
+
+            .dt-inner {
+                padding: 2rem 1rem 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="dt-nav">
+        <div class="dt-nav-inner">
+            <a class="dt-logo" href="../index.html">
+                <div class="dt-logo-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                ASET
+            </a>
+            <div class="dt-nav-badge">
+                <span class="dt-nav-badge-dot"></span>
+                Department Transfer
+            </div>
+            <a class="dt-nav-back" href="./student-dashboard.html">
+                <i class="bi bi-arrow-left"></i> Cancel
+            </a>
+        </div>
+    </nav>
+
+    <!-- Background elements -->
+    <div class="dt-page-blob dt-page-blob-1"></div>
+    <div class="dt-page-blob dt-page-blob-2"></div>
+
+    <div class="dt-page">
+        <div class="dt-inner">
+
+            <!-- Page Header -->
+            <div class="dt-page-header">
+                <div class="dt-overline">
+                    <span>Student Services</span>
+                </div>
+                <h1 class="dt-page-title">Department Transfer</h1>
+                <p class="dt-page-desc">Switch your programme or department through our verified academic process. All
+                    steps are tracked in your portal.</p>
+            </div>
+
+            <!-- Stepper -->
+            <div class="dt-stepper">
+                <div class="dt-step active" id="stepper1">
+                    <div class="dt-step-circle" id="stepCircle1">1</div>
+                    <div class="dt-step-info">
+                        <span class="dt-step-label">Eligibility</span>
+                        <span class="dt-step-sub">Upload & Verify</span>
+                    </div>
+                </div>
+                <div class="dt-step" id="stepper2">
+                    <div class="dt-step-circle" id="stepCircle2">2</div>
+                    <div class="dt-step-info">
+                        <span class="dt-step-label">Destination</span>
+                        <span class="dt-step-sub">Select Target</span>
+                    </div>
+                </div>
+                <div class="dt-step" id="stepper3">
+                    <div class="dt-step-circle" id="stepCircle3">3</div>
+                    <div class="dt-step-info">
+                        <span class="dt-step-label">Review</span>
+                        <span class="dt-step-sub">Confirm & Submit</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card -->
+            <div class="dt-card">
+                <div class="dt-card-body">
+
+                    <!-- ===== STEP 1: ELIGIBILITY ===== -->
+                    <div class="dt-step-content active" id="step1">
+                        <div class="dt-step-heading">
+                            <h3>Academic Validation</h3>
+                            <p>Upload your current result slip or entry credentials to verify your eligibility for the
+                                target department.</p>
+                        </div>
+
+                        <div class="dt-section-label">Verification Method</div>
+
+                        <div class="dt-method-btns">
+                            <button class="dt-method-btn active" id="btnMethodUpload" onclick="setMethod('upload')">
+                                <i class="bi bi-cloud-arrow-up"></i> Result Upload
+                            </button>
+                            <button class="dt-method-btn" id="btnMethodManual" onclick="setMethod('manual')">
+                                <i class="bi bi-keyboard"></i> Manual Entry
+                            </button>
+                        </div>
+
+                        <div id="uploadArea">
+                            <div class="dt-upload-zone" onclick="document.getElementById('fileIn').click()"
+                                id="uploadZone">
+                                <div class="dt-upload-zone-icon">
+                                    <i class="bi bi-file-earmark-arrow-up"></i>
+                                </div>
+                                <h5>Click to Upload Result Slip</h5>
+                                <p>PDF, JPG or PNG — Max 10MB accepted</p>
+                                <input type="file" id="fileIn" class="d-none" onchange="handleFile(this)"
+                                    accept=".pdf,.jpg,.jpeg,.png">
+                            </div>
+
+                            <div class="dt-file-ready" id="fileReadyBadge">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div
+                                        style="width:38px;height:38px;border-radius:10px;background:#d1fae5;display:flex;align-items:center;justify-content:center;color:#059669;font-size:1.1rem;flex-shrink:0;">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold" style="font-size:0.9rem;" id="fileName">Result_Slip.pdf
+                                        </div>
+                                        <div style="font-size:0.75rem;color:#059669;font-weight:500;">Ready for
+                                            submission</div>
+                                    </div>
+                                </div>
+                                <button onclick="clearFile()"
+                                    style="background:none;border:none;color:#ef4444;font-size:0.82rem;font-weight:600;cursor:pointer;padding:4px 10px;border-radius:8px;transition:background 0.2s;"
+                                    onmouseover="this.style.background='#fee2e2'"
+                                    onmouseout="this.style.background='none'">Remove</button>
+                            </div>
+                        </div>
+
+                        <div class="dt-nav-actions">
+                            <div></div>
+                            <button class="dt-btn-primary" style="width: auto; padding: 14px 32px;"
+                                onclick="nextStep(2)">
+                                Continue <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ===== STEP 2: DESTINATION ===== -->
+                    <div class="dt-step-content" id="step2">
+                        <div class="dt-step-heading">
+                            <h3>Select Target Department</h3>
+                            <p>Choose the faculty and department you wish to transfer into within your institution.</p>
+                        </div>
+
+                        <div class="dt-section-label">Available Faculties</div>
+                        <div class="dt-faculty-grid" id="facultyGrid">
+                            <!-- Populated via JS -->
+                        </div>
+
+                        <div class="dt-dept-panel" id="deptPanel">
+                            <div class="dt-section-label" style="margin-top: 0.5rem;">
+                                Departments in <span id="selectedFacName" style="color:var(--dt-brand)">Faculty</span>
+                            </div>
+                            <div id="departmentList"></div>
+                        </div>
+
+                        <div class="dt-nav-actions">
+                            <button class="dt-btn-secondary" onclick="nextStep(1)">
+                                <i class="bi bi-arrow-left"></i> Back
+                            </button>
+                            <button class="dt-btn-primary" style="width: auto; padding: 14px 32px;" id="btnToReview"
+                                disabled onclick="nextStep(3)">
+                                Review Application <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ===== STEP 3: REVIEW ===== -->
+                    <div class="dt-step-content" id="step3">
+                        <div class="dt-step-heading">
+                            <h3>Confirm Application</h3>
+                            <p>Please review all your transfer details carefully before final submission.</p>
+                        </div>
+
+                        <!-- Review Hero Card -->
+                        <div class="dt-review-hero">
+                            <div class="dt-review-icon"><i class="bi bi-file-earmark-check"></i></div>
+                            <h4>Change of Department</h4>
+                            <p id="reviewDeptSummary">Faculty &rarr; Department • Level 200</p>
+                        </div>
+
+                        <!-- Review Grid -->
+                        <div class="dt-review-grid">
+                            <div class="dt-review-item">
+                                <div class="dt-review-label">Current Institution</div>
+                                <div class="dt-review-val" id="reviewInst">—</div>
+                            </div>
+                            <div class="dt-review-item">
+                                <div class="dt-review-label">Transfer Level</div>
+                                <div class="dt-review-val"><span
+                                        style="background:var(--dt-brand-50);color:var(--dt-brand);padding:4px 12px;border-radius:999px;font-size:0.82rem;">Level
+                                        200</span></div>
+                            </div>
+                            <div class="dt-review-item">
+                                <div class="dt-review-label">Target Faculty</div>
+                                <div class="dt-review-val" id="reviewFac">—</div>
+                            </div>
+                            <div class="dt-review-item">
+                                <div class="dt-review-label">Target Department</div>
+                                <div class="dt-review-val highlight" id="reviewDept">—</div>
+                            </div>
+                        </div>
+
+                        <!-- Info Alert -->
+                        <div class="dt-info-alert">
+                            <i class="bi bi-info-circle-fill dt-info-alert-icon"></i>
+                            <div class="dt-info-alert-text">
+                                <strong>Processing Information</strong>
+                                A processing fee of ₦5,000 will be required after departmental clearance. Your request
+                                will be tracked and visible in your student portal.
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <button class="dt-btn-primary" id="btnSubmit" onclick="handleSubmit()">
+                            Submit Request <i class="bi bi-send-check"></i>
+                        </button>
+
+                        <div class="dt-nav-actions"
+                            style="padding-top: 1rem; margin-top: 0; border-top: none; justify-content: center;">
+                            <button onclick="nextStep(2)"
+                                style="background:none;border:none;color:var(--dt-sub);font-size:0.85rem;font-weight:600;cursor:pointer;">
+                                <i class="bi bi-pencil me-1"></i> Edit Destination
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared/scripts/institution-data.js"></script>
+    <script>
+        let currentStep = 1;
+        let selectedFaculty = null;
+        let selectedDepartment = null;
+        let intakeData = { state: 'Lagos', institution: 'University of Lagos (UNILAG)' };
+
+        const FACULTY_ICONS = [
+            'bi-cpu', 'bi-palette2', 'bi-building', 'bi-people-fill',
+            'bi-briefcase-fill', 'bi-gear-fill', 'bi-heart-pulse-fill', 'bi-calculator-fill'
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const stored = localStorage.getItem('aset_intake_data');
+            if (stored) {
+                try { intakeData = JSON.parse(stored); } catch (e) { }
+            }
+            initFaculties();
+            updateReview();
+        });
+
+        function initFaculties() {
+            const state = intakeData.state || 'Lagos';
+            const inst = intakeData.institution || 'University of Lagos (UNILAG)';
+            const data = (window.INSTITUTION_DATA[state] && window.INSTITUTION_DATA[state][inst])
+                ? window.INSTITUTION_DATA[state][inst]
+                : window.INSTITUTION_DATA['Lagos']['University of Lagos (UNILAG)'];
+
+            const grid = document.getElementById('facultyGrid');
+            grid.innerHTML = '';
+
+            Object.keys(data).forEach((fac, idx) => {
+                const card = document.createElement('div');
+                card.className = 'dt-faculty-card';
+                card.id = 'fac-' + idx;
+                card.innerHTML = `
+                    <div class="dt-faculty-icon"><i class="bi ${FACULTY_ICONS[idx % FACULTY_ICONS.length]}"></i></div>
+                    <h6>${fac}</h6>
+                `;
+                card.onclick = () => selectFaculty(fac, card.id, data[fac]);
+                grid.appendChild(card);
+            });
+        }
+
+        function selectFaculty(name, id, depts) {
+            document.querySelectorAll('.dt-faculty-card').forEach(el => el.classList.remove('selected'));
+            document.getElementById(id).classList.add('selected');
+            selectedFaculty = name;
+            selectedDepartment = null;
+            document.getElementById('btnToReview').disabled = true;
+
+            document.getElementById('selectedFacName').innerText = name;
+            const list = document.getElementById('departmentList');
+            list.innerHTML = '';
+
+            depts.forEach(dept => {
+                const item = document.createElement('div');
+                item.className = 'dt-dept-item';
+                item.innerHTML = `<span>${dept}</span> <i class="bi bi-chevron-right" style="opacity:0.4;font-size:0.8rem;"></i>`;
+                item.onclick = () => selectDept(dept, item);
+                list.appendChild(item);
+            });
+
+            const panel = document.getElementById('deptPanel');
+            panel.classList.add('show');
+            setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
+
+        function selectDept(name, el) {
+            selectedDepartment = name;
+            document.querySelectorAll('.dt-dept-item').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('btnToReview').disabled = false;
+            updateReview();
+        }
+
+        function updateReview() {
+            document.getElementById('reviewInst').innerText = intakeData.institution || '—';
+            document.getElementById('reviewFac').innerText = selectedFaculty || '—';
+            document.getElementById('reviewDept').innerText = selectedDepartment || '—';
+            if (selectedFaculty && selectedDepartment) {
+                document.getElementById('reviewDeptSummary').innerHTML =
+                    `${selectedFaculty} &rarr; ${selectedDepartment} &bull; Level 200`;
+            }
+        }
+
+        function nextStep(step) {
+            // Animate out
+            const current = document.getElementById('step' + currentStep);
+            current.style.opacity = '0';
+            current.style.transform = 'translateY(-10px)';
+
+            setTimeout(() => {
+                current.classList.remove('active');
+                current.style.opacity = '';
+                current.style.transform = '';
+
+                const next = document.getElementById('step' + step);
+                next.classList.add('active');
+
+                // Update stepper
+                for (let i = 1; i <= 3; i++) {
+                    const s = document.getElementById('stepper' + i);
+                    const c = document.getElementById('stepCircle' + i);
+                    s.classList.remove('active', 'completed');
+                    if (i < step) {
+                        s.classList.add('completed');
+                        c.innerHTML = '<i class="bi bi-check-lg"></i>';
+                    } else if (i === step) {
+                        s.classList.add('active');
+                        c.innerHTML = i;
+                    } else {
+                        c.innerHTML = i;
+                    }
+                }
+
+                currentStep = step;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (step === 3) updateReview();
+            }, 250);
+        }
+
+        function setMethod(method) {
+            document.getElementById('btnMethodUpload').classList.toggle('active', method === 'upload');
+            document.getElementById('btnMethodManual').classList.toggle('active', method === 'manual');
+            if (method === 'manual') {
+                // Show a friendly inline message instead of native alert
+                setMethod('upload');
+            }
+        }
+
+        function handleFile(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            document.getElementById('fileName').innerText = file.name;
+            document.getElementById('uploadZone').style.display = 'none';
+            document.getElementById('fileReadyBadge').classList.add('show');
+        }
+
+        function clearFile() {
+            document.getElementById('fileIn').value = '';
+            document.getElementById('uploadZone').style.display = '';
+            document.getElementById('fileReadyBadge').classList.remove('show');
+        }
+
+        function handleSubmit() {
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Submitting Request...';
+
+            setTimeout(() => {
+                // Redirect back with success notification
+                const caseId = 'ASET-TR-' + Math.floor(10000 + Math.random() * 90000);
+                // Store success data for dashboard to pick up
+                try {
+                    localStorage.setItem('aset_last_transfer', JSON.stringify({
+                        caseId, faculty: selectedFaculty, dept: selectedDepartment, time: Date.now()
+                    }));
+                } catch (e) { }
+                window.location.href = './student-dashboard.html?transfer=success&id=' + caseId;
+            }, 1800);
+        }
+    </script>
+</body>
+
+</html>

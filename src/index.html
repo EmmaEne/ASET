@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASET | Transfer Assistance & Mentorship</title>
-    <link href="./shared/styles/main.css" rel="stylesheet">
-    <link href="./shared/styles/ui-states.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="./shared/styles/main.css" rel="stylesheet">
+    <link href="./shared/styles/ui-states.css" rel="stylesheet">
+    <link href="./shared/styles/landing.css" rel="stylesheet">
     <style>
         .form-select:disabled {
             background-color: #f8f9fa;
@@ -25,91 +26,80 @@
     </style>
 </head>
 
-<body style="zoom: 80%;">
+<body class="landing-page" style="zoom: 80%;">
 
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg fixed-top bg-white border-bottom py-3">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="./index.html">
-                <span class="bg-primary text-white rounded p-1 fs-5"><i class="bi bi-mortarboard-fill"></i></span>
-                <span style="font-family: var(--font-display); color: var(--aset-blue);">ASET</span>
+    <nav class="ln-nav">
+        <div class="ln-nav-inner">
+            <a class="ln-logo" href="./index.html">
+                <img src="./shared/assets/images/aset-logo.png" alt="" srcset="">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navMain">
-                <ul class="navbar-nav ms-auto gap-4 fw-medium text-secondary">
-                    <li class="nav-item"><a href="./index.html" class="nav-link text-dark">Home</a></li>
-                    <li class="nav-item"><a href="#process" class="nav-link text-secondary">Process</a></li>
-                    <li class="nav-item"><a href="#faq" class="nav-link text-secondary">FAQ</a></li>
-                    <li class="nav-item">
-                        <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#intakeModal"
-                            onclick="goToStep(3)">
-                            Login Portal
-                        </button>
-                    </li>
-                </ul>
-            </div>
+            <ul class="ln-nav-links">
+                <li><a href="./index.html" class="active">Home</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <button class="ln-nav-cta" data-bs-toggle="modal" data-bs-target="#intakeModal" onclick="goToStep(3)">Login
+                Portal</button>
+            <button class="ln-nav-toggle" data-bs-toggle="collapse" data-bs-target="#navMain"><i
+                    class="bi bi-list"></i></button>
         </div>
     </nav>
 
-    <!-- Hero Section (Blue Background as per Image) -->
-    <section class="hero-visual d-flex align-items-center" style="margin-top: 70px; min-height: 85vh;">
-        <div class="container position-relative z-1">
-            <div class="row align-items-center">
-                <div class="col-lg-6 text-white">
-                    <h1 class="display-3 fw-bold mb-4 text-white hero-animate hero-animate-delay-2"
-                        style="line-height: 1.1;">
-                        Never Lose <br> a Semester Again!
-                    </h1>
-                    <p class="lead mb-5 opacity-75 hero-animate hero-animate-delay-3" style="max-width: 500px;">
-                        Get Expert Help with Transfers, Probation, Deferred Admission & Academic Challenges in Minutes
-                    </p>
-
-                    <!-- Quick Actions Grid (Reflective of Image) -->
-                    <div class="row g-3 mb-4 hero-animate hero-animate-delay-3">
-                        <div class="col-4">
-                            <div class="bg-white text-dark rounded-3 p-3 text-center h-100 shadow-sm">
-                                <i class="bi bi-arrow-left-right fs-2 text-primary mb-2 d-block"></i>
-                                <small class="fw-bold d-block lh-sm">Change of Programme</small>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="bg-white text-dark rounded-3 p-3 text-center h-100 shadow-sm">
-                                <i class="bi bi-life-preserver fs-2 text-primary mb-2 d-block"></i>
-                                <small class="fw-bold d-block lh-sm">Probation Help</small>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="bg-white text-dark rounded-3 p-3 text-center h-100 shadow-sm">
-                                <i class="bi bi-buildings fs-2 text-primary mb-2 d-block"></i>
-                                <small class="fw-bold d-block lh-sm">University Transfer</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-light btn-lg px-5 text-primary fw-bold hero-animate hero-animate-delay-4"
-                        data-bs-toggle="modal" data-bs-target="#intakeModal">
-                        Start Your Case <i class="bi bi-arrow-right ms-2"></i>
+    <!-- Hero -->
+    <section class="ln-hero">
+        <div class="ln-hero-grid"></div>
+        <div class="ln-hero-blob ln-hero-blob-1"></div>
+        <div class="ln-hero-blob ln-hero-blob-2"></div>
+        <div class="ln-hero-inner">
+            <div>
+                <div class="ln-hero-badge ln-hero-enter ln-hero-enter-1">
+                    <span class="ln-hero-badge-dot"></span>
+                    2,300+ cases resolved
+                </div>
+                <h1 class="ln-hero-enter ln-hero-enter-2 ln-typewriter-container" aria-label="Never lose a semester">
+                    <span class="ln-typewriter-ghost" aria-hidden="true">Never lose <span>a semester</span></span>
+                    <span class="ln-typewriter-wrapper" aria-hidden="true">
+                        <span id="typewriter-text"></span><span class="ln-typewriter-cursor"></span>
+                    </span>
+                </h1>
+                <p class="ln-hero-desc ln-hero-after-type">
+                    Get Expert Help with Transfers, Probation, Deferred Admission &amp; Academic Challenges in Minutes
+                </p>
+                <div class="ln-hero-actions ln-hero-after-type">
+                    <button class="ln-btn-hero primary" data-bs-toggle="modal" data-bs-target="#intakeModal">
+                        Start Your Case <i class="bi bi-arrow-right"></i>
+                    </button>
+                    <button class="ln-btn-hero secondary" data-bs-toggle="modal" data-bs-target="#intakeModal"
+                        onclick="goToStep(3)">
+                        Login Portal <i class="bi bi-box-arrow-in-right"></i>
                     </button>
                 </div>
-
-                <!-- Right Side Visual / Graphic Placeholder -->
-                <div class="col-lg-6 d-none d-lg-block position-relative">
-                    <!-- Abstract representation of the 'book/grad cap' image -->
-                    <div class="bg-white bg-opacity-10 rounded-circle position-absolute top-50 start-50 translate-middle"
-                        style="width: 500px; height: 500px;"></div>
-                    <div class="card p-4 border-0 shadow-lg position-relative" style="max-width: 400px; margin: auto;">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="avatar rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
-                                style="width: 48px; height: 48px;"><i class="bi bi-check-lg"></i></div>
-                            <div>
-                                <h6 class="fw-bold mb-0 text-dark">Application Approved</h6>
-                                <small class="text-muted">Registry Department</small>
-                            </div>
+            </div>
+            <div class="ln-hero-visual">
+                <div class="ln-hero-image-container">
+                    <img src="./shared/assets/images/student-hero-happy.png" alt="ASET Student">
+                    <div class="ln-hero-image-overlay"></div>
+                </div>
+                <div class="ln-float-card ln-float-card-1">
+                    <div class="fc-row">
+                        <div class="fc-icon success"><i class="bi bi-check-lg"></i></div>
+                        <div>
+                            <div class="fc-label">Status</div>
+                            <div style="font-weight:600;font-size:0.95rem;">Application Approved</div>
                         </div>
-                        <div class="progress" style="height: 6px;">
-                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="ln-float-card ln-float-card-2">
+                    <div class="fc-label">Cases Processed</div>
+                    <div class="fc-value">2,300+</div>
+                </div>
+                <div class="ln-float-card ln-float-card-3">
+                    <div class="fc-row">
+                        <div class="fc-icon info"><i class="bi bi-arrow-left-right"></i></div>
+                        <div>
+                            <div class="fc-label">Quick Action</div>
+                            <div style="font-weight:600;font-size:0.95rem;">Change Programme</div>
                         </div>
                     </div>
                 </div>
@@ -118,138 +108,117 @@
     </section>
 
 
-    <section class="py-5 bg-white border-bottom scroll-reveal">
-        <div class="container">
-            <div class="row align-items-center g-4">
-                <!-- Stat 1 -->
-                <div class="col-6 col-lg-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="stat-icon bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center"
-                            style="width: 48px; height: 48px; font-size: 1.2rem;">
-                            <i class="bi bi-mortarboard"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold mb-0 text-dark">2,300+</h4>
-                            <div class="text-muted small fw-medium text-uppercase tracking-wider"
-                                style="font-size: 0.65rem;">Cases processed</div>
-                        </div>
-                    </div>
+    <!-- Stats Ribbon -->
+    <section class="ln-stats-bar" style="background-color: #fcfcfe;">
+        <div class="ln-stats-bar-inner ln-reveal">
+            <div class="ln-stat-item">
+                <div class="ln-stat-icon"><i class="bi bi-mortarboard"></i></div>
+                <div>
+                    <div class="ln-stat-number">2,300+</div>
+                    <div class="ln-stat-label">Cases Resolved</div>
                 </div>
-                <!-- Stat 2 -->
-                <div class="col-6 col-lg-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="stat-icon bg-info-subtle text-info rounded-circle d-flex align-items-center justify-content-center"
-                            style="width: 48px; height: 48px; font-size: 1.2rem;">
-                            <i class="bi bi-arrow-left-right"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold mb-0 text-dark">1,800+</h4>
-                            <div class="text-muted small fw-medium text-uppercase tracking-wider"
-                                style="font-size: 0.65rem;">Departmental Transfers</div>
-                        </div>
-                    </div>
+            </div>
+            <div class="ln-stat-item">
+                <div class="ln-stat-icon"><i class="bi bi-arrow-left-right"></i></div>
+                <div>
+                    <div class="ln-stat-number">1,800+</div>
+                    <div class="ln-stat-label">Transfers</div>
                 </div>
-                <!-- Stat 3 -->
-                <div class="col-6 col-lg-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="stat-icon bg-warning-subtle text-warning rounded-circle d-flex align-items-center justify-content-center"
-                            style="width: 48px; height: 48px; font-size: 1.2rem;">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold mb-0 text-dark">900+</h4>
-                            <div class="text-muted small fw-medium text-uppercase tracking-wider"
-                                style="font-size: 0.65rem;">Probation Assistance</div>
-                        </div>
-                    </div>
+            </div>
+            <div class="ln-stat-item">
+                <div class="ln-stat-icon"><i class="bi bi-shield-check"></i></div>
+                <div>
+                    <div class="ln-stat-number">900+</div>
+                    <div class="ln-stat-label">Probation Aid</div>
                 </div>
-                <!-- Stat 4 -->
-                <div class="col-6 col-lg-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="stat-icon bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center"
-                            style="width: 48px; height: 48px; font-size: 1.2rem;">
-                            <i class="bi bi-calendar-event"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold mb-0 text-dark">1,000+</h4>
-                            <div class="text-muted small fw-medium text-uppercase tracking-wider"
-                                style="font-size: 0.65rem;">Deferment/Suspension of studies</div>
-                        </div>
-                    </div>
+            </div>
+            <div class="ln-stat-item">
+                <div class="ln-stat-icon"><i class="bi bi-calendar-event"></i></div>
+                <div>
+                    <div class="ln-stat-number">1,000+</div>
+                    <div class="ln-stat-label">Deferments</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How ASET Works -->
-    <section class="py-5 bg-white scroll-reveal" id="process">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold mb-3">How TAMP Works</h2>
-                <p class="text-muted">Simple 3-step process to resolve your academic issues.</p>
+    <section class="ln-section" id="process" style="background-color: #fcfcfe;">
+        <div class="ln-section-inner">
+            <div class="ln-section-header ln-reveal">
+                <span class="ln-overline">The Process</span>
+                <h2>How TAMP Works</h2>
+                <p>A streamlined, three-step digital workflow designed to resolve your academic challenges effectively.
+                </p>
             </div>
-
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-3">
-                    <div class="p-4 border rounded-4 text-center h-100">
-                        <div class="mb-3 text-primary fs-1"><i class="bi bi-file-earmark-text"></i></div>
-                        <h5>Submit Your Request</h5>
-                        <p class="text-muted small">Select your issue type and fill the form.</p>
-                    </div>
+            <div class="ln-process-grid ln-reveal">
+                <div class="ln-process-card">
+                    <div class="ln-process-num">01</div>
+                    <div class="ln-process-icon"><i class="bi bi-file-earmark-text"></i></div>
+                    <h5>Submit Request</h5>
+                    <p>Select your category and provide the necessary details through our intuitive intake portal.</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="p-4 border rounded-4 text-center h-100">
-                        <div class="mb-3 text-primary fs-1"><i class="bi bi-cloud-arrow-up"></i></div>
-                        <h5>Upload Documents</h5>
-                        <p class="text-muted small">Attach necessary result slips and letters.</p>
-                    </div>
+                <div class="ln-process-card">
+                    <div class="ln-process-num">02</div>
+                    <div class="ln-process-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+                    <h5>Upload Verification</h5>
+                    <p>Securely attach your result slips and official letters for immediate institutional review.</p>
                 </div>
-                <div class="col-md-3">
-                    <div class="p-4 border rounded-4 text-center h-100 text-bg-warning bg-opacity-10 border-warning">
-                        <div class="mb-3 text-warning fs-1"><i class="bi bi-coin"></i></div>
-                        <h5 class="text-dark">Pay Service Fee</h5>
-                        <p class="text-muted small">Pay ₦5,000 via our secure gateway.</p>
-                    </div>
+                <div class="ln-process-card">
+                    <div class="ln-process-num">03</div>
+                    <div class="ln-process-icon"><i class="bi bi-check-all"></i></div>
+                    <h5>Direct Resolution</h5>
+                    <p>Track your case in real-time as it moves through departmental and registrar approvals.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Use Cases -->
-    <section class="py-5 bg-light scroll-reveal">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold">Common Requests on ASET</h2>
+    <!-- Services Bento Grid -->
+    <section class="ln-section ln-reveal">
+        <div class="ln-section-inner">
+            <div class="ln-section-header">
+                <span class="ln-overline">Solutions</span>
+                <h2>Expert Support for Every Challenge</h2>
+                <p>Comprehensive assistance for transfers, deferments, and complex academic administration.</p>
             </div>
-            <div class="row g-4 d-flex justify-content-center">
-                <div class="col-6 col-md-4 col-lg-2">
-                    <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
-                        <div class="mb-3 text-primary"><i class="bi bi-star-fill fs-3"></i></div>
-                        <h6 class="mb-0">Voluntary Change Program (CGPA 3.0 & above)</h6>
+            <div class="ln-bento-grid">
+                <div class="ln-bento-card wide">
+                    <div>
+                        <div class="ln-bento-icon"><i class="bi bi-star-fill"></i></div>
+                        <h6>Voluntary Change of Programme</h6>
+                        <p>Specialized routing for high-performance students seeking departmental switches.</p>
                     </div>
                 </div>
-                <div class="col-6 col-md-4 col-lg-2">
-                    <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
-                        <div class="mb-3 text-primary"><i class="bi bi-arrow-repeat fs-3"></i></div>
-                        <h6 class="mb-0">Change of Programme</h6>
+                <div class="ln-bento-card">
+                    <div>
+                        <div class="ln-bento-icon"><i class="bi bi-arrow-repeat"></i></div>
+                        <h6>Academic Deferment</h6>
                     </div>
                 </div>
-                <div class="col-6 col-md-4 col-lg-2">
-                    <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
-                        <div class="mb-3 text-primary"><i class="bi bi-signpost-split fs-3"></i></div>
-                        <h6 class="mb-0">Transfer Request</h6>
+                <div class="ln-bento-card">
+                    <div>
+                        <div class="ln-bento-icon"><i class="bi bi-shield-exclamation"></i></div>
+                        <h6>Probation Aid</h6>
                     </div>
                 </div>
-                <div class="col-6 col-md-4 col-lg-2">
-                    <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
-                        <div class="mb-3 text-primary"><i class="bi bi-pause-circle fs-3"></i></div>
-                        <h6 class="mb-0">Deferment / Suspension</h6>
+                <div class="ln-bento-card">
+                    <div>
+                        <div class="ln-bento-icon"><i class="bi bi-hash"></i></div>
+                        <h6>Matric Support</h6>
                     </div>
                 </div>
-                <div class="col-6 col-md-4 col-lg-2">
-                    <div class="card border-0 shadow-sm p-4 rounded-4 text-center h-100">
-                        <div class="mb-3 text-primary"><i class="bi bi-hash fs-3"></i></div>
-                        <h6 class="mb-0">Matric Number Generation</h6>
+                <div class="ln-bento-card wide">
+                    <div>
+                        <div class="ln-bento-icon"><i class="bi bi-signpost-split"></i></div>
+                        <h6>Cross-Institutional Transfer</h6>
+                        <p>Seamlessly navigate transfers between different universities with verified records.</p>
+                    </div>
+                </div>
+                <div class="ln-bento-card">
+                    <div>
+                        <div class="ln-bento-icon"><i class="bi bi-file-earmark-check"></i></div>
+                        <h6>Result Rectification</h6>
                     </div>
                 </div>
             </div>
@@ -257,59 +226,55 @@
     </section>
 
     <!-- Platform Capabilities -->
-    <section class="py-5 bg-white scroll-reveal">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold">Built for Students, Officers, and Institutions</h2>
-            </div>
-            <div class="row align-items-center g-5">
-                <div class="col-lg-6">
-                    <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
-                        <li class="d-flex align-items-start gap-3">
-                            <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                            <div><strong class="d-block">Case submission and document uploads</strong></div>
+    <section class="ln-section ln-capabilities" style="background-color: #e2e8f0;">
+        <div class="ln-section-inner">
+            <div class="ln-cap-layout">
+                <div class="ln-reveal">
+                    <div class="ln-section-header" style="text-align: left; margin-bottom: 2.5rem;">
+                        <span class="ln-overline">Platform Control</span>
+                        <h2 style="margin-left: 0;">Built for Modern Academic Administration</h2>
+                        <p style="margin-left: 0;">Experience a unified platform that connects students, department
+                            heads, and registrars in one secure ecosystem.</p>
+                    </div>
+                    <ul class="ln-cap-list">
+                        <li>
+                            <div class="ln-cap-check"><i class="bi bi-check2"></i></div>
+                            <span class="ln-cap-text">Real-time status tracking for every case</span>
                         </li>
-                        <li class="d-flex align-items-start gap-3">
-                            <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                            <div><strong class="d-block">Multi-stage institutional workflow</strong></div>
+                        <li>
+                            <div class="ln-cap-check"><i class="bi bi-check2"></i></div>
+                            <span class="ln-cap-text">Departmental & Dean approval automation</span>
                         </li>
-                        <li class="d-flex align-items-start gap-3">
-                            <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                            <div><strong class="d-block">Role-based access control</strong></div>
+                        <li>
+                            <div class="ln-cap-check"><i class="bi bi-check2"></i></div>
+                            <span class="ln-cap-text">Direct registrar integration & processing</span>
                         </li>
-                        <li class="d-flex align-items-start gap-3">
-                            <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                            <div><strong class="d-block">Audit trail for every action</strong></div>
-                        </li>
-                        <li class="d-flex align-items-start gap-3">
-                            <i class="bi bi-check-circle-fill text-primary mt-1"></i>
-                            <div><strong class="d-block">Secure digital records</strong></div>
+                        <li>
+                            <div class="ln-cap-check"><i class="bi bi-check2"></i></div>
+                            <span class="ln-cap-text">Secure ₦5k service fee processing (Split Pay)</span>
                         </li>
                     </ul>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card border bg-light p-4 rounded-4 user-select-none">
-                        <div class="d-flex align-items-center gap-3 mb-4 opacity-50">
-                            <small class="fw-bold text-uppercase text-muted">Case Timeline</small>
-                        </div>
-                        <div class="border-start border-2 ps-4 position-relative ms-2">
-                            <div class="position-absolute start-0 top-0 translate-middle rounded-circle bg-primary"
-                                style="width: 12px; height: 12px;"></div>
-                            <div class="mb-4">
-                                <h6 class="fw-bold mb-1">Request Submitted</h6>
-                                <small class="text-muted">Jan 12, 10:00 AM</small>
+                <div class="ln-mockup-wrapper ln-reveal">
+                    <div class="ln-mockup-container">
+                        <img src="./shared/assets/images/aset_platform_mockup_1772637914857.png"
+                            alt="ASET Platform Dashboard Mockup" loading="lazy">
+                    </div>
+                    <div class="ln-mockup-lifestyle">
+                        <img src="./shared/assets/images/aset_platform_mockup_1772637914857.png"
+                            alt="Successful Student Lifestyle">
+                        <span>Success in 48 hours</span>
+                    </div>
+                    <div class="ln-mockup-badge">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="ln-stat-icon"
+                                style="width:40px;height:40px;font-size:1rem;background:var(--accent-emerald);color:white;">
+                                <i class="bi bi-check-circle-fill"></i>
                             </div>
-                            <div class="position-absolute start-0 top-50 translate-middle rounded-circle bg-primary"
-                                style="width: 12px; height: 12px;"></div>
-                            <div class="mb-4">
-                                <h6 class="fw-bold mb-1">Department Review</h6>
-                                <small class="text-muted">Jan 14, 02:30 PM</small>
-                            </div>
-                            <div class="position-absolute start-0 bottom-0 translate-middle rounded-circle bg-success"
-                                style="width: 12px; height: 12px;"></div>
                             <div>
-                                <h6 class="fw-bold mb-1">Approved</h6>
-                                <small class="text-muted">Pending Final Check</small>
+                                <div style="font-size:0.7rem;font-weight:700;color:var(--surface-400)">STATUS</div>
+                                <div style="font-size:0.9rem;font-weight:800;color:var(--surface-900)">CASE RESOLVED
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -318,70 +283,65 @@
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="py-5 bg-light border-bottom scroll-reveal">
-        <div class="container py-5 text-center">
-            <div class="col-lg-8 mx-auto">
-                <h2 class="fw-bold mb-3">Ready to Submit a Case?</h2>
-                <p class="lead text-muted mb-4">Start your request and track it seamlessly from submission to
-                    resolution.
-                </p>
-                <button class="btn btn-primary btn-lg px-5 fw-bold shadow" data-bs-toggle="modal"
-                    data-bs-target="#intakeModal">Get Started</button>
-            </div>
+    <!-- Immersive Call to Action -->
+    <section class="ln-cta">
+        <div class="ln-cta-inner ln-reveal">
+            <h2>Take control of your <br> academic journey today.</h2>
+            <p>Join over 2,300 students who have successfully resolved their academic challenges through ASET.</p>
+            <button class="ln-btn-cta" data-bs-toggle="modal" data-bs-target="#intakeModal">
+                Get Started Now <i class="bi bi-arrow-right ms-2"></i>
+            </button>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-top pt-5 pb-3">
-        <div class="container">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-3">
-                    <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2 mb-3" href="#">
-                        <span class="bg-primary text-white rounded p-1 fs-5"><i
-                                class="bi bi-mortarboard-fill"></i></span>
-                        <span style="font-family: var(--font-display); color: var(--aset-blue);">ASET</span>
-                    </a>
-                    <p class="text-muted small">Transfer Assistance & Mentorship Platform</p>
+    <!-- Refined Modern Footer -->
+    <footer class="ln-footer">
+        <div class="ln-footer-inner">
+            <div class="ln-footer-grid">
+                <div class="ln-footer-brand">
+                    <div class="ln-logo">
+                        <span class="ln-logo-icon"></span>
+                        ASET <span style="font-weight: 300; opacity: 0.6;">TAMP</span>
+                    </div>
+
+                    <p>The Academic Support and Electronic Transfer system. Empowering students to navigate academic
+                        challenges with transparency and efficiency.</p>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <h6 class="fw-bold mb-3">Platform</h6>
-                    <ul class="list-unstyled small d-flex flex-column gap-2" id="footerPlatformLinks">
-                        <li><a href="#" data-route="STUDENT_DASHBOARD" class="text-decoration-none text-muted">Student
-                                Dashboard</a></li>
-                        <li><a href="#" data-route="ADMIN_DASHBOARD" class="text-decoration-none text-muted">Admin
-                                Dashboard</a></li>
-                        <li><a href="#" data-route="OFFICER_DASHBOARD" class="text-decoration-none text-muted">Officer
-                                Dashboard</a></li>
-                        <li><a href="#" data-route="MENTOR_DASHBOARD" class="text-decoration-none text-muted">Mentor
-                                Dashboard</a></li>
+                <div>
+                    <h6>Platform</h6>
+                    <ul class="ln-footer-links" id="footerPlatformLinks">
+                        <li><a href="#" data-route="STUDENT_DASHBOARD">Student Dashboard</a></li>
+                        <li><a href="#" data-route="ADMIN_DASHBOARD">Admin Dashboard</a></li>
+                        <li><a href="#" data-route="OFFICER_DASHBOARD">Officer Dashboard</a></li>
+                        <li><a href="#" data-route="MENTOR_DASHBOARD">Mentor Dashboard</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <h6 class="fw-bold mb-3">Support</h6>
-                    <ul class="list-unstyled small d-flex flex-column gap-2">
-                        <li><a href="#" class="text-decoration-none text-muted">Help Center</a></li>
-                        <li><a href="#faq" class="text-decoration-none text-muted">FAQs</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Contact Support</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Privacy Policy</a></li>
+                <div>
+                    <h6>Support</h6>
+                    <ul class="ln-footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#faq">FAQs</a></li>
+                        <li><a href="#">Contact Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3">
-                    <h6 class="fw-bold mb-3">Contact</h6>
-                    <ul class="list-unstyled small d-flex flex-column gap-2">
-                        <li><a href="mailto:support@aset.ng" class="text-decoration-none text-muted">support@aset.ng</a>
-                        </li>
-                        <li class="text-muted">Lagos, Nigeria</li>
+                <div>
+                    <h6>Connect</h6>
+                    <ul class="ln-footer-links">
+                        <li><a href="mailto:support@aset.ng">support@aset.ng</a></li>
+                        <li><span style="color:var(--surface-500);font-size:0.95rem;font-weight:500;">Lagos,
+                                Nigeria</span></li>
                     </ul>
                 </div>
             </div>
-            <div
-                class="border-top pt-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-                <small class="text-muted">© 2026 ASET. All rights reserved.</small>
-                <div class="d-flex gap-3">
-                    <a href="#" class="text-muted"><i class="bi bi-linkedin"></i></a>
-                    <a href="#" class="text-muted"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="text-muted"><i class="bi bi-github"></i></a>
+            <div class="ln-footer-bar">
+                <small>&copy; 2026 ASET Platform. All rights reserved.</small>
+                <div class="ln-footer-social">
+                    <a href="#"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-envelope-fill"></i></a>
                 </div>
             </div>
         </div>
@@ -458,175 +418,227 @@
     <div class="modal fade" id="intakeModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
-                <div class="modal-body p-0">
+                <div class="modal-body p-0 position-relative">
+                    <!-- Progress Bar -->
+                    <div class="position-absolute top-0 start-0 w-100 px-5 pt-4" style="z-index: 10;">
+                        <div class="progress" style="height: 6px;">
+                            <div id="intakeProgress" class="progress-bar" role="progressbar" style="width: 25%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Header Controls -->
+                    <button id="intakeBackBtn" class="btn-modal-back" style="display: none;"
+                        onclick="handleModalBack()">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                     <!-- Step 1: Issue Selection -->
-                    <div id="intakeStep1" class="intake-step active p-5">
-                        <div class="text-center mb-4">
-                            <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle"
-                                style="width: 64px; height: 64px;">
+                    <div id="intakeStep1" class="intake-step active p-5 pt-5">
+                        <div class="text-center mb-5 mt-3">
+                            <div class="mb-4 d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle"
+                                style="width: 80px; height: 80px;">
                                 <i class="bi bi-patch-question text-primary fs-1"></i>
                             </div>
                             <h3 class="fw-bold">What issue are you facing?</h3>
-                            <p class="text-muted">Select a category to help us route your case</p>
+                            <p class="text-muted">Select a category to help us route your case accurately</p>
                         </div>
                         <div class="mb-4">
                             <label class="form-label fw-bold small text-secondary">Issue Type</label>
-                            <select id="issueType" class="form-select form-select-lg" onchange="validateStep1()">
-                                <option value="" selected disabled>Choose your issue...</option>
-                                <option value="Change Program & Departmental Issues">Change Program & Departmental
-                                    Issues</option>
-                                <option value="Voluntary Change Program (CGPA 3.0 & above)">Voluntary Change Program
-                                    (CGPA 3.0 & above)</option>
-                                <option value="Probation / Withdrawal Issues">Probation / Withdrawal Issues</option>
-                                <option value="Suspension of Studies">Suspension of Studies</option>
-                                <option value="Deferment of Studies">Deferment of Studies</option>
-                                <option value="Result & Examination Issues">Result & Examination Issues</option>
-                                <option value="Course Registration Problems">Course Registration Problems</option>
-                                <option value="Portal & Payment Issues">Portal & Payment Issues</option>
-                                <option value="Transfer to Another Nigerian University (Interschool)">Transfer to
-                                    Another Nigerian University (Interschool)</option>
-                                <option value="Financial, Loan & Scholarship Support">Financial, Loan & Scholarship
-                                    Support</option>
-                                <option value="Multiple / Complex Issues">Multiple / Complex Issues</option>
-                            </select>
+                            <div class="aset-select-container">
+                                <i class="bi bi-tag aset-select-icon"></i>
+                                <select id="issueType" class="form-select form-select-lg aset-select-field"
+                                    onchange="validateStep1()">
+                                    <option value="" selected disabled>Choose your issue...</option>
+                                    <option value="Change Program & Departmental Issues">Change Program & Departmental
+                                        Issues</option>
+                                    <option value="Voluntary Change Program (CGPA 3.0 & above)">Voluntary Change Program
+                                        (CGPA 3.0 & above)</option>
+                                    <option value="Probation / Withdrawal Issues">Probation / Withdrawal Issues</option>
+                                    <option value="Suspension of Studies">Suspension of Studies</option>
+                                    <option value="Deferment of Studies">Deferment of Studies</option>
+                                    <option value="Result & Examination Issues">Result & Examination Issues</option>
+                                    <option value="Course Registration Problems">Course Registration Problems</option>
+                                    <option value="Portal & Payment Issues">Portal & Payment Issues</option>
+                                    <option value="Transfer to Another Nigerian University (Interschool)">Transfer to
+                                        Another Nigerian University (Interschool)</option>
+                                    <option value="Financial, Loan & Scholarship Support">Financial, Loan & Scholarship
+                                        Support</option>
+                                    <option value="Multiple / Complex Issues">Multiple / Complex Issues</option>
+                                </select>
+                            </div>
                         </div>
 
 
                         <button class="btn btn-primary w-100 btn-lg py-3" id="btnContinueStep1" disabled
                             onclick="handleIntakeStart()">Continue</button>
-                        <div class="text-center mt-3">
-                            <button class="btn btn-link text-muted text-decoration-none small"
-                                data-bs-dismiss="modal">Cancel and exit</button>
-                        </div>
                     </div>
 
                     <!-- Step 2: Personal Details -->
-                    <div id="intakeStep2" class="intake-step p-5">
-                        <div class="text-center mb-4">
+                    <div id="intakeStep2" class="intake-step p-5 pt-5">
+                        <div class="text-center mb-5 mt-3">
                             <h3 class="fw-bold">Tell us about yourself</h3>
-                            <p class="text-muted">Fill in your information to proceed</p>
+                            <p class="text-muted">Fill in your information to proceed with your case</p>
                         </div>
                         <div class="row g-3 mb-4">
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold">Matriculation Number</label>
-                                <input type="text" class="form-control form-control-lg" id="intakeMatric"
-                                    placeholder="e.g. 2024/123456" style="font-size: 1.25rem; font-weight: 600;">
-                                <div class="select-feedback">Format: YYYY/123456</div>
+                                <div class="aset-input-container">
+                                    <i class="bi bi-person-badge aset-input-icon"></i>
+                                    <input type="text" class="form-control form-control-lg aset-input-field"
+                                        id="intakeMatric" placeholder="e.g. 2024/123456" style="font-weight: 700;">
+                                </div>
+                                <div class="select-feedback ms-2">Format: YYYY/123456</div>
                             </div>
 
                             <!-- New State Selection -->
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">State / Region</label>
-                                <select class="form-select" id="intakeState" onchange="handleStateChange()">
-                                    <option value="" selected disabled>Select state</option>
-                                    <!-- Populated by JS -->
-                                </select>
+                                <div class="aset-select-container">
+                                    <i class="bi bi-geo-alt aset-select-icon"></i>
+                                    <select class="form-select aset-select-field" id="intakeState"
+                                        onchange="handleStateChange()">
+                                        <option value="" selected disabled>Select state</option>
+                                        <!-- Populated by JS -->
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Institution</label>
-                                <select class="form-select" id="intakeInstitution" disabled
-                                    onchange="handleInstitutionChange()">
-                                    <option value="" selected disabled>Select institution in your state</option>
-                                </select>
+                                <div class="aset-select-container">
+                                    <i class="bi bi-building aset-select-icon"></i>
+                                    <select class="form-select aset-select-field" id="intakeInstitution" disabled
+                                        onchange="handleInstitutionChange()">
+                                        <option value="" selected disabled>Select institution</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Faculty</label>
-                                <select class="form-select" id="intakeFaculty" disabled
-                                    onchange="handleFacultyChange()">
-                                    <option value="" selected disabled>Select faculty</option>
-                                </select>
+                                <div class="aset-select-container">
+                                    <i class="bi bi-mortarboard aset-select-icon"></i>
+                                    <select class="form-select aset-select-field" id="intakeFaculty" disabled
+                                        onchange="handleFacultyChange()">
+                                        <option value="" selected disabled>Select faculty</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Department</label>
-                                <select class="form-select" id="intakeDepartment" disabled>
-                                    <option value="" selected disabled>Select department</option>
-                                </select>
+                                <div class="aset-select-container">
+                                    <i class="bi bi-book aset-select-icon"></i>
+                                    <select class="form-select aset-select-field" id="intakeDepartment" disabled>
+                                        <option value="" selected disabled>Select department</option>
+                                    </select>
+                                </div>
                             </div>
+
+                            <hr class="my-3 opacity-50">
 
                             <div class="col-md-4">
                                 <label class="form-label small fw-bold">Level / Year</label>
-                                <select class="form-select" id="intakeLevel">
-                                    <option value="100">100 Level</option>
-                                    <option value="200">200 Level</option>
-                                    <option value="300">300 Level</option>
-                                    <option value="400">400 Level</option>
-                                    <option value="500">500 Level</option>
-                                </select>
+                                <div class="aset-select-container">
+                                    <i class="bi bi-layers aset-select-icon"></i>
+                                    <select class="form-select aset-select-field" id="intakeLevel">
+                                        <option value="100">100 Level</option>
+                                        <option value="200">200 Level</option>
+                                        <option value="300">300 Level</option>
+                                        <option value="400">400 Level</option>
+                                        <option value="500">500 Level</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-8">
                                 <label class="form-label small fw-bold">Email Address</label>
-                                <input type="email" class="form-control" id="intakeEmail" placeholder="name@email.com">
+                                <div class="aset-input-container">
+                                    <i class="bi bi-envelope aset-input-icon"></i>
+                                    <input type="email" class="form-control aset-input-field" id="intakeEmail"
+                                        placeholder="name@email.com">
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold">Phone Number</label>
-                                <input type="tel" class="form-control" id="intakePhone" placeholder="080 000 0000">
+                                <div class="aset-input-container">
+                                    <i class="bi bi-telephone aset-input-icon"></i>
+                                    <input type="tel" class="form-control aset-input-field" id="intakePhone"
+                                        placeholder="080 000 0000">
+                                </div>
                             </div>
                         </div>
                         <button class="btn btn-primary w-100 btn-lg py-3" onclick="proceedFromStep2()">Continue</button>
-                        <div class="text-center mt-3">
-                            <button class="btn btn-link text-muted text-decoration-none small"
-                                onclick="goToStep(1)">Back</button>
-                        </div>
                     </div>
 
                     <!-- Step 3: Auth -->
-                    <div id="intakeStep3" class="intake-step p-5">
-                        <div class="text-center mb-4">
+                    <div id="intakeStep3" class="intake-step p-5 pt-5">
+                        <div class="text-center mb-5 mt-3">
+                            <div class="mb-4 d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle"
+                                style="width: 80px; height: 80px;">
+                                <i class="bi bi-shield-lock text-primary fs-1"></i>
+                            </div>
                             <h3 class="fw-bold">Secure your account</h3>
-                            <p class="text-muted">Authenticate to access your dashboard</p>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold">Matriculation Number</label>
-                            <input type="text" class="form-control bg-light" id="authMatric" readonly>
+                            <p class="text-muted">Create a secure password or login to finalize your submission</p>
                         </div>
                         <div class="mb-4">
+                            <label class="form-label small fw-bold">Matriculation Number</label>
+                            <div class="aset-input-container">
+                                <i class="bi bi-person-badge aset-input-icon"></i>
+                                <input type="text" class="form-control bg-light border-0 fw-bold aset-input-field"
+                                    id="authMatric" readonly style="color: var(--brand-700);">
+                            </div>
+                        </div>
+                        <div class="mb-5">
                             <label class="form-label small fw-bold">Password</label>
-                            <input type="password" class="form-control" id="authPassword"
-                                placeholder="Minimum 6 characters">
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <button class="btn btn-primary w-100 btn-lg"
-                                    onclick="finishFlow('login')">Login</button>
-                            </div>
-                            <div class="col-6">
-                                <button class="btn btn-outline-primary w-100 btn-lg"
-                                    onclick="finishFlow('signup')">Create Account</button>
+                            <div class="aset-input-container">
+                                <i class="bi bi-lock aset-input-icon"></i>
+                                <input type="password" class="form-control aset-input-field" id="authPassword"
+                                    placeholder="Enter at least 6 characters">
                             </div>
                         </div>
-                        <div class="text-center mt-3">
-                            <button class="btn btn-link text-muted text-decoration-none small"
-                                onclick="goToStep(2)">Back</button>
+                        <div id="authActionArea">
+                            <button class="btn btn-primary w-100 btn-lg shadow-sm py-3" id="mainAuthBtn"
+                                onclick="handleAuthSubmit()">
+                                Create Account <i class="bi bi-plus-lg ms-2"></i>
+                            </button>
+                            <div class="text-center mt-4">
+                                <a href="javascript:void(0)" id="authToggleLink"
+                                    class="text-decoration-none small fw-bold text-primary" onclick="toggleAuthMode()">
+                                    Already have an account? Login here
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- SPECIALIZED FLOW: Suspension / Deferment -->
 
                     <!-- Suspension Step 1: Basic Info & Duration -->
-                    <div id="suspensionStep1" class="intake-step p-5">
-                        <div class="text-center mb-4">
-                            <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 rounded-circle"
-                                style="width: 64px; height: 64px;">
+                    <div id="suspensionStep1" class="intake-step p-5 pt-5">
+                        <div class="text-center mb-5 mt-3">
+                            <div class="mb-4 d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 rounded-circle"
+                                style="width: 80px; height: 80px;">
                                 <i class="bi bi-pause-circle text-danger fs-1"></i>
                             </div>
-                            <h3 class="fw-bold">Suspension / Deferment Request</h3>
-                            <p class="text-muted">Please provide details for your academic pause</p>
+                            <h3 class="fw-bold">Suspension / Deferment</h3>
+                            <p class="text-muted">Please provide details regarding your required academic pause</p>
                         </div>
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold">Reason for Request</label>
-                                <select class="form-select" id="suspensionReason">
-                                    <option value="Health Issues">Health Issues</option>
-                                    <option value="Financial Constraints">Financial Constraints</option>
-                                    <option value="Personal / Family Reasons">Personal / Family Reasons</option>
-                                    <option value="Travel / International Opportunity">Travel / International
-                                        Opportunity</option>
-                                    <option value="Military / National Service">Military / National Service</option>
-                                    <option value="Other">Other (Please specify below)</option>
-                                </select>
+                                <div class="aset-select-container">
+                                    <i class="bi bi-question-circle aset-select-icon"></i>
+                                    <select class="form-select aset-select-field" id="suspensionReason">
+                                        <option value="Health Issues">Health Issues</option>
+                                        <option value="Financial Constraints">Financial Constraints</option>
+                                        <option value="Personal / Family Reasons">Personal / Family Reasons</option>
+                                        <option value="Travel / International Opportunity">Travel / International
+                                            Opportunity</option>
+                                        <option value="Military / National Service">Military / National Service</option>
+                                        <option value="Other">Other (Please specify below)</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <textarea class="form-control" id="suspensionDetail" rows="2"
@@ -634,11 +646,14 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label small fw-bold">Desired Duration</label>
-                                <select class="form-select" id="suspensionDuration">
-                                    <option value="One Semester">One Semester</option>
-                                    <option value="One Academic Session">One Academic Session (2 Semesters)</option>
-                                    <option value="Two Academic Sessions">Two Academic Sessions</option>
-                                </select>
+                                <div class="aset-select-container">
+                                    <i class="bi bi-calendar-range aset-select-icon"></i>
+                                    <select class="form-select aset-select-field" id="suspensionDuration">
+                                        <option value="One Semester">One Semester</option>
+                                        <option value="One Academic Session">One Academic Session (2 Semesters)</option>
+                                        <option value="Two Academic Sessions">Two Academic Sessions</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <button class="btn btn-primary w-100 btn-lg py-3 mt-4"
@@ -646,129 +661,78 @@
                     </div>
 
                     <!-- Suspension Step 2: Document Upload -->
-                    <div id="suspensionStep2" class="intake-step p-4">
-                        <div class="text-center mb-4">
-                            <h4 class="fw-bold">Mandatory Document Upload</h4>
-                            <p class="text-muted small">All documents must be verified before proceeding</p>
+                    <div id="suspensionStep2" class="intake-step p-4 pt-5">
+                        <div class="text-center mb-4 mt-3">
+                            <h3 class="fw-bold">Mandatory Verification</h3>
+                            <p class="text-muted small">Please upload official documents to support your request</p>
                         </div>
-                        <div class="upload-scroll-area px-2" style="max-height: 350px; overflow-y: auto;">
+                        <div class="upload-scroll-area px-3" style="max-height: 400px; overflow-y: auto;">
                             <!-- Doc Items -->
-                            <div
-                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                            <div class="doc-upload-item d-flex align-items-center justify-content-between p-3 mb-3">
                                 <div class="d-flex align-items-center gap-3">
-                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div class="bg-primary bg-opacity-10 p-2 rounded-3">
+                                        <i class="bi bi-receipt fs-4 text-primary"></i>
+                                    </div>
                                     <div>
-                                        <div class="fw-bold small">School Fees Receipt</div>
-                                        <div class="text-muted" style="font-size: 0.7rem;">Verified • PDF/JPG/PNG</div>
+                                        <div class="fw-bold small text-dark">School Fees Receipt</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Official payment record
+                                            required</div>
                                     </div>
                                 </div>
                                 <input type="file" class="d-none" id="file_fees" accept=".pdf,.jpg,.jpeg,.png"
                                     onchange="updateUploadStatus(this)">
-                                <button class="btn btn-sm btn-outline-primary"
+                                <button class="btn btn-sm btn-outline-primary px-3 rounded-pill"
                                     onclick="document.getElementById('file_fees').click()"><i
-                                        class="bi bi-upload"></i></button>
+                                        class="bi bi-upload me-1"></i> Upload</button>
                             </div>
-                            <div
-                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+                            <!-- Repeat for others or just improve styling for all via CSS -->
+                            <div class="doc-upload-item d-flex align-items-center justify-content-between p-3 mb-3">
                                 <div class="d-flex align-items-center gap-3">
-                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
-                                    <div>
-                                        <div class="fw-bold small">Acceptance Fee Receipt</div>
-                                        <div class="text-muted" style="font-size: 0.7rem;">Pending • PDF/JPG/PNG</div>
+                                    <div class="bg-info bg-opacity-10 p-2 rounded-3">
+                                        <i class="bi bi-patch-check fs-4 text-info"></i>
                                     </div>
-                                </div>
-                                <input type="file" class="d-none" id="file_acceptance" accept=".pdf,.jpg,.jpeg,.png"
-                                    onchange="updateUploadStatus(this)">
-                                <button class="btn btn-sm btn-outline-primary"
-                                    onclick="document.getElementById('file_acceptance').click()"><i
-                                        class="bi bi-upload"></i></button>
-                            </div>
-                            <div
-                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
                                     <div>
-                                        <div class="fw-bold small">Departmental Dues Receipt</div>
-                                        <div class="text-muted" style="font-size: 0.7rem;">Pending • PDF/JPG/PNG</div>
-                                    </div>
-                                </div>
-                                <input type="file" class="d-none" id="file_dept" accept=".pdf,.jpg,.jpeg,.png"
-                                    onchange="updateUploadStatus(this)">
-                                <button class="btn btn-sm btn-outline-primary"
-                                    onclick="document.getElementById('file_dept').click()"><i
-                                        class="bi bi-upload"></i></button>
-                            </div>
-                            <div
-                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
-                                    <div>
-                                        <div class="fw-bold small">Faculty Dues Receipt</div>
-                                        <div class="text-muted" style="font-size: 0.7rem;">Pending • PDF/JPG/PNG</div>
-                                    </div>
-                                </div>
-                                <input type="file" class="d-none" id="file_faculty" accept=".pdf,.jpg,.jpeg,.png"
-                                    onchange="updateUploadStatus(this)">
-                                <button class="btn btn-sm btn-outline-primary"
-                                    onclick="document.getElementById('file_faculty').click()"><i
-                                        class="bi bi-upload"></i></button>
-                            </div>
-                            <div
-                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <i class="bi bi-file-earmark-text fs-4 text-primary"></i>
-                                    <div>
-                                        <div class="fw-bold small">Letter of Suspension</div>
-                                        <div class="text-muted" style="font-size: 0.7rem;">Required • Formal Request
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="file" class="d-none" id="file_letter" accept=".pdf,.jpg,.jpeg,.png"
-                                    onchange="updateUploadStatus(this)">
-                                <button class="btn btn-sm btn-outline-primary"
-                                    onclick="document.getElementById('file_letter').click()"><i
-                                        class="bi bi-upload"></i></button>
-                            </div>
-                            <div
-                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
-                                    <div>
-                                        <div class="fw-bold small">JAMB Admission Letter</div>
-                                        <div class="text-muted" style="font-size: 0.7rem;">Required</div>
+                                        <div class="fw-bold small text-dark">JAMB Admission Letter</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Required for final
+                                            verification</div>
                                     </div>
                                 </div>
                                 <input type="file" class="d-none" id="file_jamb" accept=".pdf,.jpg,.jpeg,.png"
                                     onchange="updateUploadStatus(this)">
-                                <button class="btn btn-sm btn-outline-primary"
+                                <button class="btn btn-sm btn-outline-primary px-3 rounded-pill"
                                     onclick="document.getElementById('file_jamb').click()"><i
-                                        class="bi bi-upload"></i></button>
+                                        class="bi bi-upload me-1"></i> Upload</button>
                             </div>
-                            <div
-                                class="doc-upload-item p-3 border rounded-3 mb-2 bg-light d-flex align-items-center justify-content-between">
+
+                            <!-- Condensed view for the rest to keep it clean -->
+                            <div class="doc-upload-item d-flex align-items-center justify-content-between p-3 mb-3">
                                 <div class="d-flex align-items-center gap-3">
-                                    <i class="bi bi-file-earmark-check fs-4 text-primary"></i>
+                                    <div class="bg-secondary bg-opacity-10 p-2 rounded-3">
+                                        <i class="bi bi-file-earmark-text fs-4 text-secondary"></i>
+                                    </div>
                                     <div>
-                                        <div class="fw-bold small">School Admission Letter</div>
-                                        <div class="text-muted" style="font-size: 0.7rem;">Required</div>
+                                        <div class="fw-bold small text-dark">Formal Letter of Request</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Stating Reasons clearly</div>
                                     </div>
                                 </div>
-                                <input type="file" class="d-none" id="file_school" accept=".pdf,.jpg,.jpeg,.png"
+                                <input type="file" class="d-none" id="file_letter" accept=".pdf,.jpg,.jpeg,.png"
                                     onchange="updateUploadStatus(this)">
-                                <button class="btn btn-sm btn-outline-primary"
-                                    onclick="document.getElementById('file_school').click()"><i
-                                        class="bi bi-upload"></i></button>
+                                <button class="btn btn-sm btn-outline-primary px-3 rounded-pill"
+                                    onclick="document.getElementById('file_letter').click()"><i
+                                        class="bi bi-upload me-1"></i> Upload</button>
                             </div>
                         </div>
-                        <div class="alert alert-info py-2 px-3 mt-3 mb-3 d-flex align-items-center gap-2"
-                            style="font-size: 0.75rem;">
-                            <i class="bi bi-info-circle-fill"></i>
-                            <span>You can save progress and upload remaining docs later.</span>
+                        <div class="alert alert-light border-0 py-2 px-3 mt-3 mb-3 d-flex align-items-center gap-2"
+                            style="font-size: 0.75rem; background: #f1f5f9;">
+                            <i class="bi bi-info-circle-fill text-primary"></i>
+                            <span class="text-secondary fw-medium">All uploads are secured with 256-bit
+                                encryption.</span>
                         </div>
-                        <button class="btn btn-success w-100 btn-lg py-3" onclick="handleSuspensionSubmit()">Submit
-                            Request & Review</button>
-                        <div class="text-center mt-2 small text-muted">A secure login prompt will follow if session is
-                            expired.</div>
+                        <button class="btn btn-primary w-100 btn-lg py-3 shadow-sm"
+                            onclick="handleSuspensionSubmit()">Submit
+                            Application <i class="bi bi-check-circle-fill ms-2"></i></button>
+                        <div class="text-center mt-3 small text-muted opacity-75">By submitting, you agree to our
+                            processing timeline.</div>
                     </div>
 
                     <!-- Suspension Step 3: Counselling Automation -->
@@ -922,43 +886,45 @@
     </div>
 
     <!-- Dashboard View (Initially Hidden) -->
-    <div id="dashboardView" class="py-5" style="display:none; min-height: 100vh; background: #f8f9fc;">
+    <div id="dashboardView" class="py-5" style="display:none; min-height: 100vh;">
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="d-flex justify-content-between align-items-center mb-5">
-                        <div class="d-flex align-items-center gap-3">
-                            <span class="bg-primary text-white rounded p-1 fs-5"><i
+                        <a class="ln-logo" href="#" style="color: var(--brand-700);">
+                            <span class="ln-logo-icon" style="background: var(--brand-700); color: white;"><i
                                     class="bi bi-mortarboard-fill"></i></span>
-                            <h2 class="fw-bold mb-0" style="color: var(--aset-blue);">ASET Dashboard</h2>
-                        </div>
-                        <button class="btn btn-outline-danger btn-sm px-4" onclick="location.reload()">Logout</button>
+                            ASET Dashboard
+                        </a>
+                        <button class="ln-btn-hero secondary"
+                            style="color: var(--surface-700); border-color: var(--surface-200); padding: 8px 20px;"
+                            onclick="location.reload()">Logout</button>
                     </div>
 
                     <div class="mb-5">
-                        <h2 class="fw-bold mb-1">Welcome back, <span id="studentNameDisplay">Student</span></h2>
-                        <p class="text-muted">Your current case status and dashboard.</p>
+                        <h2 class="fw-bold mb-1" style="font-size: 2.5rem;">Welcome back, <span
+                                id="studentNameDisplay">Student</span></h2>
+                        <p class="text-muted" style="font-size: 1.1rem;">Your current case status and dashboard.</p>
                     </div>
 
-                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
-                        <div class="card-body p-4 p-md-5">
-                            <div class="row align-items-center">
-                                <div class="col-md-7">
-                                    <div class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">Case ID:
-                                        ASET-2026-X8429</div>
-                                    <h3 class="fw-bold mb-3" id="selectedIssueDisplay">Issue Type</h3>
-                                    <p class="text-muted mb-4">Your request has been received and is currently in the
-                                        initial review phase. A coordinator will be assigned shortly.</p>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="status-dot bg-warning"
-                                            style="width: 12px; height: 12px; border-radius: 50%;"></div>
-                                        <span class="fw-bold text-dark" id="caseStatusDisplay">Pending Review</span>
-                                    </div>
+                    <div class="dashboard-card mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-7">
+                                <div class="status-badge pending mb-3">Case ID: ASET-2026-X8429</div>
+                                <h3 class="fw-bold mb-3" id="selectedIssueDisplay" style="font-size: 1.75rem;">Issue
+                                    Type</h3>
+                                <p class="text-muted mb-4" style="line-height: 1.6;">Your request has been received and
+                                    is currently in the initial review phase. A coordinator will be assigned shortly.
+                                </p>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="status-badge success" id="caseStatusDisplay">
+                                        <span class="ln-hero-badge-dot"></span> Pending Review
+                                    </span>
                                 </div>
-                                <div class="col-md-5 text-center d-none d-md-block">
-                                    <div class="p-4 bg-light rounded-circle d-inline-block">
-                                        <i class="bi bi-clock-history text-primary" style="font-size: 4rem;"></i>
-                                    </div>
+                            </div>
+                            <div class="col-md-5 text-center d-none d-md-block">
+                                <div style="font-size: 5rem; color: var(--brand-100);">
+                                    <i class="bi bi-clock-history"></i>
                                 </div>
                             </div>
                         </div>
@@ -966,50 +932,37 @@
 
                     <div class="row g-4">
                         <div class="col-md-8">
-                            <div class="card border-0 shadow-sm rounded-4 h-100">
-                                <div class="card-body p-4">
-                                    <h5 class="fw-bold mb-4">Case Timeline</h5>
-                                    <div class="timeline-small">
-                                        <div class="d-flex gap-3 mb-4">
-                                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center flex-shrink-0"
-                                                style="width: 28px; height: 28px;"><i class="bi bi-check-lg small"></i>
-                                            </div>
-                                            <div>
-                                                <h6 class="fw-bold mb-0">Case Submission</h6><small
-                                                    class="text-muted">Completed just now</small>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex gap-3 mb-4">
-                                            <div class="rounded-circle bg-primary bg-opacity-20 text-primary d-flex align-items-center justify-content-center flex-shrink-0"
-                                                style="width: 28px; height: 28px;"><i
-                                                    class="bi bi-arrow-right small"></i></div>
-                                            <div>
-                                                <h6 class="fw-bold mb-0 text-dark">Institutional Verification</h6><small
-                                                    class="text-muted">Estimated: 24-48 hours</small>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex gap-3">
-                                            <div class="rounded-circle bg-light text-muted d-flex align-items-center justify-content-center flex-shrink-0"
-                                                style="width: 28px; height: 28px;"><i class="bi bi-dot"></i></div>
-                                            <div>
-                                                <h6 class="fw-bold mb-0 text-muted">Final Approval</h6><small
-                                                    class="text-muted">Awaiting verification</small>
-                                            </div>
-                                        </div>
+                            <div class="dashboard-card h-100" style="padding: 2.5rem;">
+                                <h5 class="fw-bold mb-4">Case Timeline</h5>
+                                <div class="ln-tl-step">
+                                    <div class="ln-tl-dot done"><i class="bi bi-check-lg"></i></div>
+                                    <div>
+                                        <div class="ln-tl-title">Case Submission</div>
+                                        <div class="ln-tl-time">Completed just now</div>
+                                    </div>
+                                </div>
+                                <div class="ln-tl-step">
+                                    <div class="ln-tl-dot active"><i class="bi bi-arrow-right"></i></div>
+                                    <div>
+                                        <div class="ln-tl-title">Institutional Verification</div>
+                                        <div class="ln-tl-time">Estimated: 24-48 hours</div>
+                                    </div>
+                                </div>
+                                <div class="ln-tl-step">
+                                    <div class="ln-tl-dot pending"><i class="bi bi-dot"></i></div>
+                                    <div>
+                                        <div class="ln-tl-title">Final Approval</div>
+                                        <div class="ln-tl-time">Awaiting verification</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card border-0 shadow-sm rounded-4 h-100 text-white"
-                                style="background: linear-gradient(135deg, var(--aset-blue) 0%, #002266 100%);">
-                                <div class="card-body p-4">
-                                    <h5 class="fw-bold mb-3">Priority Support</h5>
-                                    <p class="small opacity-75 mb-4">Need urgent help? Our mentors are available for
-                                        1-on-1 consultations.</p>
-                                    <button class="btn btn-light w-100 text-primary fw-bold py-3">Chat with
-                                        Advisor</button>
-                                </div>
+                            <div class="priority-card">
+                                <h5 class="fw-bold mb-3">Priority Support</h5>
+                                <p class="small mb-4">Need urgent help? Our mentors are available for 1-on-1
+                                    consultations.</p>
+                                <button class="ln-btn-light w-100">Chat with Advisor</button>
                             </div>
                         </div>
                     </div>
@@ -1120,6 +1073,16 @@
                     stateSelect.appendChild(option);
                 });
             }
+
+            // Modal Reset Handling
+            const intakeModalEl = document.getElementById('intakeModal');
+            if (intakeModalEl) {
+                intakeModalEl.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    // If triggered by help buttons, start at step 1
+                    // If triggered by "Login Portal" with specific onclick, that will run after
+                });
+            }
         });
 
         // Cascading Dropdown Logic
@@ -1193,7 +1156,44 @@
             document.getElementById('btnContinueStep1').disabled = !issueType;
         }
 
+        let currentIntakeStep = 1;
+        let currentAuthMode = 'signup'; // default
+
+        function toggleAuthMode() {
+            const area = document.getElementById('authActionArea');
+            area.classList.remove('auth-toggle-animation');
+            void area.offsetWidth; // Trigger reflow
+            area.classList.add('auth-toggle-animation');
+
+            currentAuthMode = (currentAuthMode === 'signup') ? 'login' : 'signup';
+            updateAuthUI();
+        }
+
+        function updateAuthUI() {
+            const btn = document.getElementById('mainAuthBtn');
+            const link = document.getElementById('authToggleLink');
+            const title = document.querySelector('#intakeStep3 h3');
+            const subtitle = document.querySelector('#intakeStep3 .text-muted');
+
+            if (currentAuthMode === 'signup') {
+                btn.innerHTML = 'Create Account <i class="bi bi-plus-lg ms-2"></i>';
+                link.innerText = 'Already have an account? Login here';
+                title.innerText = 'Secure your account';
+                subtitle.innerText = 'Create a secure password to finalize your submission';
+            } else {
+                btn.innerHTML = 'Login & Submit <i class="bi bi-box-arrow-in-right ms-2"></i>';
+                link.innerText = "Don't have an account? Create one";
+                title.innerText = 'Welcome Back';
+                subtitle.innerText = 'Please login to proceed with your case submission';
+            }
+        }
+
+        function handleAuthSubmit() {
+            finishFlow(currentAuthMode);
+        }
+
         function goToStep(step) {
+            currentIntakeStep = step;
             document.querySelectorAll('.intake-step').forEach(s => s.classList.remove('active'));
 
             // Handle element ID branching
@@ -1204,9 +1204,37 @@
                 targetElement.classList.add('active');
             }
 
-            if (step === 3) {
-                document.getElementById('authMatric').value = document.getElementById('intakeMatric').value || 'Student-Guest';
+            // Back Button Visibility
+            const backBtn = document.getElementById('intakeBackBtn');
+            if (backBtn) {
+                backBtn.style.display = (step === 1) ? 'none' : 'flex';
             }
+
+            // Progress Bar Logic
+            const progressBar = document.getElementById('intakeProgress');
+            if (progressBar) {
+                let progress = 25;
+                if (step === 2) progress = 50;
+                if (step === 'suspensionStep1') progress = 65;
+                if (step === 'suspensionStep2') progress = 85;
+                if (step === 3) progress = 100;
+                progressBar.style.width = progress + '%';
+            }
+
+            if (step === 3 || step === 'suspensionStep2') {
+                updateAuthUI();
+                const matricInput = document.getElementById('authMatric');
+                if (matricInput) {
+                    matricInput.value = document.getElementById('intakeMatric').value || 'Student-Guest';
+                }
+            }
+        }
+
+        function handleModalBack() {
+            if (currentIntakeStep === 2) goToStep(1);
+            else if (currentIntakeStep === 3) goToStep(2);
+            else if (currentIntakeStep === 'suspensionStep1') goToStep(2);
+            else if (currentIntakeStep === 'suspensionStep2') goToStep('suspensionStep1');
         }
 
         // Branching Logic for specialized flows
@@ -1284,7 +1312,8 @@
                 return;
             }
 
-            const btn = event.target;
+            const btn = document.getElementById('mainAuthBtn') || (event && event.target);
+            if (!btn) return;
             const originalText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
@@ -1304,9 +1333,13 @@
             };
             localStorage.setItem('aset_intake_data', JSON.stringify(studentData));
 
-            // ALWAYS Redirect to Dashboard
+            // Redirect Logic
             setTimeout(() => {
-                window.location.href = 'student/student-dashboard.html';
+                if (issue === 'Change Program & Departmental Issues') {
+                    window.location.href = 'student/dept-transfer.html';
+                } else {
+                    window.location.href = 'student/student-dashboard.html';
+                }
             }, 1000);
         }
 
@@ -1349,10 +1382,10 @@
         (function () {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (prefersReducedMotion) {
-                document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('revealed'));
+                document.querySelectorAll('.scroll-reveal, .ln-reveal').forEach(el => el.classList.add('revealed'));
                 return;
             }
-            const revealElements = document.querySelectorAll('.scroll-reveal');
+            const revealElements = document.querySelectorAll('.scroll-reveal, .ln-reveal');
             const observerOptions = { root: null, rootMargin: '0px 0px -80px 0px', threshold: 0.1 };
             const revealOnScroll = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -1364,6 +1397,101 @@
             }, observerOptions);
             revealElements.forEach(el => revealOnScroll.observe(el));
         })();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.ln-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        // Mobile menu toggle
+        const toggle = document.querySelector('.ln-nav-toggle');
+        const navLinks = document.querySelector('.ln-nav-links');
+        if (toggle && navLinks) {
+            toggle.addEventListener('click', () => {
+                navLinks.classList.toggle('show');
+            });
+        }
+        // Typewriter Animation Logic
+        (function () {
+            const container = document.getElementById('typewriter-text');
+            const cursor = document.querySelector('.ln-typewriter-cursor');
+            const afterTypeElements = document.querySelectorAll('.ln-hero-after-type');
+
+            if (!container || !cursor) return;
+
+            const parts = [
+                { text: "Never lose ", isAccent: false },
+                { text: "a semester", isAccent: true }
+            ];
+
+            let partIndex = 0;
+            let charIndex = 0;
+            let currentTarget = container;
+
+            function type() {
+                const part = parts[partIndex];
+
+                // Smooth, Perfectly Consistent Timing
+                const timing = 75;
+
+                // Start of second phrase: add styled block span
+                if (partIndex === 1 && charIndex === 0) {
+                    const span = document.createElement('span');
+                    container.appendChild(span);
+                    currentTarget = span;
+                }
+
+                currentTarget.textContent += part.text[charIndex];
+                charIndex++;
+
+                if (charIndex < part.text.length) {
+                    setTimeout(type, timing);
+                } else {
+                    partIndex++;
+                    charIndex = 0;
+                    if (partIndex < parts.length) {
+                        setTimeout(type, 300); // Small breath between lines
+                    } else {
+                        finishTyping();
+                    }
+                }
+            }
+
+            function finishTyping() {
+                // Fade out cursor
+                setTimeout(() => {
+                    cursor.classList.add('finished');
+                }, 1000);
+
+                // Reveal desc and buttons sequentially
+                setTimeout(() => {
+                    afterTypeElements.forEach((el, index) => {
+                        setTimeout(() => {
+                            el.classList.add('revealed');
+                        }, index * 200);
+                    });
+                }, 400);
+            }
+
+            // Sync with initial logo/badge entrance (ln-hero-enter)
+            setTimeout(type, 1200);
+        })();
+
+        // Scroll Reveal Observer
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.ln-reveal').forEach(el => revealObserver.observe(el));
     </script>
 </body>
 

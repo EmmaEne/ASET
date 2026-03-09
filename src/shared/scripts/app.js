@@ -7,7 +7,7 @@ const ASET = {
     // Database Defaults
     defaults: {
         users: [
-            { id: 'u1', name: 'Adebayo Oluwaseun', email: 'student@aset.edu.ng', role: 'student', avatar: 'https://ui-avatars.com/api/?name=Adebayo+O&background=f0f9ff&color=0284c7&bold=true' },
+            { id: 'u1', name: 'Emmanuella Ene', email: 'student@aset.edu.ng', role: 'student', avatar: 'https://ui-avatars.com/api/?name=Adebayo+O&background=f0f9ff&color=0284c7&bold=true' },
             { id: 'u2', name: 'Dr. Okonkwo', email: 'mentor@aset.edu.ng', role: 'mentor', avatar: 'https://ui-avatars.com/api/?name=Dr+Okonkwo&background=e0f2fe&color=0369a1&bold=true' },
             { id: 'u3', name: 'Mrs. Adekoya F.', email: 'officer@aset.edu.ng', role: 'officer', avatar: 'https://ui-avatars.com/api/?name=Mrs+Adekoya&background=fef3c7&color=d97706&bold=true' },
             { id: 'u4', name: 'System Admin', email: 'admin@aset.edu.ng', role: 'admin', avatar: 'https://ui-avatars.com/api/?name=Admin&background=fee2e2&color=991b1b&bold=true' },

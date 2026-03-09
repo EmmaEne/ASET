@@ -119,6 +119,12 @@ function processWizardPayment() {
 
     // Simulated Processing
     setTimeout(() => {
+        // Redirect Logic for Change of Programme
+        if (currentRequestData.type === 'Change of Programme') {
+            window.location.href = 'dept-transfer.html';
+            return;
+        }
+
         document.getElementById('requestMain').classList.add('d-none');
         document.getElementById('requestSuccess').classList.remove('d-none');
 
@@ -310,6 +316,88 @@ function sendChatMessage() {
 }
 
 /* ============================
+   MATRIC GENERATION LOGIC
+   ============================ */
+function openMatricModal() {
+    // Reset modal state
+    document.getElementById('matricInitial').classList.remove('d-none');
+    document.getElementById('matricLoading').classList.add('d-none');
+    document.getElementById('matricSuccess').classList.add('d-none');
+
+    // Set dynamic names from localStorage if available
+    const rawData = localStorage.getItem('aset_intake_data');
+    if (rawData) {
+        const data = JSON.parse(rawData);
+        document.getElementById('matricDisplayName').innerText = data.matric || 'Adebayo Oluwaseun';
+        document.getElementById('matricRegNo').innerText = `REG/2024/${Math.floor(Math.random() * 90000) + 10000}`;
+    }
+
+    const modal = new bootstrap.Modal(document.getElementById('matricModal'));
+    modal.show();
+}
+
+function startMatricGeneration() {
+    document.getElementById('matricInitial').classList.add('d-none');
+    document.getElementById('matricLoading').classList.remove('d-none');
+
+    const progressBar = document.getElementById('matricProgressBar');
+    let progress = 0;
+    // Targeting ~5000ms duration
+    // 50 intervals of 100ms each = 5000ms
+    const interval = setInterval(() => {
+        progress += 2; // Fixed increment for consistency in the 5s window
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            setTimeout(() => finishMatricGeneration(), 500);
+        }
+        progressBar.style.width = progress + '%';
+    }, 100);
+}
+
+function finishMatricGeneration() {
+    const matricNo = `2024/MT/${Math.floor(Math.random() * 9000) + 1000}`;
+    document.getElementById('officialMatricNo').innerText = matricNo;
+
+    document.getElementById('matricLoading').classList.add('d-none');
+    document.getElementById('matricSuccess').classList.remove('d-none');
+
+    // Update localStorage and Profile UI
+    const rawData = localStorage.getItem('aset_intake_data');
+    if (rawData) {
+        const data = JSON.parse(rawData);
+        data.matricNumber = matricNo;
+        localStorage.setItem('aset_intake_data', JSON.stringify(data));
+
+        // Dynamic Update
+        const profileMatric = document.getElementById('profileMatric');
+        if (profileMatric) profileMatric.innerText = matricNo;
+        const btnGen = document.getElementById('btnGenProfileMatric');
+        if (btnGen) btnGen.style.display = 'none';
+
+        addActivityItem('Matric Generated', `Official ID: ${matricNo}`, 'Just now');
+    }
+
+    if (typeof UIStates !== 'undefined') {
+        UIStates.showToast('Official Matric Number Generated!', 'success');
+    }
+}
+
+function previewPassport(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('profilePassport').src = e.target.result;
+            // In a real app, upload to server here
+            if (typeof UIStates !== 'undefined') {
+                UIStates.showToast('Passport updated!', 'success');
+            }
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+/* ============================
    UTILS
    =========================== */
 function addActivityItem(title, text, time) {
@@ -415,12 +503,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// 4. Issue Type Change Listener
+document.addEventListener('DOMContentLoaded', () => {
+    const issueTypeSelect = document.getElementById('issueType');
+    if (issueTypeSelect) {
+        issueTypeSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            const interUniSection = document.getElementById('interUniversitySection');
+            const courseRegSection = document.getElementById('courseRegSection');
+            const submitBtn = document.getElementById('submitCaseBtn');
+
+            // Reset visibility
+            if (interUniSection) interUniSection.classList.add('d-none');
+            if (courseRegSection) courseRegSection.classList.add('d-none');
+            if (submitBtn) submitBtn.innerHTML = '<i class="bi bi-send me-2"></i> Submit Case';
+
+            if (val === 'inter-university-transfer') {
+                if (interUniSection) interUniSection.classList.remove('d-none');
+            } else if (val === 'course-registration-issue') {
+                if (courseRegSection) courseRegSection.classList.remove('d-none');
+                if (submitBtn) submitBtn.innerHTML = '<i class="bi bi-credit-card me-2"></i> Pay & Submit Request';
+            }
+        });
+    }
+});
+
+function applyForTranscript() {
+    const btn = document.getElementById('btnApplyTranscript');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Applying...';
+
+    setTimeout(() => {
+        document.getElementById('transcriptAction').classList.add('d-none');
+        document.getElementById('transcriptSuccess').classList.remove('d-none');
+
+        if (typeof UIStates !== 'undefined') {
+            UIStates.showToast('Transcript application initialized.', 'success');
+        }
+    }, 2000);
+}
+
 // 3. Form Submission Handling
 function handleCaseSubmission(event) {
     event.preventDefault();
     const form = event.target;
     const btn = document.getElementById('submitCaseBtn');
     const descError = document.getElementById('descriptionError');
+
+    const issueTypeObj = document.getElementById('issueType');
+    const issueTypeValue = issueTypeObj.value;
 
     // Custom validation for description length
     const desc = document.getElementById('problemDescription').value;
@@ -429,6 +561,21 @@ function handleCaseSubmission(event) {
         return;
     } else {
         descError.style.setProperty('display', 'none', 'important');
+    }
+
+    // Specialized validation for Inter-University Transfer
+    if (issueTypeValue === 'inter-university-transfer') {
+        const uni = document.getElementById('targetUniversity').value;
+        const transcriptApplied = document.getElementById('transcriptAction').classList.contains('d-none');
+
+        if (!uni) {
+            alert('Please select a target university.');
+            return;
+        }
+        if (!transcriptApplied) {
+            alert('You must apply for your transcript before submitting an inter-university transfer.');
+            return;
+        }
     }
 
     // Standard Bootstrap validation
@@ -440,18 +587,29 @@ function handleCaseSubmission(event) {
     // Loading State
     const originalText = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Submitting...`;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>${issueTypeValue === 'course-registration-issue' ? 'Processing Payment...' : 'Submitting...'}`;
 
     // Simulated Server Request
     setTimeout(() => {
         // Success Logic
+        const issueTypeName = issueTypeObj.options[issueTypeObj.selectedIndex].text;
+
         if (typeof UIStates !== 'undefined') {
-            UIStates.showToast('Case submitted successfully! We will review it shortly.', 'success');
+            const msg = issueTypeValue === 'course-registration-issue'
+                ? 'Payment successful! Registration issue case submitted.'
+                : 'Case submitted successfully! We will review it shortly.';
+            UIStates.showToast(msg, 'success');
+        }
+
+        // Redirect Logic for Change of Department
+        if (issueTypeValue === 'change-of-department') {
+            setTimeout(() => {
+                window.location.href = 'dept-transfer.html';
+            }, 1000);
+            return;
         }
 
         // Add to recent activity
-        const issueTypeObj = document.getElementById('issueType');
-        const issueTypeName = issueTypeObj.options[issueTypeObj.selectedIndex].text;
         addActivityItem(issueTypeName, 'Case submitted and awaiting review.', 'Just now');
 
         // Reset Form
@@ -460,9 +618,17 @@ function handleCaseSubmission(event) {
         document.getElementById('charCount').innerText = '0';
         document.querySelectorAll('.searchable-dropdown input[type="hidden"]').forEach(input => input.value = '');
 
+        // Reset specialized sections
+        const interUniSection = document.getElementById('interUniversitySection');
+        const courseRegSection = document.getElementById('courseRegSection');
+        if (interUniSection) interUniSection.classList.add('d-none');
+        if (courseRegSection) courseRegSection.classList.add('d-none');
+        document.getElementById('transcriptAction').classList.remove('d-none');
+        document.getElementById('transcriptSuccess').classList.add('d-none');
+
         // Restore Button
         btn.disabled = false;
-        btn.innerHTML = originalText;
+        btn.innerHTML = '<i class="bi bi-send me-2"></i> Submit Case';
 
         // Close Modal
         const modalEl = document.getElementById('caseSubmissionModal');
@@ -471,8 +637,9 @@ function handleCaseSubmission(event) {
 
         // Scroll to the activity to show the user it's done
         setTimeout(() => {
-            document.querySelector('.section-title').scrollIntoView({ behavior: 'smooth' });
+            const activitySection = document.querySelector('.section-title');
+            if (activitySection) activitySection.scrollIntoView({ behavior: 'smooth' });
         }, 500);
 
-    }, 2000);
+    }, 2500);
 }
