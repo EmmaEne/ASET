@@ -711,148 +711,130 @@
                 <div id="view-academic-plan" class="app-view container-fluid">
                     <div class="view-header mb-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                         <div>
-                            <h2 class="fw-bold mb-1">My Learning Journey 🚀</h2>
-                            <p class="text-muted small">Keep it up! You're crushing your transition goals.</p>
+                            <h2 class="fw-bold mb-1">Academic Registration Plan</h2>
+                            <p class="text-muted small">Required courses for your new department (Year 2 Transition)</p>
                         </div>
-                        <div class="progress-summary-card">
-                            <div class="ps-stats">
-                                <div class="ps-stat">
-                                    <div class="ps-val">85%</div>
-                                    <div class="ps-label">Total Progress</div>
-                                </div>
-                                <div class="ps-divider"></div>
-                                <div class="ps-stat">
-                                    <div class="ps-val">37</div>
-                                    <div class="ps-label">Units Earned</div>
-                                </div>
-                            </div>
-                            <div class="progress mt-2" style="height: 6px; background: rgba(255,255,255,0.2);">
-                                <div class="progress-bar bg-white" style="width: 85%"></div>
-                            </div>
+                        <div>
+                            <button class="btn-export">
+                                <i class="bi bi-download"></i> Export PDF
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Roadmap Layout -->
-                    <div class="roadmap-container">
-                        
-                        <!-- Block: Year 1 -->
-                        <div class="roadmap-section mb-5">
-                            <div class="roadmap-header">
-                                <div class="rh-icon"><i class="bi bi-stars"></i></div>
-                                <div>
-                                    <h4>First Year Foundations</h4>
-                                    <span>Everything you've conquered so far</span>
-                                </div>
-                            </div>
-                            
-                            <div class="row g-3">
-                                <!-- Course Card -->
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card completed">
-                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">MTH101</div>
-                                            <h6 class="fcc-title">Algebra & Trig</h6>
-                                            <div class="fcc-meta">3 Units &bull; Core Course</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card completed">
-                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">PHY101</div>
-                                            <h6 class="fcc-title">General Physics I</h6>
-                                            <div class="fcc-meta">3 Units &bull; Core Course</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card completed">
-                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">CHM101</div>
-                                            <h6 class="fcc-title">General Chemistry I</h6>
-                                            <div class="fcc-meta">3 Units &bull; Core Course</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card pending">
-                                        <div class="fcc-status"><i class="bi bi-clock-history"></i></div>
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">CSC101</div>
-                                            <h6 class="fcc-title">Intro to Comp Sci</h6>
-                                            <div class="fcc-meta text-primary fw-bold">Carry-over required</div>
-                                        </div>
-                                        <button class="fcc-action-btn"><i class="bi bi-plus-circle"></i> Register</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card completed">
-                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">GST101</div>
-                                            <h6 class="fcc-title">Use of English I</h6>
-                                            <div class="fcc-meta">2 Units &bull; Elective</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="academic-plan-card">
+                        <div class="table-responsive">
+                            <table class="table academic-table">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Title</th>
+                                        <th>Credit Unit</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Year 1 Segment -->
+                                    <tr class="semester-row">
+                                        <td colspan="4">Year 1 – Semester 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">CSC101</td>
+                                        <td class="course-title">Introduction to Computer Science</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft pending">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">MTH101</td>
+                                        <td class="course-title">Algebra and Trigonometry</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft completed">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">PHY101</td>
+                                        <td class="course-title">General Physics I</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft completed">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">CHM101</td>
+                                        <td class="course-title">General Chemistry I</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft completed">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">GST101</td>
+                                        <td class="course-title">Use of English I</td>
+                                        <td>2 Units</td>
+                                        <td><span class="status-pill-soft completed">Completed</span></td>
+                                    </tr>
 
-                        <!-- Block: Year 2 -->
-                        <div class="roadmap-section">
-                            <div class="roadmap-header">
-                                <div class="rh-icon blue"><i class="bi bi-rocket-takeoff"></i></div>
-                                <div>
-                                    <h4>Second Year: The Deep Dive</h4>
-                                    <span>Current semester registration plan</span>
-                                </div>
-                                <div class="ms-auto">
-                                    <span class="badge bg-primary-subtle text-primary border-0 rounded-pill px-3 py-2">Current Semester</span>
-                                </div>
-                            </div>
+                                    <tr class="semester-row">
+                                        <td colspan="4">Year 1 – Semester 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">CSC102</td>
+                                        <td class="course-title">Introduction to Programming</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft pending">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">MTH102</td>
+                                        <td class="course-title">Calculus</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft completed">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">PHY102</td>
+                                        <td class="course-title">General Physics II</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft completed">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code">GST102</td>
+                                        <td class="course-title">Philosophy and Logic</td>
+                                        <td>2 Units</td>
+                                        <td><span class="status-pill-soft completed">Completed</span></td>
+                                    </tr>
 
-                            <div class="row g-3">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card current">
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">CSC201</div>
-                                            <h6 class="fcc-title">Data Structures</h6>
-                                            <div class="fcc-meta">3 Units &bull; Registered</div>
-                                        </div>
-                                        <div class="fcc-progress-bar">
-                                            <div class="fcc-progress-inner" style="width: 40%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card current">
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">CSC205</div>
-                                            <h6 class="fcc-title">Operating Systems I</h6>
-                                            <div class="fcc-meta">3 Units &bull; Registered</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="friendly-course-card current">
-                                        <div class="fcc-content">
-                                            <div class="fcc-code">MTH201</div>
-                                            <h6 class="fcc-title">Linear Algebra</h6>
-                                            <div class="fcc-meta">3 Units &bull; Registered</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    <tr class="semester-row">
+                                        <td colspan="4">Year 2 – Semester 1 (Current)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code" style="color: var(--brand-600);">CSC201</td>
+                                        <td class="course-title">Data Structures and Algorithms</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft current">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code" style="color: var(--brand-600);">CSC205</td>
+                                        <td class="course-title">Operating Systems I</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft current">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code" style="color: var(--brand-600);">MTH201</td>
+                                        <td class="course-title">Linear Algebra</td>
+                                        <td>3 Units</td>
+                                        <td><span class="status-pill-soft current">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="course-code" style="color: var(--brand-600);">GST201</td>
+                                        <td class="course-title">Nigerian Peoples and Culture</td>
+                                        <td>2 Units</td>
+                                        <td><span class="status-pill-soft current">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <div class="friendly-note mt-5">
-                        <div class="fn-icon">💡</div>
-                        <div class="fn-message">
-                            <strong>Hey there!</strong> Just a reminder that you need to complete those Year 1 carry-overs (CSC101) to officially lock in your switch!
+                    <div class="academic-note-box mt-4">
+                        <div class="an-icon">
+                            <i class="bi bi-info-circle"></i>
+                        </div>
+                        <div class="an-content">
+                            <h6>Academic Note:</h6>
+                            <p>You are required to register for the pending Year 1 courses (CSC101, CSC102) alongside your Year 2 curriculum to complete your department switch requirements.</p>
                         </div>
                     </div>
                 </div>

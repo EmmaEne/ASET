@@ -499,27 +499,13 @@
                                 <div class="select-feedback ms-2">Format: YYYY/123456</div>
                             </div>
 
-                            <!-- New State Selection -->
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">State / Region</label>
-                                <div class="aset-select-container">
-                                    <i class="bi bi-geo-alt aset-select-icon"></i>
-                                    <select class="form-select aset-select-field" id="intakeState"
-                                        onchange="handleStateChange()">
-                                        <option value="" selected disabled>Select state</option>
-                                        <!-- Populated by JS -->
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="form-label small fw-bold">Institution</label>
                                 <div class="aset-select-container">
                                     <i class="bi bi-building aset-select-icon"></i>
                                     <select class="form-select aset-select-field" id="intakeInstitution" 
                                         onchange="handleInstitutionChange()">
                                         <option value="" selected disabled>Select institution</option>
-                                        <option value="Havilla University">Havilla University</option>
                                     </select>
                                 </div>
                             </div>
@@ -1071,14 +1057,21 @@
                 }
             });
 
-            // Initialize State dropdown
-            const stateSelect = document.getElementById('intakeState');
-            if (stateSelect && window.INSTITUTION_DATA) {
-                Object.keys(window.INSTITUTION_DATA).sort().forEach(state => {
+            // Initialize Institution dropdown
+            const instSelect = document.getElementById('intakeInstitution');
+            if (instSelect && window.INSTITUTION_DATA) {
+                instSelect.innerHTML = '<option value="" selected disabled>Select institution</option>';
+                const allInstitutions = [];
+                Object.keys(window.INSTITUTION_DATA).forEach(state => {
+                    Object.keys(window.INSTITUTION_DATA[state]).forEach(inst => {
+                        allInstitutions.push(inst);
+                    });
+                });
+                allInstitutions.sort().forEach(inst => {
                     const option = document.createElement('option');
-                    option.value = state;
-                    option.textContent = state;
-                    stateSelect.appendChild(option);
+                    option.value = inst;
+                    option.textContent = inst;
+                    instSelect.appendChild(option);
                 });
             }
 
@@ -1094,46 +1087,22 @@
         });
 
         // Cascading Dropdown Logic
-        function handleStateChange() {
-            const state = document.getElementById('intakeState').value;
-            const instSelect = document.getElementById('intakeInstitution');
-            const facultySelect = document.getElementById('intakeFaculty');
-            const deptSelect = document.getElementById('intakeDepartment');
-
-            // Reset children
-            instSelect.innerHTML = '<option value="" selected disabled>Select institution in ' + state + '</option>';
-            instSelect.disabled = false;
-
-            facultySelect.innerHTML = '<option value="" selected disabled>Select faculty</option>';
-            facultySelect.disabled = true;
-
-            deptSelect.innerHTML = '<option value="" selected disabled>Select department</option>';
-            deptSelect.disabled = true;
-
-            const institutions = Object.keys(window.INSTITUTION_DATA[state]);
-            institutions.sort().forEach(inst => {
-                const option = document.createElement('option');
-                option.value = inst;
-                option.textContent = inst;
-                instSelect.appendChild(option);
-            });
-        }
-
         function handleInstitutionChange() {
-            let stateSelect = document.getElementById('intakeState');
-            let state = stateSelect.value;
             const inst = document.getElementById('intakeInstitution').value;
             const facultySelect = document.getElementById('intakeFaculty');
             const deptSelect = document.getElementById('intakeDepartment');
 
-            // Handle Havilla University Direct Selection
-            if (inst === "Havilla University" && !state) {
-                state = "Cross River (Calabar)";
-                stateSelect.value = state;
-                UIStates.showToast('Region auto-selected for Havilla University', 'info');
-            }
+            if (!inst) return;
 
-            if (!state) return;
+            // Find the state this institution belongs to
+            let foundState = null;
+            Object.keys(window.INSTITUTION_DATA).forEach(state => {
+                if (window.INSTITUTION_DATA[state][inst]) {
+                    foundState = state;
+                }
+            });
+
+            if (!foundState) return;
 
             facultySelect.innerHTML = '<option value="" selected disabled>Select faculty</option>';
             facultySelect.disabled = false;
@@ -1141,7 +1110,7 @@
             deptSelect.innerHTML = '<option value="" selected disabled>Select department</option>';
             deptSelect.disabled = true;
 
-            const faculties = Object.keys(window.INSTITUTION_DATA[state][inst]);
+            const faculties = Object.keys(window.INSTITUTION_DATA[foundState][inst]);
             faculties.sort().forEach(f => {
                 const option = document.createElement('option');
                 option.value = f;
@@ -1151,15 +1120,23 @@
         }
 
         function handleFacultyChange() {
-            const state = document.getElementById('intakeState').value;
             const inst = document.getElementById('intakeInstitution').value;
             const faculty = document.getElementById('intakeFaculty').value;
             const deptSelect = document.getElementById('intakeDepartment');
 
+            let foundState = null;
+            Object.keys(window.INSTITUTION_DATA).forEach(state => {
+                if (window.INSTITUTION_DATA[state][inst]) {
+                    foundState = state;
+                }
+            });
+
+            if (!foundState) return;
+
             deptSelect.innerHTML = '<option value="" selected disabled>Select department</option>';
             deptSelect.disabled = false;
 
-            const departments = window.INSTITUTION_DATA[state][inst][faculty];
+            const departments = window.INSTITUTION_DATA[foundState][inst][faculty];
             departments.sort().forEach(d => {
                 const option = document.createElement('option');
                 option.value = d;
@@ -1304,11 +1281,18 @@
         function finishFlow(mode) {
             const matric = document.getElementById('intakeMatric').value || 'Student-Guest';
             const issue = document.getElementById('issueType').value || 'New Case';
-            const state = document.getElementById('intakeState').value;
             const inst = document.getElementById('intakeInstitution').value;
             const faculty = document.getElementById('intakeFaculty').value;
             const dept = document.getElementById('intakeDepartment').value;
             const level = document.getElementById('intakeLevel').value;
+
+            let foundState = null;
+            Object.keys(window.INSTITUTION_DATA).forEach(state => {
+                if (inst && window.INSTITUTION_DATA[state][inst]) {
+                    foundState = state;
+                }
+            });
+            const state = foundState;
             const email = document.getElementById('intakeEmail').value;
             const phone = document.getElementById('intakePhone').value;
 
