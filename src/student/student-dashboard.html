@@ -291,7 +291,7 @@
                                         </div>
                                         <div class="step completed">
                                             <div class="step-icon"><i class="bi bi-check-lg"></i></div>
-                                            <div class="step-label">Received</div>
+                                            <div class="step-label">Dept Stage</div>
                                             <div class="step-line"></div>
                                         </div>
                                         <div class="step ongoing">
@@ -301,7 +301,7 @@
                                         </div>
                                         <div class="step">
                                             <div class="step-icon">4</div>
-                                            <div class="step-label">Faculty Stage <span>(Outgoing)</span></div>
+                                            <div class="step-label">Registry</div>
                                             <div class="step-line"></div>
                                         </div>
                                     </div>
@@ -709,162 +709,150 @@
 
                 <!-- Academic Plan View -->
                 <div id="view-academic-plan" class="app-view container-fluid">
-                    <div class="view-header mb-4">
+                    <div class="view-header mb-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                         <div>
-                            <h2 class="fw-bold mb-1">Academic Registration Plan</h2>
-                            <p class="text-muted small">Required courses for your new department (Year 2 Transition)</p>
+                            <h2 class="fw-bold mb-1">My Learning Journey 🚀</h2>
+                            <p class="text-muted small">Keep it up! You're crushing your transition goals.</p>
                         </div>
-                        <button class="wh-btn wh-btn-primary" style="color:var(--brand-950);background:var(--brand-50);border:1.5px solid var(--brand-200);box-shadow:none;">
-                            <i class="bi bi-download"></i> Export PDF
-                        </button>
-                    </div>
-
-                    <div class="academic-table-wrap">
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th class="ps-4 py-3 text-uppercase small fw-bold text-muted"
-                                            style="width: 15%">Course Code</th>
-                                        <th class="py-3 text-uppercase small fw-bold text-muted">Course Title</th>
-                                        <th class="py-3 text-uppercase small fw-bold text-muted" style="width: 15%">
-                                            Credit Unit</th>
-                                        <th class="pe-4 py-3 text-uppercase small fw-bold text-muted"
-                                            style="width: 15%">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="table-group-divider">
-                                        <td colspan="4" class="bg-light ps-4 py-2 small fw-bold text-primary">YEAR 1 -
-                                            SEMESTER 1</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold">CSC101</td>
-                                        <td>Introduction to Computer Science</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-warning-subtle text-warning px-3">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold">MTH101</td>
-                                        <td>Algebra and Trigonometry</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold">PHY101</td>
-                                        <td>General Physics I</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold">CHM101</td>
-                                        <td>General Chemistry I</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-muted small">GST101</td>
-                                        <td class="text-muted small">Use of English I</td>
-                                        <td class="text-muted small">2 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="table-group-divider">
-                                        <td colspan="4" class="bg-light ps-4 py-2 small fw-bold text-primary">YEAR 1 -
-                                            SEMESTER 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold">CSC102</td>
-                                        <td>Introduction to Programming</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-warning-subtle text-warning px-3">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-muted small">MTH102</td>
-                                        <td class="text-muted small">Calculus</td>
-                                        <td class="text-muted small">3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-muted small">PHY102</td>
-                                        <td class="text-muted small">General Physics II</td>
-                                        <td class="text-muted small">3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-muted small">GST102</td>
-                                        <td class="text-muted small">Philosophy and Logic</td>
-                                        <td class="text-muted small">2 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-success-subtle text-success px-3">Completed</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="table-group-divider">
-                                        <td colspan="4" class="bg-light ps-4 py-2 small fw-bold text-primary">YEAR 2 -
-                                            SEMESTER 1 (CURRENT)</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-primary">CSC201</td>
-                                        <td>Data Structures and Algorithms</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-primary">CSC205</td>
-                                        <td>Operating Systems I</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-primary">MTH201</td>
-                                        <td>Linear Algebra</td>
-                                        <td>3 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="ps-4 fw-bold text-primary">GST201</td>
-                                        <td>Nigerian Peoples and Culture</td>
-                                        <td>2 Units</td>
-                                        <td><span
-                                                class="badge rounded-pill bg-primary-subtle text-primary px-3">Pending</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-4 bg-light border-top">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="icon-sq blue"><i class="bi bi-info-circle"></i></div>
-                                <div class="small">
-                                    <span class="fw-bold d-block">Academic Note:</span>
-                                    <span class="text-muted">You are required to register for the pending Year 1 courses
-                                        (CSC101, CSC102) alongside your Year 2 curriculum to complete your department
-                                        switch requirements.</span>
+                        <div class="progress-summary-card">
+                            <div class="ps-stats">
+                                <div class="ps-stat">
+                                    <div class="ps-val">85%</div>
+                                    <div class="ps-label">Total Progress</div>
+                                </div>
+                                <div class="ps-divider"></div>
+                                <div class="ps-stat">
+                                    <div class="ps-val">37</div>
+                                    <div class="ps-label">Units Earned</div>
                                 </div>
                             </div>
+                            <div class="progress mt-2" style="height: 6px; background: rgba(255,255,255,0.2);">
+                                <div class="progress-bar bg-white" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Roadmap Layout -->
+                    <div class="roadmap-container">
+                        
+                        <!-- Block: Year 1 -->
+                        <div class="roadmap-section mb-5">
+                            <div class="roadmap-header">
+                                <div class="rh-icon"><i class="bi bi-stars"></i></div>
+                                <div>
+                                    <h4>First Year Foundations</h4>
+                                    <span>Everything you've conquered so far</span>
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3">
+                                <!-- Course Card -->
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card completed">
+                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">MTH101</div>
+                                            <h6 class="fcc-title">Algebra & Trig</h6>
+                                            <div class="fcc-meta">3 Units &bull; Core Course</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card completed">
+                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">PHY101</div>
+                                            <h6 class="fcc-title">General Physics I</h6>
+                                            <div class="fcc-meta">3 Units &bull; Core Course</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card completed">
+                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">CHM101</div>
+                                            <h6 class="fcc-title">General Chemistry I</h6>
+                                            <div class="fcc-meta">3 Units &bull; Core Course</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card pending">
+                                        <div class="fcc-status"><i class="bi bi-clock-history"></i></div>
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">CSC101</div>
+                                            <h6 class="fcc-title">Intro to Comp Sci</h6>
+                                            <div class="fcc-meta text-primary fw-bold">Carry-over required</div>
+                                        </div>
+                                        <button class="fcc-action-btn"><i class="bi bi-plus-circle"></i> Register</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card completed">
+                                        <div class="fcc-status"><i class="bi bi-check-circle-fill"></i></div>
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">GST101</div>
+                                            <h6 class="fcc-title">Use of English I</h6>
+                                            <div class="fcc-meta">2 Units &bull; Elective</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Block: Year 2 -->
+                        <div class="roadmap-section">
+                            <div class="roadmap-header">
+                                <div class="rh-icon blue"><i class="bi bi-rocket-takeoff"></i></div>
+                                <div>
+                                    <h4>Second Year: The Deep Dive</h4>
+                                    <span>Current semester registration plan</span>
+                                </div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-primary-subtle text-primary border-0 rounded-pill px-3 py-2">Current Semester</span>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card current">
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">CSC201</div>
+                                            <h6 class="fcc-title">Data Structures</h6>
+                                            <div class="fcc-meta">3 Units &bull; Registered</div>
+                                        </div>
+                                        <div class="fcc-progress-bar">
+                                            <div class="fcc-progress-inner" style="width: 40%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card current">
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">CSC205</div>
+                                            <h6 class="fcc-title">Operating Systems I</h6>
+                                            <div class="fcc-meta">3 Units &bull; Registered</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="friendly-course-card current">
+                                        <div class="fcc-content">
+                                            <div class="fcc-code">MTH201</div>
+                                            <h6 class="fcc-title">Linear Algebra</h6>
+                                            <div class="fcc-meta">3 Units &bull; Registered</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="friendly-note mt-5">
+                        <div class="fn-icon">💡</div>
+                        <div class="fn-message">
+                            <strong>Hey there!</strong> Just a reminder that you need to complete those Year 1 carry-overs (CSC101) to officially lock in your switch!
                         </div>
                     </div>
                 </div>
@@ -925,10 +913,10 @@
                                 <div class="timeline-dot"><i class="bi bi-check-lg"></i></div>
                                 <div class="timeline-content">
                                     <div class="timeline-header">
-                                        <span class="timeline-title">Case Submitted</span>
-                                        <span class="timeline-time">Mar 01, 10:24 AM</span>
+                                        <span class="timeline-title">Submitted</span>
+                                        <span class="timeline-time">Jan 15, 10:30 AM</span>
                                     </div>
-                                    <p class="timeline-desc">Initial application received and ID generated.</p>
+                                    <p class="timeline-desc">Application successfully received.</p>
                                 </div>
                             </div>
 
@@ -937,10 +925,10 @@
                                 <div class="timeline-dot"><i class="bi bi-check-lg"></i></div>
                                 <div class="timeline-content">
                                     <div class="timeline-header">
-                                        <span class="timeline-title">Registry Verification</span>
-                                        <span class="timeline-time">Mar 02, 02:15 PM</span>
+                                        <span class="timeline-title">Department Stage</span>
+                                        <span class="timeline-time">Jan 18, 02:15 PM</span>
                                     </div>
-                                    <p class="timeline-desc">Mandatory documents were cross-checked and validated.</p>
+                                    <p class="timeline-desc">Cleared by HOD Computer Science.</p>
                                 </div>
                             </div>
 
@@ -949,12 +937,11 @@
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
                                     <div class="timeline-header">
-                                        <span class="timeline-title">Departmental Review</span>
-                                        <span class="timeline-time">Mar 04, 09:00 AM</span>
+                                        <span class="timeline-title">Faculty Stage</span>
+                                        <span class="timeline-time">Jan 20, 09:10 AM</span>
                                     </div>
-                                    <p class="timeline-desc">Academic board is reviewing student records for
-                                        eligibility.</p>
-                                    <span class="timeline-badge current">Working on this</span>
+                                    <p class="timeline-desc">Under review by the Sub-Dean.</p>
+                                    <span class="timeline-badge current">IN PROGRESS</span>
                                 </div>
                             </div>
 
@@ -963,10 +950,34 @@
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
                                     <div class="timeline-header">
-                                        <span class="timeline-title">Final Approval</span>
-                                        <span class="timeline-time">Pending</span>
+                                        <span class="timeline-title">Accepting Department</span>
+                                        <span class="timeline-time">Pending Stage</span>
                                     </div>
-                                    <p class="timeline-desc">Dean's office will issue the final letter of transfer.</p>
+                                    <p class="timeline-desc">Review by target department.</p>
+                                </div>
+                            </div>
+
+                            <!-- Stage 5 -->
+                            <div class="timeline-node">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">HOD (New Department)</span>
+                                        <span class="timeline-time">Pending Stage</span>
+                                    </div>
+                                    <p class="timeline-desc">Final departmental approval for switch.</p>
+                                </div>
+                            </div>
+
+                            <!-- Stage 6 -->
+                            <div class="timeline-node">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Registry Review</span>
+                                        <span class="timeline-time">Pending Stage</span>
+                                    </div>
+                                    <p class="timeline-desc">Final validation of credentials.</p>
                                 </div>
                             </div>
                         </div>

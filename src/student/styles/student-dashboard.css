@@ -1962,12 +1962,19 @@ h6 {
     animation-delay: 0.4s;
 }
 
+#view-track-progress .timeline-node:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+#view-track-progress .timeline-node:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
 /* Connection line highlighting for completed states */
 .timeline-node.completed::after {
     content: '';
     position: absolute;
     left: -21px;
-    /* Center with the line */
     top: 24px;
     bottom: -28px;
     width: 2.5px;
@@ -1975,6 +1982,230 @@ h6 {
     z-index: 1;
 }
 
+/* Line for active node */
+.timeline-node.active::after {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 24px;
+    bottom: -28px;
+    width: 2.5px;
+    background: var(--primary-soft);
+    z-index: 1;
+}
+
 .timeline-node:last-child::after {
     display: none;
+}
+
+/* ============================
+   STUDENT FRIENDLY ACADEMIC PLAN
+   ============================ */
+
+.progress-summary-card {
+    background: linear-gradient(135deg, var(--brand-600), var(--brand-800));
+    padding: 1.25rem 1.5rem;
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 10px 25px -5px rgba(26, 63, 245, 0.3);
+    min-width: 240px;
+}
+
+.ps-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.ps-stat {
+    text-align: center;
+}
+
+.ps-val {
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.ps-label {
+    font-size: 0.65rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+}
+
+.ps-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.roadmap-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.roadmap-header h4 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-main);
+}
+
+.roadmap-header span {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.rh-icon {
+    width: 44px;
+    height: 44px;
+    background: #fef3c7;
+    color: #d97706;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.rh-icon.blue {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+/* Friendly Course Cards */
+.friendly-course-card {
+    background: white;
+    border: 2px solid var(--surface-100);
+    border-radius: 20px;
+    padding: 1.25rem;
+    position: relative;
+    transition: all 0.3s var(--ease-spring);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.friendly-course-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-soft);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.friendly-course-card.completed {
+    border-color: #ecfdf5;
+    background: #f0fdf4;
+}
+
+.friendly-course-card.pending {
+    border-color: #fffbeb;
+    background: #fffcf0;
+    border-style: dashed;
+}
+
+.friendly-course-card.current {
+    border-color: var(--primary);
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.1);
+}
+
+.fcc-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.2rem;
+}
+
+.completed .fcc-status { color: #10b981; }
+.pending .fcc-status { color: #f59e0b; }
+
+.fcc-code {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.fcc-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.fcc-meta {
+    font-size: 0.78rem;
+    color: var(--text-sub);
+}
+
+.fcc-progress-bar {
+    height: 4px;
+    background: var(--primary-soft);
+    border-radius: 10px;
+    margin-top: auto;
+    padding-top: 1rem; /* spacing wrapper */
+}
+
+.fcc-progress-inner {
+    height: 4px;
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+.fcc-action-btn {
+    margin-top: 1rem;
+    width: 100%;
+    background: white;
+    border: 1.5px solid #f59e0b;
+    color: #b45309;
+    padding: 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.fcc-action-btn:hover {
+    background: #fbbf24;
+    color: white;
+    border-color: #fbbf24;
+}
+
+/* Friendly Note */
+.friendly-note {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid var(--surface-100);
+}
+
+.fn-icon {
+    font-size: 1.5rem;
+}
+
+.fn-message {
+    font-size: 0.88rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+}
+
+.fn-message strong {
+    color: var(--text-main);
+    display: block;
+    margin-bottom: 2px;
+}
+
+@media (max-width: 767px) {
+    .progress-summary-card {
+        width: 100%;
+    }
 }

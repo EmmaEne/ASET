@@ -47,6 +47,11 @@ const INSTITUTION_DATA = {
             "Faculty of Environmental Sciences": ["Architecture", "Estate Management", "Urban and Regional Planning"],
             "Faculty of Management Sciences": ["Accountancy", "Business Administration"],
             "Faculty of Science": ["Computer Science", "Biological Science", "Chemistry"]
+        },
+        "Havilla University": {
+            "Faculty of Computing and Sciences": ["Computer Science", "Software Engineering", "Cyber Security", "Biotechnology", "Industrial Chemistry", "Physics with Electronics"],
+            "Faculty of Health Sciences": ["Nursing Sciences", "Medical Laboratory Science", "Public Health"],
+            "Faculty of Management Sciences": ["Accounting and Finance", "Business Administration", "Mass Communication"]
         }
     },
     "Oyo": {

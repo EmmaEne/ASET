@@ -389,8 +389,6 @@
             color: white;
         }
 
-        .si-step-text {}
-
         .si-step-label {
             font-family: var(--font-heading);
             font-size: 0.78rem;
@@ -819,8 +817,110 @@
         }
 
         /* ============================================
-           FIELD GRID LAYOUT (Step 2 - row helpers)
+           RESPONSIVE REFINEMENTS
         ============================================ */
+
+        /* Tablets (768px - 1024px) */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .si-inner {
+                max-width: 850px;
+                padding-top: 5rem;
+            }
+
+            .si-header {
+                margin-bottom: 3.5rem;
+            }
+
+            .si-title {
+                font-size: 3.2rem;
+            }
+
+            .si-desc {
+                font-size: 1.15rem;
+                max-width: 550px;
+            }
+
+            .si-stepper {
+                padding: 1.5rem 2.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .si-step-circle {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+
+            .si-step-label {
+                font-size: 0.95rem;
+            }
+
+            .si-step-sub {
+                font-size: 0.78rem;
+            }
+
+            .si-card-body {
+                padding: 3.5rem;
+            }
+
+            .si-issue-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.25rem;
+            }
+
+            .si-issue-card {
+                padding: 1.5rem;
+            }
+
+            .si-issue-icon-box {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+
+            .si-issue-title {
+                font-size: 1rem;
+            }
+
+            .si-form-grid {
+                gap: 2rem;
+            }
+
+            .si-row-2,
+            .si-row-3 {
+                gap: 2rem;
+            }
+        }
+
+        /* Large Mobiles & Small Tablets */
+        @media (max-width: 767px) {
+            .si-inner {
+                padding: 2.5rem 1rem 4rem;
+            }
+
+            .si-title {
+                font-size: 2.2rem;
+            }
+
+            .si-stepper {
+                padding: 1rem;
+            }
+
+            .si-step-text {
+                display: none;
+            }
+
+            .si-step-circle {
+                width: 32px;
+                height: 32px;
+            }
+
+            .si-issue-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Form grid helpers */
         .si-form-grid {
             display: flex;
             flex-direction: column;

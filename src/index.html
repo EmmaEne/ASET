@@ -26,22 +26,28 @@
     </style>
 </head>
 
-<body class="landing-page" style="zoom: 80%;">
+<body class="landing-page">
 
     <!-- Header -->
-    <nav class="ln-nav">
+    <nav class="ln-nav navbar navbar-expand-lg">
         <div class="ln-nav-inner">
             <a class="ln-logo" href="./index.html">
-                <img src="./shared/assets/images/aset-logo.png" alt="" srcset="">
+                <div class="ln-logo-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                ASET
             </a>
-            <ul class="ln-nav-links">
-                <li><a href="./index.html" class="active">Home</a></li>
-                <li><a href="#process">Process</a></li>
-                <li><a href="#faq">FAQ</a></li>
-            </ul>
-            <button class="ln-nav-cta" data-bs-toggle="modal" data-bs-target="#intakeModal" onclick="goToStep(3)">Login
-                Portal</button>
-            <button class="ln-nav-toggle" data-bs-toggle="collapse" data-bs-target="#navMain"><i
+            <div class="collapse navbar-collapse ln-nav-collapse" id="navMain">
+                <div class="d-lg-flex align-items-center ms-auto ln-nav-collapse-content">
+                    <ul class="ln-nav-links">
+                        <li><a href="./index.html" class="active">Home</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                    <button class="ln-nav-cta ms-lg-5" data-bs-toggle="modal" data-bs-target="#intakeModal"
+                        onclick="goToStep(3)">Login
+                        Portal</button>
+                </div>
+            </div>
+            <button class="ln-nav-toggle d-lg-none" data-bs-toggle="collapse" data-bs-target="#navMain"><i
                     class="bi bi-list"></i></button>
         </div>
     </nav>
@@ -58,7 +64,8 @@
                     2,300+ cases resolved
                 </div>
                 <h1 class="ln-hero-enter ln-hero-enter-2 ln-typewriter-container" aria-label="Never lose a semester">
-                    <span class="ln-typewriter-ghost" aria-hidden="true">Never lose <span>a semester</span></span>
+                    <span class="ln-typewriter-ghost" aria-hidden="true">Never lose <span class="ln-typewriter-accent">a
+                            semester</span></span>
                     <span class="ln-typewriter-wrapper" aria-hidden="true">
                         <span id="typewriter-text"></span><span class="ln-typewriter-cursor"></span>
                     </span>
@@ -509,9 +516,10 @@
                                 <label class="form-label small fw-bold">Institution</label>
                                 <div class="aset-select-container">
                                     <i class="bi bi-building aset-select-icon"></i>
-                                    <select class="form-select aset-select-field" id="intakeInstitution" disabled
+                                    <select class="form-select aset-select-field" id="intakeInstitution" 
                                         onchange="handleInstitutionChange()">
                                         <option value="" selected disabled>Select institution</option>
+                                        <option value="Havilla University">Havilla University</option>
                                     </select>
                                 </div>
                             </div>
@@ -1112,10 +1120,20 @@
         }
 
         function handleInstitutionChange() {
-            const state = document.getElementById('intakeState').value;
+            let stateSelect = document.getElementById('intakeState');
+            let state = stateSelect.value;
             const inst = document.getElementById('intakeInstitution').value;
             const facultySelect = document.getElementById('intakeFaculty');
             const deptSelect = document.getElementById('intakeDepartment');
+
+            // Handle Havilla University Direct Selection
+            if (inst === "Havilla University" && !state) {
+                state = "Cross River (Calabar)";
+                stateSelect.value = state;
+                UIStates.showToast('Region auto-selected for Havilla University', 'info');
+            }
+
+            if (!state) return;
 
             facultySelect.innerHTML = '<option value="" selected disabled>Select faculty</option>';
             facultySelect.disabled = false;
@@ -1407,14 +1425,6 @@
                 nav.classList.remove('scrolled');
             }
         });
-        // Mobile menu toggle
-        const toggle = document.querySelector('.ln-nav-toggle');
-        const navLinks = document.querySelector('.ln-nav-links');
-        if (toggle && navLinks) {
-            toggle.addEventListener('click', () => {
-                navLinks.classList.toggle('show');
-            });
-        }
         // Typewriter Animation Logic
         (function () {
             const container = document.getElementById('typewriter-text');
@@ -1441,6 +1451,7 @@
                 // Start of second phrase: add styled block span
                 if (partIndex === 1 && charIndex === 0) {
                     const span = document.createElement('span');
+                    span.className = 'ln-typewriter-accent'; // Use specific class for accent styling
                     container.appendChild(span);
                     currentTarget = span;
                 }
