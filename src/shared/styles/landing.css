@@ -3,7 +3,7 @@
    A refined, mature UI layer for the public site.
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ---------- Design Tokens ---------- */
 :root {
@@ -35,7 +35,7 @@
     --accent-amber: #d97706;
     --accent-rose: #e11d48;
 
-    --font-heading: 'Archivo Black', sans-serif;
+    --font-heading: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
 
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
