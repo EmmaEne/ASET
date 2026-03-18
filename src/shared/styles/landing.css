@@ -670,80 +670,93 @@
     color: #fbbf24;
 }
 
-/* ---------- Stats Ribbon ---------- */
+/* ---------- Redesigned Stats Ribbon ---------- */
 .ln-stats-bar {
     background: transparent;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
     position: relative;
-    z-index: 10;
-    margin-top: -60px;
-    /* Overlap hero slightly */
+    z-index: 50;
+    margin-top: -50px;
 }
 
 .ln-stats-bar-inner {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     background: white;
-    padding: 2.5rem;
-    border-radius: var(--radius-2xl);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3rem;
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--surface-200);
+    padding: 1.75rem 2rem;
+    border-radius: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+
+.ln-stats-bar-inner::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 
 .ln-stat-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
     gap: 1rem;
+    flex: 1 1 0%;
+    min-width: max-content;
+    padding: 0 1rem;
     position: relative;
+    transition: all 0.3s ease;
+}
+
+.ln-stat-item:hover {
+    transform: translateY(-2px);
 }
 
 .ln-stat-item:not(:last-child)::after {
     content: '';
     position: absolute;
-    right: -1.5rem;
+    right: 0;
     top: 20%;
     height: 60%;
     width: 1px;
-    background: var(--surface-200);
+    background: linear-gradient(to bottom, transparent, #e2e8f0, transparent);
 }
 
 .ln-stat-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
-    background: var(--brand-50);
+    font-size: 1.15rem;
+    background: #f8fafc;
     color: var(--brand-600);
-    transition: all 0.3s var(--ease-spring);
+    flex-shrink: 0;
 }
 
-.ln-stat-item:hover .ln-stat-icon {
-    transform: translateY(-4px) rotate(-5deg);
-    background: var(--brand-600);
-    color: white;
+.ln-stat-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .ln-stat-number {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--surface-900);
     letter-spacing: -0.04em;
-    line-height: 1;
+    line-height: 1.1;
 }
 
 .ln-stat-label {
-    font-size: 0.75rem;
+    font-size: 0.725rem;
     font-weight: 600;
     color: var(--surface-500);
-    margin-top: 4px;
+    margin-top: 2px;
+    white-space: nowrap;
 }
 
 /* ---------- Section Shared ---------- */
@@ -1949,19 +1962,18 @@
         /* Hide for cleaner tablet layout */
     }
 
-    .ln-stats-bar {
-        margin-top: -50px;
-        padding: 0 3rem;
-    }
-
     .ln-stats-bar-inner {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 3rem;
-        padding: 3.5rem;
+        padding: 1.5rem;
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     }
 
-    .ln-stat-item:hover .ln-stat-icon {
-        transform: translateY(-8px) scale(1.1);
+    .ln-stat-item {
+        padding: 0 1.5rem;
+    }
+
+    .ln-stat-number {
+        font-size: 1.35rem;
     }
 
     .ln-section {
@@ -2091,18 +2103,25 @@
 
     .ln-stats-bar {
         margin-top: 0;
-        padding: 2rem 1.5rem;
-        background: var(--surface-50);
+        padding: 2.5rem 0;
+        background: transparent;
     }
 
     .ln-stats-bar-inner {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-        padding: 2rem;
+        padding: 1.25rem 1rem;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        gap: 2rem;
     }
 
-    .ln-stat-item:nth-child(2)::after {
-        display: none;
+    .ln-stat-item::after {
+        display: none !important;
+    }
+
+    .ln-stat-number {
+        font-size: 1.25rem;
     }
 
     .ln-section {
@@ -2134,8 +2153,8 @@
         font-size: 2.6rem;
     }
 
-    .ln-stats-bar-inner {
-        grid-template-columns: 1fr;
+    .ln-stat-item {
+        min-width: 160px;
     }
 
     .ln-stat-item::after {
