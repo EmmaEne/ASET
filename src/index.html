@@ -63,16 +63,15 @@
                     <span class="ln-hero-badge-dot"></span>
                     2,300+ cases resolved
                 </div>
-                <h1 class="ln-hero-enter ln-hero-enter-2 ln-typewriter-container" aria-label="Never lose a semester">
-                    <span class="ln-typewriter-ghost" aria-hidden="true">Never lose <span class="ln-typewriter-accent">a
-                            semester</span></span>
+                <h1 class="ln-hero-enter ln-hero-enter-2 ln-typewriter-container" aria-label="Don't lose your admission or semester">
+                    <span class="ln-typewriter-ghost" aria-hidden="true">Don't lose your <span class="ln-typewriter-accent">admission or semester</span></span>
                     <span class="ln-typewriter-wrapper" aria-hidden="true">
                         <span id="typewriter-text"></span><span class="ln-typewriter-cursor"></span>
                     </span>
                 </h1>
-                <p class="ln-hero-desc ln-hero-after-type">
-                    Get Expert Help with Transfers, Probation, Deferred Admission &amp; Academic Challenges in Minutes
-                </p>
+              <p class="ln-hero-desc ln-hero-after-type">
+  With ASET, you can seamlessly transfer to other universities, switch department, secure hostel / accommodation, and resolve admission & JAMB related issues.
+</p>
                 <div class="ln-hero-actions ln-hero-after-type">
                     <button class="ln-btn-hero primary" data-bs-toggle="modal" data-bs-target="#intakeModal">
                         Start Your Case <i class="bi bi-arrow-right"></i>
@@ -458,11 +457,11 @@
                                 <select id="issueType" class="form-select form-select-lg aset-select-field"
                                     onchange="validateStep1()">
                                     <option value="" selected disabled>Choose your issue...</option>
-                                    <option value="Change Program & Departmental Issues">Change Program & Departmental
-                                        Issues</option>
+                                    <option value="Change Program / Department">Change Program / Department</option>
                                     <option value="Voluntary Change Program (CGPA 3.0 & above)">Voluntary Change Program
                                         (CGPA 3.0 & above)</option>
-                                    <option value="Probation / Withdrawal Issues">Probation / Withdrawal Issues</option>
+                                    <option value="Withdrawal Issues">Withdrawal Issues</option>
+                                    <option value="Probation Issues">Probation Issues</option>
                                     <option value="Suspension of Studies">Suspension of Studies</option>
                                     <option value="Deferment of Studies">Deferment of Studies</option>
                                     <option value="Result & Examination Issues">Result & Examination Issues</option>
@@ -470,8 +469,7 @@
                                     <option value="Portal & Payment Issues">Portal & Payment Issues</option>
                                     <option value="Transfer to Another Nigerian University (Interschool)">Transfer to
                                         Another Nigerian University (Interschool)</option>
-                                    <option value="Financial, Loan & Scholarship Support">Financial, Loan & Scholarship
-                                        Support</option>
+                                    <option value="Loan & Scholarship">Loan & Scholarship</option>
                                     <option value="Multiple / Complex Issues">Multiple / Complex Issues</option>
                                 </select>
                             </div>
@@ -1418,8 +1416,8 @@
             if (!container || !cursor) return;
 
             const parts = [
-                { text: "Never lose ", isAccent: false },
-                { text: "a semester", isAccent: true }
+                { text: "Don't lose your ", isAccent: false },
+                { text: "admission or semester", isAccent: true }
             ];
 
             let partIndex = 0;

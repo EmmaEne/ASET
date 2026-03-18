@@ -294,89 +294,95 @@
         /* ============================
            STEPPER
         ============================ */
+        /* ============================
+           REDESIGNED HORIZONTAL STEPPER
+        ============================ */
         .dt-stepper {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            margin-bottom: 2.5rem;
-            background: white;
-            border: 1px solid var(--dt-border);
-            border-radius: 16px;
-            padding: 1.25rem 1.5rem;
-            box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.06);
-            animation: fadeInUp 0.6s var(--ease-expo) 0.1s backwards;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 3.5rem;
+            position: relative;
+            background: transparent;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        /* The progress track line */
+        .dt-stepper::before {
+            content: '';
+            position: absolute;
+            top: 18px; /* half of circle height */
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: #e4e8f0;
+            z-index: 0;
         }
 
         .dt-step {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            flex: 1;
+            text-align: center;
+            gap: 12px;
             position: relative;
-        }
-
-        .dt-step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            left: calc(52px + 10px);
-            top: 50%;
-            transform: translateY(-50%);
-            height: 2px;
-            background: #e4e8f0;
-            border-radius: 2px;
-            transition: background 0.4s ease;
-        }
-
-        .dt-step.completed::after {
-            background: var(--dt-brand);
-        }
-
-        .dt-step.active::after {
-            background: #e4e8f0;
+            z-index: 1;
         }
 
         .dt-step-circle {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 800;
+            font-size: 0.9rem;
             flex-shrink: 0;
-            transition: all 0.35s var(--ease-spring);
-            background: #f1f3f8;
+            transition: all 0.4s var(--ease-spring);
+            background: white;
             color: #9ba3b5;
             border: 2px solid #e4e8f0;
+            box-shadow: 0 0 0 4px white;
         }
 
         .dt-step.active .dt-step-circle {
             background: var(--dt-brand);
             color: white;
             border-color: var(--dt-brand);
-            box-shadow: 0 4px 12px rgba(19, 47, 225, 0.25);
-            transform: scale(1.08);
+            box-shadow: 0 0 0 6px rgba(19, 47, 225, 0.08), 0 0 0 4px white;
+            transform: scale(1.1);
         }
 
         .dt-step.completed .dt-step-circle {
             background: #059669;
             color: white;
             border-color: #059669;
+            box-shadow: 0 0 0 4px white;
         }
 
         .dt-step-info {
             display: flex;
             flex-direction: column;
+            gap: 2px;
         }
 
         .dt-step-label {
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 700;
             color: #9ba3b5;
             transition: color 0.3s ease;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            white-space: nowrap;
+        }
+
+        .dt-step-sub {
+            font-size: 0.7rem;
+            color: #c5cad4;
+            font-weight: 500;
+            white-space: nowrap;
         }
 
         .dt-step.active .dt-step-label {
@@ -385,12 +391,6 @@
 
         .dt-step.completed .dt-step-label {
             color: #059669;
-        }
-
-        .dt-step-sub {
-            font-size: 0.68rem;
-            color: #c5cad4;
-            font-weight: 500;
         }
 
         .dt-step.active .dt-step-sub {
@@ -802,6 +802,78 @@
         }
 
         /* ============================
+           MANUAL ENTRY STYLES
+        ============================ */
+        .dt-manual-row {
+            display: grid;
+            grid-template-columns: 1fr 100px 40px;
+            gap: 10px;
+            margin-bottom: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dt-input-sub {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dt-text);
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .dt-input-sub:focus {
+            outline: none;
+            border-color: var(--dt-brand);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(19, 47, 225, 0.05);
+        }
+
+        .dt-remove-btn {
+            background: #fff1f2;
+            color: #e11d48;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dt-remove-btn:hover {
+            background: #ffe4e6;
+            transform: scale(1.05);
+        }
+
+        .dt-add-btn {
+            background: transparent;
+            border: 2px dashed #cbd5e1;
+            color: var(--dt-sub);
+            padding: 12px;
+            border-radius: 14px;
+            width: 100%;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-expo);
+            margin-top: 10px;
+        }
+
+        .dt-add-btn:hover {
+            border-color: var(--dt-brand);
+            color: var(--dt-brand);
+            background: var(--dt-brand-50);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================
            BUTTONS
         ============================ */
         .dt-btn-primary {
@@ -971,6 +1043,19 @@
 
         /* Mobile Devices (Max 767px) */
         @media (max-width: 767px) {
+            .dt-nav {
+                height: 80px;
+                padding: 0 1.25rem;
+            }
+
+            .dt-logo {
+                font-size: 1.2rem;
+            }
+
+            .dt-nav-badge {
+                display: none; /* Hide badge on mobile to save space */
+            }
+
             .dt-inner {
                 padding: 2.5rem 1rem 4rem;
             }
@@ -984,11 +1069,43 @@
             }
 
             .dt-stepper {
-                padding: 1rem;
+                grid-template-columns: repeat(3, 1fr);
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+                margin-bottom: 2.5rem;
+            }
+
+            .dt-step {
+                width: auto;
+                gap: 8px;
+            }
+
+            .dt-step-circle {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+                border-width: 1.5px;
+            }
+
+            .dt-stepper::before {
+                top: 15px;
+                left: 10%;
+                right: 10%;
+            }
+
+            .dt-step-label {
+                font-size: 0.68rem;
+                letter-spacing: -0.01em;
+            }
+
+            .dt-step-sub {
+                font-size: 0.58rem;
+                opacity: 0.8;
             }
 
             .dt-step-info {
-                display: none;
+                display: flex;
             }
 
             .dt-card-body {
@@ -1021,7 +1138,7 @@
                 Department Transfer
             </div>
             <a class="dt-nav-back" href="./student-dashboard.html">
-                <i class="bi bi-arrow-left"></i> Cancel
+                <i class="bi bi-chevron-left"></i> Back
             </a>
         </div>
     </nav>
@@ -1120,6 +1237,42 @@
                                     style="background:none;border:none;color:#ef4444;font-size:0.82rem;font-weight:600;cursor:pointer;padding:4px 10px;border-radius:8px;transition:background 0.2s;"
                                     onmouseover="this.style.background='#fee2e2'"
                                     onmouseout="this.style.background='none'">Remove</button>
+                            </div>
+                        </div>
+
+                        <div id="manualArea" style="display: none;">
+                            <div class="dt-section-label">O'Level Results (WAEC/NECO)</div>
+                            <p class="small text-muted mb-4">Provide your grades for core institutional requirements below.</p>
+                            
+                            <div id="waecList">
+                                <!-- Pre-populated English & Math -->
+                                <div class="dt-manual-row">
+                                    <input type="text" class="dt-input-sub" value="Mathematics" readonly>
+                                    <select class="dt-input-sub">
+                                        <option value="A1">A1</option><option value="B2">B2</option><option value="B3">B3</option>
+                                        <option value="C4">C4</option><option value="C5">C5</option><option value="C6">C6</option>
+                                    </select>
+                                    <div></div>
+                                </div>
+                                <div class="dt-manual-row">
+                                    <input type="text" class="dt-input-sub" value="English Language" readonly>
+                                    <select class="dt-input-sub">
+                                        <option value="A1">A1</option><option value="B2">B2</option><option value="B3">B3</option>
+                                        <option value="C4">C4</option><option value="C5">C5</option><option value="C6">C6</option>
+                                    </select>
+                                    <div></div>
+                                </div>
+                            </div>
+                            
+                            <button class="dt-add-btn" onclick="addSubjectRow()">
+                                <i class="bi bi-plus-lg me-1"></i> Add Subject
+                            </button>
+
+                            <div class="mt-4 p-3 rounded-4" style="background:#fefce8; border: 1px solid #fef3c7;">
+                                <div class="d-flex gap-2">
+                                    <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                    <p class="small mb-0 text-dark"><strong>Note:</strong> Manual entries will be verified against the official WAEC database before final clearance.</p>
+                                </div>
                             </div>
                         </div>
 
@@ -1355,10 +1508,29 @@
         function setMethod(method) {
             document.getElementById('btnMethodUpload').classList.toggle('active', method === 'upload');
             document.getElementById('btnMethodManual').classList.toggle('active', method === 'manual');
-            if (method === 'manual') {
-                // Show a friendly inline message instead of native alert
-                setMethod('upload');
-            }
+            
+            document.getElementById('uploadArea').style.display = (method === 'upload') ? 'block' : 'none';
+            document.getElementById('manualArea').style.display = (method === 'manual') ? 'block' : 'none';
+        }
+
+        function addSubjectRow() {
+            const list = document.getElementById('waecList');
+            const row = document.createElement('div');
+            row.className = 'dt-manual-row';
+            row.innerHTML = `
+                <select class="dt-input-sub">
+                    <option value="" disabled selected>Subject</option>
+                    <option>Physics</option><option>Chemistry</option><option>Biology</option>
+                    <option>Economics</option><option>Government</option><option>Literature</option>
+                    <option>Accounting</option><option>Further Maths</option>
+                </select>
+                <select class="dt-input-sub">
+                    <option value="A1">A1</option><option value="B2">B2</option><option value="B3">B3</option>
+                    <option value="C4">C4</option><option value="C5">C5</option><option value="C6">C6</option>
+                </select>
+                <button class="dt-remove-btn" onclick="this.parentElement.remove()"><i class="bi bi-x"></i></button>
+            `;
+            list.appendChild(row);
         }
 
         function handleFile(input) {
