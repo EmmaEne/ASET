@@ -290,11 +290,11 @@
 }
 
 .ln-hero-inner {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 5rem 2rem 7rem;
+    padding: 6rem 3rem 8rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.25fr 0.75fr;
     gap: 4rem;
     align-items: center;
     position: relative;
@@ -339,12 +339,13 @@
 }
 
 .ln-hero h1 {
-    font-size: clamp(5rem, 6vw, 6rem);
+    font-size: clamp(4.2rem, 5.5vw, 5.4rem);
     font-weight: 850;
     color: #1a1a1a !important;
-    line-height: 1.05;
-    margin-bottom: 2rem;
-    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.045em;
+    max-width: 850px;
 }
 
 /* Dedicated accent styling for the hero headline */

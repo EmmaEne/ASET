@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Application | ASET Portal</title>
+    <meta name="description" content="Apply for campus hostel accommodation through the ASET student portal.">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons + Framework -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Shared Styles (Reusing patterns from dept-transfer.html) -->
+    <link href="../shared/styles/main.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ha-brand: #0f1957;
+            --ha-brand-accent: #2563eb;
+            --ha-brand-light: #eff6ff;
+            --ha-surface: #f8fafc;
+            --ha-border: #e2e8f0;
+            --ha-text-main: #0f172a;
+            --ha-text-sub: #64748b;
+            --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background: radial-gradient(circle at top right, #f1f5f9, var(--ha-surface));
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--ha-text-main);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--ha-text-main);
+            letter-spacing: -0.02em;
+        }
+
+        /* Navbar (Standard ASET Style) */
+        .ha-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 72px;
+            background: #0f1957;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        .ha-nav-inner {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ha-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            color: white;
+            font-size: 1.25rem;
+        }
+        .ha-logo-icon {
+            width: 32px; height: 32px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center; justify-content: center;
+            color: #0f1957;
+        }
+
+        /* Layout */
+        .ha-page {
+            min-height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+        .ha-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Stepper */
+        .ha-stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .ha-stepper::before {
+            content: '';
+            position: absolute;
+            top: 18px; left: 10%; right: 10%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+        .ha-step {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        .ha-step-circle {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            transition: all 0.4s var(--ease-expo);
+        }
+        .ha-step.active .ha-step-circle {
+            background: var(--ha-brand-accent);
+            border-color: var(--ha-brand-accent);
+            color: white;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+            transform: scale(1.1);
+        }
+        .ha-step.completed .ha-step-circle {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+        .ha-step-label {
+            margin-top: 12px;
+            font-size: 0.725rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #94a3b8;
+        }
+        .ha-step.active .ha-step-label { color: var(--ha-brand-accent); }
+        .ha-step.completed .ha-step-label { color: #10b981; }
+
+        /* Card Style */
+        .ha-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--ha-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            padding: 2.5rem;
+            animation: fadeInUp 0.5s var(--ease-expo);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-content { display: none; }
+        .step-content.active { display: block; }
+
+        /* Step 1: Verification */
+        .verification-box {
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        /* Step 2: Hall Selection */
+        .hall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        .hall-card {
+            border: 1.5px solid var(--ha-border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-expo);
+            text-align: center;
+            background: white;
+        }
+        .hall-card:hover {
+            border-color: var(--ha-brand-accent);
+            background: #fbfdff;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(15, 25, 87, 0.06);
+        }
+        .hall-card.selected {
+            border-color: var(--ha-brand-accent);
+            background: var(--ha-brand-light);
+            box-shadow: 0 0 0 1px var(--ha-brand-accent);
+        }
+        .hall-icon {
+            font-size: 1.75rem;
+            color: var(--ha-brand-accent);
+            margin-bottom: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+        .hall-card:hover .hall-icon { transform: scale(1.15); }
+        .hall-tag {
+            font-size: 0.625rem;
+            font-weight: 900;
+            padding: 5px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        .tag-male { background: #e0f2fe; color: #0369a1; }
+        .tag-female { background: #fdf2f8; color: #be185d; }
+
+        /* Step 3: Room Selection */
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+        .room-card {
+            border: 1.5px solid var(--ha-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-expo);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .room-card::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 40px; height: 40px;
+            background: var(--ha-brand-accent);
+            opacity: 0;
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+            transition: opacity 0.3s ease;
+        }
+        .room-card:hover { border-color: var(--ha-brand-accent); background: #f8fafc; }
+        .room-card.selected { border-color: var(--ha-brand-accent); background: #f0f7ff; }
+        .room-card.selected::after { opacity: 0.1; }
+        .room-card .room-num { font-weight: 800; color: var(--ha-text-main); font-size: 1rem; }
+        .room-card .spaces-left { 
+            font-size: 0.7rem; 
+            font-weight: 600;
+            color: #059669;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Step 4: Summary */
+        .summary-list {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .summary-item:last-child { border-bottom: none; }
+        .summary-label { color: var(--ha-text-sub); font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+        .summary-value { font-weight: 700; color: var(--ha-text-main); }
+
+        /* Misc */
+        .btn-ha {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .btn-ha-primary {
+            background: var(--ha-brand);
+            color: white;
+            border: none;
+        }
+        .btn-ha-primary:hover {
+            background: #003399;
+            transform: translateY(-1px);
+        }
+        .btn-ha-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="ha-nav">
+        <div class="ha-nav-inner">
+            <a href="student-dashboard.html" class="ha-logo">
+                <div class="ha-logo-icon">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <span>ASET PORTAL</span>
+            </a>
+            <a href="student-dashboard.html" class="btn btn-sm btn-outline-light d-flex align-items-center gap-2" style="border-radius: 10px; opacity: 0.8;">
+                <i class="bi bi-arrow-left"></i> Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <main class="ha-page">
+        <div class="ha-container">
+
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Hostel Application</h2>
+                <p class="text-muted">Secure your accommodation for the 2024/2025 Academic Session</p>
+            </div>
+
+            <!-- Stepper -->
+            <div class="ha-stepper">
+                <div class="ha-step active" id="stepper1">
+                    <div class="ha-step-circle">1</div>
+                    <div class="ha-step-label">Verify</div>
+                </div>
+                <div class="ha-step" id="stepper2">
+                    <div class="ha-step-circle">2</div>
+                    <div class="ha-step-label">Hall</div>
+                </div>
+                <div class="ha-step" id="stepper3">
+                    <div class="ha-step-circle">3</div>
+                    <div class="ha-step-label">Room</div>
+                </div>
+                <div class="ha-step" id="stepper4">
+                    <div class="ha-step-circle">4</div>
+                    <div class="ha-step-label">Payment</div>
+                </div>
+                <div class="ha-step" id="stepper5">
+                    <div class="ha-step-circle"><i class="bi bi-flag-fill" style="font-size:0.75rem;"></i></div>
+                    <div class="ha-step-label">Finish</div>
+                </div>
+            </div>
+
+            <!-- Card Content Wrapper -->
+            <div class="ha-card">
+
+                <!-- STEP 1: Fee Verification -->
+                <div class="step-content active" id="step1">
+                    <div class="verification-box">
+                        <div class="mb-4">
+                            <div class="ha-logo-icon mx-auto mb-3" style="width: 50px; height: 50px; background: #eff6ff; color: var(--ha-brand); font-size: 1.5rem;">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <h5>School Fee Verification</h5>
+                            <p class="small text-muted">Please enter your fee receipt reference number to continue with your hostel application.</p>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="receiptRef" class="form-control text-center py-3 fw-bold" placeholder="REF/2024/XXXXX" style="letter-spacing: 2px;">
+                        </div>
+                        <div id="verifyError" class="alert alert-danger py-2 small d-none">Please enter a valid reference number</div>
+                        <button class="btn btn-ha btn-ha-primary w-100 shadow-sm" onclick="verifyReceipt()">
+                            Verify Receipt <i class="bi bi-arrow-right-short ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Hall Selection -->
+                <div class="step-content" id="step2">
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-1">Select a Hall</h5>
+                        <p class="small text-muted">Choose your preferred hostel hall from the list below.</p>
+                    </div>
+                    
+                    <div class="hall-grid" id="hallGrid">
+                        <!-- Halls will be injected here -->
+                    </div>
+
+                    <div class="mt-5 d-flex justify-content-end">
+                        <button class="btn btn-ha btn-ha-primary" id="toRoomBtn" disabled onclick="nextStep(3)">Select Room <i class="bi bi-arrow-right ms-2"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Room Selection -->
+                <div class="step-content" id="step3">
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-1" id="roomTitle">Select Room in Hall 1</h5>
+                        <p class="small text-muted">Live availability: Select an available room with spaces left.</p>
+                    </div>
+
+                    <div class="room-grid" id="roomGrid">
+                        <!-- Rooms will be injected here -->
+                    </div>
+
+                    <div class="mt-5 d-flex justify-content-between">
+                        <button class="btn btn-link text-muted fw-bold text-decoration-none" onclick="nextStep(2)"><i class="bi bi-arrow-left me-2"></i> Back</button>
+                        <button class="btn btn-ha btn-ha-primary" id="toPaymentBtn" disabled onclick="nextStep(4)">Review & Pay <i class="bi bi-arrow-right ms-2"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Payment -->
+                <div class="step-content" id="step4">
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-1">Application Summary</h5>
+                        <p class="small text-muted">Please review your selection before proceeding to payment.</p>
+                    </div>
+
+                    <div class="summary-list mb-4">
+                        <div class="summary-item">
+                            <span class="summary-label"><i class="bi bi-building-fill text-primary"></i> Selected Hall</span>
+                            <span class="summary-value" id="sumHall">—</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label"><i class="bi bi-door-open-fill text-primary"></i> Room Number</span>
+                            <span class="summary-value" id="sumRoom">—</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label"><i class="bi bi-cash-stack text-primary"></i> Application Fee</span>
+                            <span class="summary-value">₦16,000</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label"><i class="bi bi-lightning-charge-fill text-primary"></i> Process Type</span>
+                            <span class="summary-value">Instant Allocation</span>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info py-3 border-0 d-flex gap-3 align-items-center" style="border-radius: 12px; background: #eff6ff;">
+                        <i class="bi bi-info-circle-fill text-primary mt-1"></i>
+                        <div class="small" style="color: #1e40af;">
+                            Payment is secure and non-refundable once the allocation is confirmed.
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <button class="btn btn-ha btn-ha-primary w-100 py-3 shadow-lg" id="payBtn" onclick="processPayment()" style="background: linear-gradient(135deg, var(--ha-brand-accent), var(--ha-brand));">
+                            Proceed to Secure Payment (₦16,000)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 5: Success -->
+                <div class="step-content" id="step5">
+                    <div class="text-center py-4">
+                        <div class="mb-4">
+                            <div class="ha-logo-icon mx-auto mb-3" style="width: 70px; height: 70px; background: #ecfdf5; color: #10b981; font-size: 2.5rem;">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <h3 class="fw-bold">Application Successful</h3>
+                            <p class="text-muted">Your hostel application has been received and processed.</p>
+                        </div>
+
+                        <div class="card bg-light border-0 text-start p-4 mb-4" style="border-radius: 16px;">
+                            <h6 class="fw-bold mb-3">Application Form Summary</h6>
+                            <div class="row g-2">
+                                <div class="col-6 text-muted small">Reference No:</div>
+                                <div class="col-6 small fw-bold" id="finalRef">—</div>
+                                <div class="col-6 text-muted small">Allocated Hall:</div>
+                                <div class="col-6 small fw-bold" id="finalHall">—</div>
+                                <div class="col-6 text-muted small">Allocated Room:</div>
+                                <div class="col-6 small fw-bold" id="finalRoom">—</div>
+                                <div class="col-6 text-muted small">Payment Status:</div>
+                                <div class="col-6"><span class="badge bg-success">PAID</span></div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning py-3 border-0 d-flex gap-3 align-items-center mb-4" style="border-radius: 12px; text-align: left;">
+                            <i class="bi bi-bell-fill text-warning"></i>
+                            <div class="small fw-bold" style="color: #92400e;">
+                                Please check your notifications on the portal for approval status.
+                            </div>
+                        </div>
+
+                        <button class="btn btn-ha btn-ha-primary w-100" onclick="window.location.href='student-dashboard.html'">Return to Dashboard</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- State Management ---
+        let currentStep = 1;
+        let selectedHall = null;
+        let selectedRoom = null;
+        let receiptRef = "";
+
+        // --- Mock Data ---
+        const halls = Array.from({ length: 12 }, (_, i) => ({
+            id: i + 1,
+            name: `Hall ${i + 1}`,
+            type: i < 6 ? 'Male Hostel' : 'Female Hostel'
+        }));
+
+        const rooms = Array.from({ length: 12 }, (_, i) => ({
+            number: 100 + (i + 1),
+            spacesLeft: Math.floor(Math.random() * 4) + 1
+        }));
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHalls();
+        });
+
+        function renderHalls() {
+            const grid = document.getElementById('hallGrid');
+            grid.innerHTML = halls.map(h => `
+                <div class="hall-card" id="hall-${h.id}" onclick="selectHall(${h.id}, '${h.name}')">
+                    <div class="hall-icon"><i class="bi bi-building-fill"></i></div>
+                    <div class="fw-bold fs-6 mb-1">${h.name}</div>
+                    <div class="hall-tag ${h.type.includes('Male') ? 'tag-male' : 'tag-female'}">
+                        <i class="bi bi-${h.type.includes('Male') ? 'gender-male' : 'gender-female'} me-1"></i> ${h.type}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderRooms() {
+            const grid = document.getElementById('roomGrid');
+            grid.innerHTML = rooms.map(r => `
+                <div class="room-card" id="room-${r.number}" onclick="selectRoom(${r.number})">
+                    <span class="room-num">Room ${r.number}</span>
+                    <span class="spaces-left"><i class="bi bi-people-fill"></i> ${r.spacesLeft} beds avail.</span>
+                </div>
+            `).join('');
+        }
+
+        // --- Flow Logic ---
+        function verifyReceipt() {
+            const input = document.getElementById('receiptRef').value.trim();
+            const err = document.getElementById('verifyError');
+            
+            if (input === "") {
+                err.classList.remove('d-none');
+                return;
+            }
+            
+            err.classList.add('d-none');
+            receiptRef = input;
+            
+            // Success State Visual
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
+            
+            setTimeout(() => {
+                nextStep(2);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }, 1000);
+        }
+
+        function selectHall(id, name) {
+            selectedHall = name;
+            document.querySelectorAll('.hall-card').forEach(el => el.classList.remove('selected'));
+            document.getElementById(`hall-${id}`).classList.add('selected');
+            document.getElementById('toRoomBtn').disabled = false;
+            document.getElementById('roomTitle').innerText = `Select Room in ${name}`;
+            renderRooms();
+        }
+
+        function selectRoom(num) {
+            selectedRoom = `Room ${num}`;
+            document.querySelectorAll('.room-card').forEach(el => el.classList.remove('selected'));
+            document.getElementById(`room-${num}`).classList.add('selected');
+            document.getElementById('toPaymentBtn').disabled = false;
+        }
+
+        function nextStep(step) {
+            // Animate
+            const currentEl = document.getElementById(`step${currentStep}`);
+            currentEl.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentEl.classList.remove('active');
+                const nextEl = document.getElementById(`step${step}`);
+                nextEl.style.opacity = '0';
+                nextEl.classList.add('active');
+                
+                // Stepper update
+                updateStepper(step);
+                
+                setTimeout(() => {
+                    nextEl.style.opacity = '1';
+                }, 10);
+                
+                currentStep = step;
+                
+                // Update summary if going to payment
+                if (step === 4) {
+                    document.getElementById('sumHall').innerText = selectedHall;
+                    document.getElementById('sumRoom').innerText = selectedRoom;
+                }
+                
+                // Final reveal
+                if (step === 5) {
+                    document.getElementById('finalRef').innerText = `HA/2024/${Math.floor(100000 + Math.random() * 900000)}`;
+                    document.getElementById('finalHall').innerText = selectedHall;
+                    document.getElementById('finalRoom').innerText = selectedRoom;
+                }
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 300);
+        }
+
+        function updateStepper(step) {
+            for (let i = 1; i <= 5; i++) {
+                const s = document.getElementById(`stepper${i}`);
+                const c = s.querySelector('.ha-step-circle');
+                s.classList.remove('active', 'completed');
+                
+                if (i < step) {
+                    s.classList.add('completed');
+                    c.innerHTML = '<i class="bi bi-check-lg"></i>';
+                } else if (i === step) {
+                    s.classList.add('active');
+                    if(i === 5) {
+                         c.innerHTML = '<i class="bi bi-flag-fill" style="font-size:0.75rem;"></i>';
+                    } else {
+                         c.innerHTML = i;
+                    }
+                } else {
+                    if(i === 5) {
+                         c.innerHTML = '<i class="bi bi-flag-fill" style="font-size:0.75rem;"></i>';
+                    } else {
+                         c.innerHTML = i;
+                    }
+                }
+            }
+        }
+
+        function processPayment() {
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing Payment...';
+            
+            setTimeout(() => {
+                nextStep(5);
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>

@@ -457,9 +457,12 @@
                                 <select id="issueType" class="form-select form-select-lg aset-select-field"
                                     onchange="validateStep1()">
                                     <option value="" selected disabled>Choose your issue...</option>
+                                       <option value="Transfer to Another Nigerian University (Interschool)">Transfer to
+                                        Another Nigerian University (Interschool)</option>
                                     <option value="Change Program / Department">Change Program / Department</option>
                                     <option value="Voluntary Change Program (CGPA 3.0 & above)">Voluntary Change Program
                                         (CGPA 3.0 & above)</option>
+                                           <option value="Accommodation">Accommodation</option>
                                     <option value="Withdrawal Issues">Withdrawal Issues</option>
                                     <option value="Probation Issues">Probation Issues</option>
                                     <option value="Suspension of Studies">Suspension of Studies</option>
@@ -467,10 +470,8 @@
                                     <option value="Result & Examination Issues">Result & Examination Issues</option>
                                     <option value="Course Registration Problems">Course Registration Problems</option>
                                     <option value="Portal & Payment Issues">Portal & Payment Issues</option>
-                                    <option value="Transfer to Another Nigerian University (Interschool)">Transfer to
-                                        Another Nigerian University (Interschool)</option>
-                                    <option value="Loan & Scholarship">Loan & Scholarship</option>
-                                    <option value="Multiple / Complex Issues">Multiple / Complex Issues</option>
+                                    <option value="Student Loan & Scholarship">Student Loan & Scholarship</option>
+                            
                                 </select>
                             </div>
                         </div>
@@ -1485,6 +1486,51 @@
         }, { threshold: 0.15 });
 
         document.querySelectorAll('.ln-reveal').forEach(el => revealObserver.observe(el));
+
+        // Auto-scroll for Stats Ribbon on Mobile/Tablet
+        (function() {
+            const ribbon = document.querySelector('.ln-stats-bar-inner');
+            if (!ribbon) return;
+
+            // Only run on mobile/tablet (matches CSS breakpoints)
+            const isMobile = () => window.innerWidth < 1025;
+            
+            if (isMobile()) {
+                // Clone items for infinite effect
+                const items = Array.from(ribbon.children);
+                items.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    ribbon.appendChild(clone);
+                });
+
+                let lastScrollLeft = 0;
+                let isUserInteracting = false;
+
+                function autoScroll() {
+                    if (!isMobile() || isUserInteracting) {
+                        requestAnimationFrame(autoScroll);
+                        return;
+                    }
+
+                    ribbon.scrollLeft += 0.8; // Adjust speed here
+
+                    // If we've scrolled past the first set (half the total scroll width), reset to 0
+                    if (ribbon.scrollLeft >= ribbon.scrollWidth / 2) {
+                        ribbon.scrollLeft = 1; // Small offset to prevent jumpiness
+                    }
+
+                    requestAnimationFrame(autoScroll);
+                }
+
+                // Pause on manual touch/scroll
+                ribbon.addEventListener('touchstart', () => isUserInteracting = true);
+                ribbon.addEventListener('touchend', () => {
+                    setTimeout(() => isUserInteracting = false, 1500); // Resume after pause
+                });
+
+                autoScroll();
+            }
+        })();
     </script>
 </body>
 
